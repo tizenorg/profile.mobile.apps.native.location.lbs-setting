@@ -1,0 +1,84 @@
+msgid "IDS_TPLATFORM_BODY_ON_OFF_BUTTON_T_TTS"
+msgstr "Κουμπί ενεργοποίησης/ενεργοποίησης"
+
+msgid "IDS_ST_MBODY_USE_CURRENT_LOCATION"
+msgstr "Χρήση τρέχ. τοποθεσίας"
+
+msgid "IDS_LBS_BODY_LOCATION_SERVICE"
+msgstr "Υπηρεσία εύρεσης θέσης"
+
+msgid "IDS_ST_SK_PREVIOUS"
+msgstr "Προηγούμενο"
+
+msgid "IDS_ST_BUTTON_OK"
+msgstr "OK"
+
+msgid "IDS_ST_BUTTON2_LOCATION"
+msgstr "Θέση"
+
+msgid "IDS_ST_BODY_DO_NOT_SHOW_AGAIN"
+msgstr "Να μην εμφανιστεί ξανά"
+
+msgid "IDS_ST_BODY_GPS"
+msgstr "GPS"
+
+msgid "IDS_STU_BUTTON_PREVIOUS"
+msgstr "Προηγούμενο"
+
+msgid "IDS_ST_HEADER_HELP"
+msgstr "Βοήθεια"
+
+msgid "IDS_ST_BUTTON_AGREE"
+msgstr "Αποδοχή"
+
+msgid "IDS_ST_BUTTON_DISAGREE"
+msgstr "Δεν συμφωνώ"
+
+msgid "IDS_ST_SK_NEXT"
+msgstr "Επόμενο"
+
+msgid "IDS_LBS_BODY_ENABLING_NETWORK_POSITIONING_WILL_HELP_YOU_FIND_YOUR_LOCATION_EVEN_IF_YOU_ARE_INDOORS_MSG"
+msgstr "Η ενεργοποίηση τοποθέτησης δικτύου θα σας βοηθήσει να βρίσκετε τη θέση σας, ακόμα και όταν είστε σε εσωτερικούς χώρους. Ωστόσο, ενδέχεται να υπάρξουν χρεώσεις, αν δεν μπορείτε να συνδεθείτε μέσω Wi-Fi από τη θέση που βρίσκεστε."
+
+msgid "IDS_ST_BODY_LOCATION_SOURCES_ABB"
+msgstr "Προελεύσεις καθορισμού τοποθεσίας"
+
+msgid "IDS_ST_BODY_WIRELESS_NETWORKS_ABB"
+msgstr "Ασύρματα δίκτυα"
+
+msgid "IDS_STU_BUTTON_ALLOWED_APPLICATIONS_ABB"
+msgstr "Εφαρμογές που επιτρέπονται"
+
+msgid "IDS_TPLATFORM_BODY_OFF"
+msgstr "Ανενεργό"
+
+msgid "IDS_TPLATFORM_BODY_ON"
+msgstr "Ενεργό"
+
+msgid "IDS_ST_OPT_GPS"
+msgstr "GPS"
+
+msgid "IDS_STU_BODY_SAMSUNG_APPLICATIONS_MAY_USE_COLLECT_TRANSFER_AND_OR_TRANSMIT_THE_USERS_LOCATION_INFORMATION_IF_ALLOWED"
+msgstr "Οι εφαρμογές Samsung μπορούν να κάνουν χρήση, συλλογή, μεταφορά ή/και μετάδοση των στοιχείων τοποθεσίας του χρήστη, εάν επιτρέπεται."
+
+msgid "IDS_ST_BUTTON_NEXT"
+msgstr "Επόμενο"
+
+msgid "IDS_ST_POP_SECURITY_POLICY_PREVENTS_USE_OF_LOCATION_DATA"
+msgstr "Η πολιτική ασφαλείας δεν επιτρέπει τη χρήση δεδομένων εντοπισμού τοποθεσίας."
+
+msgid "IDS_ST_HEADER_LOCATION_LEGAL_INFORMATION_ABB"
+msgstr "Νομικές πληρ. υπηρ. τοποθεσίας"
+
+msgid "IDS_ST_BODY_USE_WI_FI_OR_MOBILE_NETWORKS_TO_HELP_FIND_YOUR_LOCATION_EVEN_IF_YOU_ARE_INDOORS_USING_MOBILE_NETWORKS_MAY_RESULT_IN_ADDITIONAL_CHARGES_MSG"
+msgstr "Χρησιμοποιήστε Wi-Fi ή δίκτυα κινητής τηλεφωνίας για να βρείτε την τοποθεσία σας, ακόμα και όταν βρίσκεστε σε κλειστούς χώρους. Η χρήση δικτύων κινητής τηλεφωνίας μπορεί να επιφέρει πρόσθετες χρεώσεις ανάλογα με το πρόγραμμα πληρωμής σας."
+
+msgid "IDS_ST_BODY_ALLOW_APPLICATIONS_TO_USE_GPS_SATELLITES_TO_PINPOINT_YOUR_LOCATION"
+msgstr "Να επιτρέπεται σε εφαρμογές η χρήση δορυφόρων GPS για τον εντοπισμό της τοποθεσίας σας."
+
+msgid "IDS_ST_HEADER_CONSENT_TO_LOCATION_INFO_USAGE_ABB"
+msgstr "Συναίνεση για χρ. πληρ. τοποθ."
+
+msgid "IDS_ST_POP_YOUR_LOCATION_DATA_INCLUDING_GPS_DATA_WILL_BE_USED_BY_RELEVANT_APPLICATIONS"
+msgstr "Τα δεδομένα τοποθεσίας, συμπεριλαμβανομένων των δεδομένων GPS, θα χρησιμοποιηθούν από τις σχετικές εφαρμογές."
+

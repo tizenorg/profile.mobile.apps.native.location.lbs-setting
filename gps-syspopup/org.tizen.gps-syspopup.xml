@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://tizen.org/ns/packages" package="org.tizen.gps-syspopup" version="1.0.7" install-location="internal-only">
+		<label>gps-syspopup</label>
+		<author email="hena.kim@samsung.com" href="www.samsung.com">Haena Kim</author>
+		<description>GPS System Popup</description>
+		<ui-application appid="org.tizen.gps-syspopup" exec="/usr/apps/org.tizen.gps-syspopup/bin/gps-syspopup" nodisplay="true" multiple="false" type="capp" taskmanage="false">
+				<label>gps-syspopup</label>
+		</ui-application>
+</manifest>
+

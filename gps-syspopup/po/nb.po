@@ -1,0 +1,84 @@
+msgid "IDS_TPLATFORM_BODY_ON_OFF_BUTTON_T_TTS"
+msgstr "På/av-knapp"
+
+msgid "IDS_ST_MBODY_USE_CURRENT_LOCATION"
+msgstr "Bruk gjeld. posisjon"
+
+msgid "IDS_LBS_BODY_LOCATION_SERVICE"
+msgstr "Posisjonstjeneste"
+
+msgid "IDS_ST_SK_PREVIOUS"
+msgstr "Forrige"
+
+msgid "IDS_ST_BUTTON_OK"
+msgstr "OK"
+
+msgid "IDS_ST_BUTTON2_LOCATION"
+msgstr "Posisjon"
+
+msgid "IDS_ST_BODY_DO_NOT_SHOW_AGAIN"
+msgstr "Ikke vis igjen"
+
+msgid "IDS_ST_BODY_GPS"
+msgstr "GPS"
+
+msgid "IDS_STU_BUTTON_PREVIOUS"
+msgstr "Forrige"
+
+msgid "IDS_ST_HEADER_HELP"
+msgstr "Hjelp"
+
+msgid "IDS_ST_BUTTON_AGREE"
+msgstr "Godta"
+
+msgid "IDS_ST_BUTTON_DISAGREE"
+msgstr "Avslå"
+
+msgid "IDS_ST_SK_NEXT"
+msgstr "Neste"
+
+msgid "IDS_LBS_BODY_ENABLING_NETWORK_POSITIONING_WILL_HELP_YOU_FIND_YOUR_LOCATION_EVEN_IF_YOU_ARE_INDOORS_MSG"
+msgstr "Aktivering av nettverksposisjon hjelper deg med å finne din posisjon selv om du er innendørs. Men dette kan medføre kostnader hvis du ikke kan koble deg til via Wi-Fi fra din posisjon."
+
+msgid "IDS_ST_BODY_LOCATION_SOURCES_ABB"
+msgstr "Posisjonskilder"
+
+msgid "IDS_ST_BODY_WIRELESS_NETWORKS_ABB"
+msgstr "Trådløse nettverk"
+
+msgid "IDS_STU_BUTTON_ALLOWED_APPLICATIONS_ABB"
+msgstr "Tillatte apper"
+
+msgid "IDS_TPLATFORM_BODY_OFF"
+msgstr "Av"
+
+msgid "IDS_TPLATFORM_BODY_ON"
+msgstr "På"
+
+msgid "IDS_ST_OPT_GPS"
+msgstr "GPS"
+
+msgid "IDS_STU_BODY_SAMSUNG_APPLICATIONS_MAY_USE_COLLECT_TRANSFER_AND_OR_TRANSMIT_THE_USERS_LOCATION_INFORMATION_IF_ALLOWED"
+msgstr "Samsung-apper kan bruke, innhente, overføre og/eller videresende brukerens posisjonsinformasjon hvis de får tillatelse til det."
+
+msgid "IDS_ST_BUTTON_NEXT"
+msgstr "Neste"
+
+msgid "IDS_ST_POP_SECURITY_POLICY_PREVENTS_USE_OF_LOCATION_DATA"
+msgstr "Sikkerhetspolicyen hindrer bruk av posisjonsdata."
+
+msgid "IDS_ST_HEADER_LOCATION_LEGAL_INFORMATION_ABB"
+msgstr "Juridisk info. om posisjon"
+
+msgid "IDS_ST_BODY_USE_WI_FI_OR_MOBILE_NETWORKS_TO_HELP_FIND_YOUR_LOCATION_EVEN_IF_YOU_ARE_INDOORS_USING_MOBILE_NETWORKS_MAY_RESULT_IN_ADDITIONAL_CHARGES_MSG"
+msgstr "Bruk Wi-Fi- eller mobilnett for å hjelpe til å finne posisjonen din, selv når du er innendørs. Bruk av mobilnett kan medføre ekstra kostnader, avhengig av abonnementet ditt."
+
+msgid "IDS_ST_BODY_ALLOW_APPLICATIONS_TO_USE_GPS_SATELLITES_TO_PINPOINT_YOUR_LOCATION"
+msgstr "Gi apper tillatelse til å bruke GPS-satellitter til å finne posisjonen din."
+
+msgid "IDS_ST_HEADER_CONSENT_TO_LOCATION_INFO_USAGE_ABB"
+msgstr "Godta bruk av posisjonsinfo."
+
+msgid "IDS_ST_POP_YOUR_LOCATION_DATA_INCLUDING_GPS_DATA_WILL_BE_USED_BY_RELEVANT_APPLICATIONS"
+msgstr "Posisjonsdataene, inkludert GPS-data, blir brukt av relevante apper."
+

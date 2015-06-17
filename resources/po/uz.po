@@ -1,0 +1,87 @@
+msgid "IDS_TPLATFORM_BODY_ON_OFF_BUTTON_T_TTS"
+msgstr "Yoqish/o‘chirish tugmasi"
+
+msgid "IDS_ST_MBODY_USE_CURRENT_LOCATION"
+msgstr "Joriy joylashuvni ishlat"
+
+msgid "IDS_LBS_BODY_LOCATION_SERVICE"
+msgstr "Joylashuv xizmati"
+
+msgid "IDS_ST_SK_PREVIOUS"
+msgstr "Avvalgi"
+
+msgid "IDS_MAPS_BODY_MY_PLACES"
+msgstr "My places"
+
+msgid "IDS_ST_BUTTON_OK"
+msgstr "OK"
+
+msgid "IDS_ST_BUTTON2_LOCATION"
+msgstr "Joylashuv"
+
+msgid "IDS_ST_BODY_DO_NOT_SHOW_AGAIN"
+msgstr "Boshqa ko‘rsatilmasin"
+
+msgid "IDS_ST_BODY_GPS"
+msgstr "GPS"
+
+msgid "IDS_STU_BUTTON_PREVIOUS"
+msgstr "Avvalgi"
+
+msgid "IDS_ST_HEADER_HELP"
+msgstr "Yordam"
+
+msgid "IDS_ST_BUTTON_AGREE"
+msgstr "Roziman"
+
+msgid "IDS_ST_BUTTON_DISAGREE"
+msgstr "Rozi emas"
+
+msgid "IDS_ST_SK_NEXT"
+msgstr "Keyingi"
+
+msgid "IDS_LBS_BODY_ENABLING_NETWORK_POSITIONING_WILL_HELP_YOU_FIND_YOUR_LOCATION_EVEN_IF_YOU_ARE_INDOORS_MSG"
+msgstr "Tarmoq joylashuvini aniqlash tizimini yoqish joylashuvingizni topishga yordam beradi, hattoki, bino ichida bo‘lsangiz ham. Lekin agar unga joylashuvingizdan Wi-Fi orqali ulana olmasangiz, qo‘shimcha to‘lov olinishi mumkin."
+
+msgid "IDS_ST_BODY_LOCATION_SOURCES_ABB"
+msgstr "Joylashuv manbalari"
+
+msgid "IDS_ST_BODY_WIRELESS_NETWORKS_ABB"
+msgstr "Simsiz tarmoqlar"
+
+msgid "IDS_STU_BUTTON_ALLOWED_APPLICATIONS_ABB"
+msgstr "Ruxsat berilgan ilovalar"
+
+msgid "IDS_TPLATFORM_BODY_OFF"
+msgstr "O‘ch."
+
+msgid "IDS_TPLATFORM_BODY_ON"
+msgstr "Yoq."
+
+msgid "IDS_ST_OPT_GPS"
+msgstr "GPS"
+
+msgid "IDS_STU_BODY_SAMSUNG_APPLICATIONS_MAY_USE_COLLECT_TRANSFER_AND_OR_TRANSMIT_THE_USERS_LOCATION_INFORMATION_IF_ALLOWED"
+msgstr "Samsung ilovalari foydalanuvchining joylashuv ruxsatlari haqidagi ma’lumotni, ruxsat etilgan bo‘lsa, ishlatishi, yig‘ishi, uzatishi va/yoki jo‘natishi mumkin."
+
+msgid "IDS_ST_BUTTON_NEXT"
+msgstr "Keyingi"
+
+msgid "IDS_ST_POP_SECURITY_POLICY_PREVENTS_USE_OF_LOCATION_DATA"
+msgstr "Xavfsizlik siyosati joylashuv ma’lumoti ishlatilishidan saqlaydi."
+
+msgid "IDS_ST_HEADER_LOCATION_LEGAL_INFORMATION_ABB"
+msgstr "Joy haqidagi huquqiy ma’lumot"
+
+msgid "IDS_ST_BODY_USE_WI_FI_OR_MOBILE_NETWORKS_TO_HELP_FIND_YOUR_LOCATION_EVEN_IF_YOU_ARE_INDOORS_USING_MOBILE_NETWORKS_MAY_RESULT_IN_ADDITIONAL_CHARGES_MSG"
+msgstr "Bino ichida bo‘lganingizda ham joylashuvingizni topishga yordam berishi uchun Wi-Fi yoki mobil tarmoqlardan foydalaning. Mobil tarmoqlardan foydalanish tarif rejangiz asosida qo‘shimcha to‘lovlarga olib kelishi mumkin."
+
+msgid "IDS_ST_BODY_ALLOW_APPLICATIONS_TO_USE_GPS_SATELLITES_TO_PINPOINT_YOUR_LOCATION"
+msgstr "Ilovalarga joylashuvingizni belgilab qo‘yishda GPS sun’iy yo‘ldoshlaridan foydalanish uchun ruxsat berish."
+
+msgid "IDS_ST_HEADER_CONSENT_TO_LOCATION_INFO_USAGE_ABB"
+msgstr "Joy. ma’l. ishlat-ga rozilik"
+
+msgid "IDS_ST_POP_YOUR_LOCATION_DATA_INCLUDING_GPS_DATA_WILL_BE_USED_BY_RELEVANT_APPLICATIONS"
+msgstr "Joylashuvingiz ma’lumotlari, jumladan, GPS ma’lumotlari, tegishli ilovalar tomonidan foydalaniladi."
+

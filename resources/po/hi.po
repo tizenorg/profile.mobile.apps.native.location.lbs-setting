@@ -1,0 +1,87 @@
+msgid "IDS_TPLATFORM_BODY_ON_OFF_BUTTON_T_TTS"
+msgstr "चालू/बंद बटन"
+
+msgid "IDS_ST_MBODY_USE_CURRENT_LOCATION"
+msgstr "वर्तमान स्थान का उपयोग करें"
+
+msgid "IDS_LBS_BODY_LOCATION_SERVICE"
+msgstr "स्थान सेवा"
+
+msgid "IDS_ST_SK_PREVIOUS"
+msgstr "पिछला"
+
+msgid "IDS_MAPS_BODY_MY_PLACES"
+msgstr "मेरे स्थान"
+
+msgid "IDS_ST_BUTTON_OK"
+msgstr "ओके"
+
+msgid "IDS_ST_BUTTON2_LOCATION"
+msgstr "स्थान"
+
+msgid "IDS_ST_BODY_DO_NOT_SHOW_AGAIN"
+msgstr "दोबारा न दिखाएँ।"
+
+msgid "IDS_ST_BODY_GPS"
+msgstr "GPS"
+
+msgid "IDS_STU_BUTTON_PREVIOUS"
+msgstr "पिछला"
+
+msgid "IDS_ST_HEADER_HELP"
+msgstr "सहायता"
+
+msgid "IDS_ST_BUTTON_AGREE"
+msgstr "सहमत"
+
+msgid "IDS_ST_BUTTON_DISAGREE"
+msgstr "असहमत"
+
+msgid "IDS_ST_SK_NEXT"
+msgstr "अगला"
+
+msgid "IDS_LBS_BODY_ENABLING_NETWORK_POSITIONING_WILL_HELP_YOU_FIND_YOUR_LOCATION_EVEN_IF_YOU_ARE_INDOORS_MSG"
+msgstr "नेटवर्क स्थिति सक्षम करने से आप को अपना स्थान ढूँढने में मदद मिलती है, आप के घर के अंदर होते हुए भी। तथापि, यदि आप अपने स्थान से Wi-Fi के साथ जोड़ने में असमर्थ होंगे तो आप को लागत चुकानी होगी"
+
+msgid "IDS_ST_BODY_LOCATION_SOURCES_ABB"
+msgstr "स्थान स्रोत"
+
+msgid "IDS_ST_BODY_WIRELESS_NETWORKS_ABB"
+msgstr "वायरलेस नेटवर्क्स"
+
+msgid "IDS_STU_BUTTON_ALLOWED_APPLICATIONS_ABB"
+msgstr "अनुमत ऐप्लिकेशन्स"
+
+msgid "IDS_TPLATFORM_BODY_OFF"
+msgstr "बंद"
+
+msgid "IDS_TPLATFORM_BODY_ON"
+msgstr "चालू"
+
+msgid "IDS_ST_OPT_GPS"
+msgstr "GPS"
+
+msgid "IDS_STU_BODY_SAMSUNG_APPLICATIONS_MAY_USE_COLLECT_TRANSFER_AND_OR_TRANSMIT_THE_USERS_LOCATION_INFORMATION_IF_ALLOWED"
+msgstr "अनुमति होने पर सैमसंग एप्लीकेशन उपयोगकर्ता की स्थान जानकारी उपयोग, संग्रह, स्थानांतरित और/या प्रसारित कर सकता है।"
+
+msgid "IDS_ST_BUTTON_NEXT"
+msgstr "अगला"
+
+msgid "IDS_ST_POP_SECURITY_POLICY_PREVENTS_USE_OF_LOCATION_DATA"
+msgstr "सुरक्षा नीति स्थान डाटा के उपयोग को रोकती है"
+
+msgid "IDS_ST_HEADER_LOCATION_LEGAL_INFORMATION_ABB"
+msgstr "स्थान की कानूनी जानकारी"
+
+msgid "IDS_ST_BODY_USE_WI_FI_OR_MOBILE_NETWORKS_TO_HELP_FIND_YOUR_LOCATION_EVEN_IF_YOU_ARE_INDOORS_USING_MOBILE_NETWORKS_MAY_RESULT_IN_ADDITIONAL_CHARGES_MSG"
+msgstr "घर के अंदर रहने पर भी अपना स्थान ढूँढने में मदद के लिए Wi-Fi या मोबाइल नेटवर्क्स का उपयोग करें। मोबाइल नेटवर्क्स का उपयोग करने पर आपकी भुगतान योजना के आधार पर अतिरिक्त शुल्क लग सकते हैं।"
+
+msgid "IDS_ST_BODY_ALLOW_APPLICATIONS_TO_USE_GPS_SATELLITES_TO_PINPOINT_YOUR_LOCATION"
+msgstr "एप्लीकेशंस को आपका स्थान बताने के लिए GPS सैटेलाइट्‍स का उपयोग करने की अनुमति दें।"
+
+msgid "IDS_ST_HEADER_CONSENT_TO_LOCATION_INFO_USAGE_ABB"
+msgstr "स्थान जानकारी उपयोग की सहमति"
+
+msgid "IDS_ST_POP_YOUR_LOCATION_DATA_INCLUDING_GPS_DATA_WILL_BE_USED_BY_RELEVANT_APPLICATIONS"
+msgstr "GPS डाटा सहित, आपका स्थान डाटा संबंधित एप्लीकेशंस द्वारा उपयोग किया जाएगा।"
+

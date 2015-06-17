@@ -1,0 +1,84 @@
+msgid "IDS_TPLATFORM_BODY_ON_OFF_BUTTON_T_TTS"
+msgstr "Przycisk włączania/wyłączania"
+
+msgid "IDS_ST_MBODY_USE_CURRENT_LOCATION"
+msgstr "Użyj bieżącej lokalizacji"
+
+msgid "IDS_LBS_BODY_LOCATION_SERVICE"
+msgstr "Usługa lokalizacji"
+
+msgid "IDS_ST_SK_PREVIOUS"
+msgstr "Wstecz"
+
+msgid "IDS_ST_BUTTON_OK"
+msgstr "OK"
+
+msgid "IDS_ST_BUTTON2_LOCATION"
+msgstr "Lokalizacja"
+
+msgid "IDS_ST_BODY_DO_NOT_SHOW_AGAIN"
+msgstr "Nie wyświetlaj ponownie"
+
+msgid "IDS_ST_BODY_GPS"
+msgstr "GPS"
+
+msgid "IDS_STU_BUTTON_PREVIOUS"
+msgstr "Wstecz"
+
+msgid "IDS_ST_HEADER_HELP"
+msgstr "Pomoc"
+
+msgid "IDS_ST_BUTTON_AGREE"
+msgstr "Akceptuję"
+
+msgid "IDS_ST_BUTTON_DISAGREE"
+msgstr "Brak zgody"
+
+msgid "IDS_ST_SK_NEXT"
+msgstr "Dalej"
+
+msgid "IDS_LBS_BODY_ENABLING_NETWORK_POSITIONING_WILL_HELP_YOU_FIND_YOUR_LOCATION_EVEN_IF_YOU_ARE_INDOORS_MSG"
+msgstr "Włączenie funkcji używania stacji bazowych pozwala na ustalenie lokalizacji nawet wewnątrz budynku. Jednakże może to spowodować naliczenie opłat w przypadku braku możliwości połączenia z Wi-Fi."
+
+msgid "IDS_ST_BODY_LOCATION_SOURCES_ABB"
+msgstr "Źródła lokalizacji"
+
+msgid "IDS_ST_BODY_WIRELESS_NETWORKS_ABB"
+msgstr "Sieci bezprzewodowe"
+
+msgid "IDS_STU_BUTTON_ALLOWED_APPLICATIONS_ABB"
+msgstr "Dozwolone aplikacje"
+
+msgid "IDS_TPLATFORM_BODY_OFF"
+msgstr "Wył."
+
+msgid "IDS_TPLATFORM_BODY_ON"
+msgstr "Wł."
+
+msgid "IDS_ST_OPT_GPS"
+msgstr "GPS"
+
+msgid "IDS_STU_BODY_SAMSUNG_APPLICATIONS_MAY_USE_COLLECT_TRANSFER_AND_OR_TRANSMIT_THE_USERS_LOCATION_INFORMATION_IF_ALLOWED"
+msgstr "Aplikacje Samsung mogą używać informacji o lokalizacji użytkownika, a także je gromadzić, przenosić i/lub przesyłać."
+
+msgid "IDS_ST_BUTTON_NEXT"
+msgstr "Dalej"
+
+msgid "IDS_ST_POP_SECURITY_POLICY_PREVENTS_USE_OF_LOCATION_DATA"
+msgstr "Zasady zabezpieczeń uniemożliwiają korzystanie z danych lokalizacji."
+
+msgid "IDS_ST_HEADER_LOCATION_LEGAL_INFORMATION_ABB"
+msgstr "Lokalizacja — inform. prawne"
+
+msgid "IDS_ST_BODY_USE_WI_FI_OR_MOBILE_NETWORKS_TO_HELP_FIND_YOUR_LOCATION_EVEN_IF_YOU_ARE_INDOORS_USING_MOBILE_NETWORKS_MAY_RESULT_IN_ADDITIONAL_CHARGES_MSG"
+msgstr "Użyj sieci Wi-Fi lub sieci komórkowych w celu znalezienia swojej lokalizacji nawet wewnątrz budynków. Korzystanie z sieci komórkowych może spowodować naliczenie dodatkowych opłat w zależności od planu taryfowego."
+
+msgid "IDS_ST_BODY_ALLOW_APPLICATIONS_TO_USE_GPS_SATELLITES_TO_PINPOINT_YOUR_LOCATION"
+msgstr "Zezwól aplikacjom na użycie satelitów GPS w celu określenia Twojej lokalizacji."
+
+msgid "IDS_ST_HEADER_CONSENT_TO_LOCATION_INFO_USAGE_ABB"
+msgstr "Zgoda na używ. inf. o lokaliz."
+
+msgid "IDS_ST_POP_YOUR_LOCATION_DATA_INCLUDING_GPS_DATA_WILL_BE_USED_BY_RELEVANT_APPLICATIONS"
+msgstr "Dane o lokalizacji, łącznie z danymi GPS, będą używane przez odpowiednie aplikacje."
+

@@ -1,0 +1,84 @@
+msgid "IDS_TPLATFORM_BODY_ON_OFF_BUTTON_T_TTS"
+msgstr "Միացնել/անջատել կոճակ"
+
+msgid "IDS_ST_MBODY_USE_CURRENT_LOCATION"
+msgstr "Օգտագործեք ներկա տեղը"
+
+msgid "IDS_LBS_BODY_LOCATION_SERVICE"
+msgstr "Տեղական ծառայություն"
+
+msgid "IDS_ST_SK_PREVIOUS"
+msgstr "Նախորդ"
+
+msgid "IDS_ST_BUTTON_OK"
+msgstr "OK"
+
+msgid "IDS_ST_BUTTON2_LOCATION"
+msgstr "Տեղը"
+
+msgid "IDS_ST_BODY_DO_NOT_SHOW_AGAIN"
+msgstr "Չցուցադրել կրկին"
+
+msgid "IDS_ST_BODY_GPS"
+msgstr "GPS"
+
+msgid "IDS_STU_BUTTON_PREVIOUS"
+msgstr "Նախորդ"
+
+msgid "IDS_ST_HEADER_HELP"
+msgstr "Օգնություն"
+
+msgid "IDS_ST_BUTTON_AGREE"
+msgstr "Հմձայն եմ"
+
+msgid "IDS_ST_BUTTON_DISAGREE"
+msgstr "Առարկել"
+
+msgid "IDS_ST_SK_NEXT"
+msgstr "Հաջորդ"
+
+msgid "IDS_LBS_BODY_ENABLING_NETWORK_POSITIONING_WILL_HELP_YOU_FIND_YOUR_LOCATION_EVEN_IF_YOU_ARE_INDOORS_MSG"
+msgstr "Ցանցի դիրքորոշման ընձեռումը կօգնի գտնել Ձեր տեղը՝ նույնիսկ եթե շենքի ներսում եք: Սակայն սա կարող է հանգեցնել վճարի գանձման, եթե Ձեր տեղից անկարող եք միանալ Wi-Fi-ի միջոցով:"
+
+msgid "IDS_ST_BODY_LOCATION_SOURCES_ABB"
+msgstr "Տեղորոշման աղբյուրներ"
+
+msgid "IDS_ST_BODY_WIRELESS_NETWORKS_ABB"
+msgstr "Անլար ցանցեր"
+
+msgid "IDS_STU_BUTTON_ALLOWED_APPLICATIONS_ABB"
+msgstr "Թույլատրված ծրագրեր"
+
+msgid "IDS_TPLATFORM_BODY_OFF"
+msgstr "Անջատված է"
+
+msgid "IDS_TPLATFORM_BODY_ON"
+msgstr "Միացված է"
+
+msgid "IDS_ST_OPT_GPS"
+msgstr "GPS"
+
+msgid "IDS_STU_BODY_SAMSUNG_APPLICATIONS_MAY_USE_COLLECT_TRANSFER_AND_OR_TRANSMIT_THE_USERS_LOCATION_INFORMATION_IF_ALLOWED"
+msgstr "Samsung գործադիրները կարող են օգտագործել, հավաքագրել, փոխանցել օգտվողի տեղադրության տվյալները՝ թույլտվության դեպքում:"
+
+msgid "IDS_ST_BUTTON_NEXT"
+msgstr "Հաջորդ"
+
+msgid "IDS_ST_POP_SECURITY_POLICY_PREVENTS_USE_OF_LOCATION_DATA"
+msgstr "Անվտանգության քաղաքականությունը կանխում է տեղի մասին տվյալների օգտագործումը:"
+
+msgid "IDS_ST_HEADER_LOCATION_LEGAL_INFORMATION_ABB"
+msgstr "Տեղադր-ն իրավական տեղեկ"
+
+msgid "IDS_ST_BODY_USE_WI_FI_OR_MOBILE_NETWORKS_TO_HELP_FIND_YOUR_LOCATION_EVEN_IF_YOU_ARE_INDOORS_USING_MOBILE_NETWORKS_MAY_RESULT_IN_ADDITIONAL_CHARGES_MSG"
+msgstr "Օգտագործել Wi-Fi կամ շարժական ցանցեր` ձեր տեղադրությունը գտնելու, նույնիսկ եթե ներսում եք: Կախված ձեր վճարային պլանից կարող են լրացուցիչ վճարներ առաջանալ շարժական ցանցերի օգտագործման դեպքում:"
+
+msgid "IDS_ST_BODY_ALLOW_APPLICATIONS_TO_USE_GPS_SATELLITES_TO_PINPOINT_YOUR_LOCATION"
+msgstr "Թող ծրգրերն օգտագործեն GPS արբանյակներ` ձեր տեղադրությունն ամրացնելու համար:"
+
+msgid "IDS_ST_HEADER_CONSENT_TO_LOCATION_INFO_USAGE_ABB"
+msgstr "Տեղի տվյալների օգտ. համաձայն."
+
+msgid "IDS_ST_POP_YOUR_LOCATION_DATA_INCLUDING_GPS_DATA_WILL_BE_USED_BY_RELEVANT_APPLICATIONS"
+msgstr "Ձեր տեղի մասին տվյալները, ներառյալ GPS տվյալները, կօգտագործվեն համապատասխան ծրագրերի կողմից:"
+

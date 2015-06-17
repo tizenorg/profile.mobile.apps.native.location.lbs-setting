@@ -1,0 +1,87 @@
+msgid "IDS_TPLATFORM_BODY_ON_OFF_BUTTON_T_TTS"
+msgstr "Aan/uit-knop"
+
+msgid "IDS_ST_MBODY_USE_CURRENT_LOCATION"
+msgstr "Huidige locatie gebruiken"
+
+msgid "IDS_LBS_BODY_LOCATION_SERVICE"
+msgstr "GPS-service"
+
+msgid "IDS_ST_SK_PREVIOUS"
+msgstr "Vorige"
+
+msgid "IDS_MAPS_BODY_MY_PLACES"
+msgstr "Mijn plaatsen"
+
+msgid "IDS_ST_BUTTON_OK"
+msgstr "OK"
+
+msgid "IDS_ST_BUTTON2_LOCATION"
+msgstr "Locatie"
+
+msgid "IDS_ST_BODY_DO_NOT_SHOW_AGAIN"
+msgstr "Niet meer weergeven"
+
+msgid "IDS_ST_BODY_GPS"
+msgstr "GPS"
+
+msgid "IDS_STU_BUTTON_PREVIOUS"
+msgstr "Vorige"
+
+msgid "IDS_ST_HEADER_HELP"
+msgstr "Help"
+
+msgid "IDS_ST_BUTTON_AGREE"
+msgstr "Akkoord"
+
+msgid "IDS_ST_BUTTON_DISAGREE"
+msgstr "Niet akkoord"
+
+msgid "IDS_ST_SK_NEXT"
+msgstr "Volgende"
+
+msgid "IDS_LBS_BODY_ENABLING_NETWORK_POSITIONING_WILL_HELP_YOU_FIND_YOUR_LOCATION_EVEN_IF_YOU_ARE_INDOORS_MSG"
+msgstr "Als netwerkpositie is ingeschakeld, vindt u uw locatie sneller, zelfs als u binnen bent. Dit kan echter wel kosten met zich meebrengen als u vanaf uw locatie geen verbinding kunt maken via Wi-Fi."
+
+msgid "IDS_ST_BODY_LOCATION_SOURCES_ABB"
+msgstr "Locatiebronnen"
+
+msgid "IDS_ST_BODY_WIRELESS_NETWORKS_ABB"
+msgstr "Draadloze netwerken"
+
+msgid "IDS_STU_BUTTON_ALLOWED_APPLICATIONS_ABB"
+msgstr "Toegestane applicaties"
+
+msgid "IDS_TPLATFORM_BODY_OFF"
+msgstr "Uit"
+
+msgid "IDS_TPLATFORM_BODY_ON"
+msgstr "Aan"
+
+msgid "IDS_ST_OPT_GPS"
+msgstr "GPS"
+
+msgid "IDS_STU_BODY_SAMSUNG_APPLICATIONS_MAY_USE_COLLECT_TRANSFER_AND_OR_TRANSMIT_THE_USERS_LOCATION_INFORMATION_IF_ALLOWED"
+msgstr "Samsung-applicaties kunnen, indien toegestaan, de locatiegegevens van de gebruiker gebruiken, verzamelen, overdragen en/of verzenden."
+
+msgid "IDS_ST_BUTTON_NEXT"
+msgstr "Volgende"
+
+msgid "IDS_ST_POP_SECURITY_POLICY_PREVENTS_USE_OF_LOCATION_DATA"
+msgstr "Beveiligingsbeleid verhindert gebruik van locatiegegevens."
+
+msgid "IDS_ST_HEADER_LOCATION_LEGAL_INFORMATION_ABB"
+msgstr "Juridische informatie locatie"
+
+msgid "IDS_ST_BODY_USE_WI_FI_OR_MOBILE_NETWORKS_TO_HELP_FIND_YOUR_LOCATION_EVEN_IF_YOU_ARE_INDOORS_USING_MOBILE_NETWORKS_MAY_RESULT_IN_ADDITIONAL_CHARGES_MSG"
+msgstr "Gebruik Wi-Fi of mobiele netwerken om uw locatie te vinden, zelfs als u binnen bent. Als u mobiele netwerken gebruikt in plaats van Wi-Fi, kan dat afhankelijk van uw abonnement resulteren in extra kosten."
+
+msgid "IDS_ST_BODY_ALLOW_APPLICATIONS_TO_USE_GPS_SATELLITES_TO_PINPOINT_YOUR_LOCATION"
+msgstr "Applicaties mogen GPS-satellieten gebruiken om uw locatie vast te stellen."
+
+msgid "IDS_ST_HEADER_CONSENT_TO_LOCATION_INFO_USAGE_ABB"
+msgstr "Instemmen gebruik locatiegeg."
+
+msgid "IDS_ST_POP_YOUR_LOCATION_DATA_INCLUDING_GPS_DATA_WILL_BE_USED_BY_RELEVANT_APPLICATIONS"
+msgstr "Uw locatiegegevens, inclusief GPS-gegevens, worden gebruikt door relevante applicaties."
+

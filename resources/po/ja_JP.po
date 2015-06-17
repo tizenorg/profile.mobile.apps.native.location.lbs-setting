@@ -1,0 +1,87 @@
+msgid "IDS_TPLATFORM_BODY_ON_OFF_BUTTON_T_TTS"
+msgstr "ON/OFFボタン"
+
+msgid "IDS_ST_MBODY_USE_CURRENT_LOCATION"
+msgstr "現在地情報を使用"
+
+msgid "IDS_LBS_BODY_LOCATION_SERVICE"
+msgstr "位置サービス"
+
+msgid "IDS_ST_SK_PREVIOUS"
+msgstr "前へ"
+
+msgid "IDS_MAPS_BODY_MY_PLACES"
+msgstr "マイプレイス"
+
+msgid "IDS_ST_BUTTON_OK"
+msgstr "OK"
+
+msgid "IDS_ST_BUTTON2_LOCATION"
+msgstr "位置情報"
+
+msgid "IDS_ST_BODY_DO_NOT_SHOW_AGAIN"
+msgstr "今後表示しない"
+
+msgid "IDS_ST_BODY_GPS"
+msgstr "GPS"
+
+msgid "IDS_STU_BUTTON_PREVIOUS"
+msgstr "前へ"
+
+msgid "IDS_ST_HEADER_HELP"
+msgstr "ヘルプ"
+
+msgid "IDS_ST_BUTTON_AGREE"
+msgstr "同意"
+
+msgid "IDS_ST_BUTTON_DISAGREE"
+msgstr "同意しない"
+
+msgid "IDS_ST_SK_NEXT"
+msgstr "次へ"
+
+msgid "IDS_LBS_BODY_ENABLING_NETWORK_POSITIONING_WILL_HELP_YOU_FIND_YOUR_LOCATION_EVEN_IF_YOU_ARE_INDOORS_MSG"
+msgstr "ネットワーク位置検出機能を有効にすると、室内にいても現在地を見つけやすくなります。しかし、Wi-Fi接続ができない場所にいると、料金が発生する可能性があります。"
+
+msgid "IDS_ST_BODY_LOCATION_SOURCES_ABB"
+msgstr "位置情報ソース"
+
+msgid "IDS_ST_BODY_WIRELESS_NETWORKS_ABB"
+msgstr "無線ネットワーク"
+
+msgid "IDS_STU_BUTTON_ALLOWED_APPLICATIONS_ABB"
+msgstr "許可されたアプリケーション"
+
+msgid "IDS_TPLATFORM_BODY_OFF"
+msgstr "OFF"
+
+msgid "IDS_TPLATFORM_BODY_ON"
+msgstr "ON"
+
+msgid "IDS_ST_OPT_GPS"
+msgstr "GPS"
+
+msgid "IDS_STU_BODY_SAMSUNG_APPLICATIONS_MAY_USE_COLLECT_TRANSFER_AND_OR_TRANSMIT_THE_USERS_LOCATION_INFORMATION_IF_ALLOWED"
+msgstr "Samsungアプリケーションに権限を許可すると、ユーザーの位置情報を使用、収集、転送または送信します。"
+
+msgid "IDS_ST_BUTTON_NEXT"
+msgstr "次へ"
+
+msgid "IDS_ST_POP_SECURITY_POLICY_PREVENTS_USE_OF_LOCATION_DATA"
+msgstr "位置情報の使用は、セキュリティポリシーによって制限されています。"
+
+msgid "IDS_ST_HEADER_LOCATION_LEGAL_INFORMATION_ABB"
+msgstr "位置情報に関する法定情報"
+
+msgid "IDS_ST_BODY_USE_WI_FI_OR_MOBILE_NETWORKS_TO_HELP_FIND_YOUR_LOCATION_EVEN_IF_YOU_ARE_INDOORS_USING_MOBILE_NETWORKS_MAY_RESULT_IN_ADDITIONAL_CHARGES_MSG"
+msgstr "室内にいても自分の位置を確認しやすくするには、Wi-Fiやモバイルネットワークを使用してください。モバイルネットワークを使用すると、料金プランによっては追加料金が発生する可能性があります。"
+
+msgid "IDS_ST_BODY_ALLOW_APPLICATIONS_TO_USE_GPS_SATELLITES_TO_PINPOINT_YOUR_LOCATION"
+msgstr "より正確な位置情報を測定するために、GPS機能を使用することをアプリケーションに許可します。"
+
+msgid "IDS_ST_HEADER_CONSENT_TO_LOCATION_INFO_USAGE_ABB"
+msgstr "位置情報の利用に同意"
+
+msgid "IDS_ST_POP_YOUR_LOCATION_DATA_INCLUDING_GPS_DATA_WILL_BE_USED_BY_RELEVANT_APPLICATIONS"
+msgstr "GPSデータを含む位置情報は、関連するアプリケーションで使用されます。"
+

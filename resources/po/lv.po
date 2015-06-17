@@ -1,0 +1,87 @@
+msgid "IDS_TPLATFORM_BODY_ON_OFF_BUTTON_T_TTS"
+msgstr "Ieslēgšanas/izslēgšana poga"
+
+msgid "IDS_ST_MBODY_USE_CURRENT_LOCATION"
+msgstr "Izm.pašr.atraš.vietu"
+
+msgid "IDS_LBS_BODY_LOCATION_SERVICE"
+msgstr "Atrašanās vietas noteikšanas pakalpojums"
+
+msgid "IDS_ST_SK_PREVIOUS"
+msgstr "Iepriekš."
+
+msgid "IDS_MAPS_BODY_MY_PLACES"
+msgstr "Manas vietas"
+
+msgid "IDS_ST_BUTTON_OK"
+msgstr "Labi"
+
+msgid "IDS_ST_BUTTON2_LOCATION"
+msgstr "Atrašanās vieta"
+
+msgid "IDS_ST_BODY_DO_NOT_SHOW_AGAIN"
+msgstr "Nerādīt vēlreiz"
+
+msgid "IDS_ST_BODY_GPS"
+msgstr "GPS"
+
+msgid "IDS_STU_BUTTON_PREVIOUS"
+msgstr "Iepriekšējais"
+
+msgid "IDS_ST_HEADER_HELP"
+msgstr "Palīdzība"
+
+msgid "IDS_ST_BUTTON_AGREE"
+msgstr "Piekrist"
+
+msgid "IDS_ST_BUTTON_DISAGREE"
+msgstr "Nepiekrītu"
+
+msgid "IDS_ST_SK_NEXT"
+msgstr "Nāk."
+
+msgid "IDS_LBS_BODY_ENABLING_NETWORK_POSITIONING_WILL_HELP_YOU_FIND_YOUR_LOCATION_EVEN_IF_YOU_ARE_INDOORS_MSG"
+msgstr "Pēc tīkla atrašanās vietas funkcijas aktivizēšanas varēsiet ātrāk atrast savu atrašanās vietu, pat ja atrodaties telpās. Taču, ja nevarēsiet izveidot savienojumu ar Wi-Fi tīklu no savas atrašanās vietas, par šo pakalpojumu var tikt piemērota samaksa."
+
+msgid "IDS_ST_BODY_LOCATION_SOURCES_ABB"
+msgstr "Atrašanās vietas avoti"
+
+msgid "IDS_ST_BODY_WIRELESS_NETWORKS_ABB"
+msgstr "Bezvadu tīkli"
+
+msgid "IDS_STU_BUTTON_ALLOWED_APPLICATIONS_ABB"
+msgstr "Atļautās programmas"
+
+msgid "IDS_TPLATFORM_BODY_OFF"
+msgstr "Izslēgt"
+
+msgid "IDS_TPLATFORM_BODY_ON"
+msgstr "Ieslēgt"
+
+msgid "IDS_ST_OPT_GPS"
+msgstr "GPS"
+
+msgid "IDS_STU_BODY_SAMSUNG_APPLICATIONS_MAY_USE_COLLECT_TRANSFER_AND_OR_TRANSMIT_THE_USERS_LOCATION_INFORMATION_IF_ALLOWED"
+msgstr "Ja atļauts, Samsung programmas var lietot, apkopot, pārsūtīt un/vai pārraidīt lietotāja atrašanās vietas informāciju."
+
+msgid "IDS_ST_BUTTON_NEXT"
+msgstr "Nākamais"
+
+msgid "IDS_ST_POP_SECURITY_POLICY_PREVENTS_USE_OF_LOCATION_DATA"
+msgstr "Drošības politika liedz atrašanās vietas datu lietošanu."
+
+msgid "IDS_ST_HEADER_LOCATION_LEGAL_INFORMATION_ABB"
+msgstr "Atr. vietas juridiskā inform."
+
+msgid "IDS_ST_BODY_USE_WI_FI_OR_MOBILE_NETWORKS_TO_HELP_FIND_YOUR_LOCATION_EVEN_IF_YOU_ARE_INDOORS_USING_MOBILE_NETWORKS_MAY_RESULT_IN_ADDITIONAL_CHARGES_MSG"
+msgstr "Izmantojiet Wi-Fi vai mobilos tīklus, lai noteiktu savu atrašanās vietu pat tad, ja atrodaties iekštelpās. Mobilo tīklu lietošana var radīt papildu izmaksas atkarībā no jūsu tarifu plāna."
+
+msgid "IDS_ST_BODY_ALLOW_APPLICATIONS_TO_USE_GPS_SATELLITES_TO_PINPOINT_YOUR_LOCATION"
+msgstr "Ļaut programmām izmantot GPS satelītus, lai norādītu jūsu atrašanās vietu."
+
+msgid "IDS_ST_HEADER_CONSENT_TO_LOCATION_INFO_USAGE_ABB"
+msgstr "Piekr. atr. vietas datu liet."
+
+msgid "IDS_ST_POP_YOUR_LOCATION_DATA_INCLUDING_GPS_DATA_WILL_BE_USED_BY_RELEVANT_APPLICATIONS"
+msgstr "Atbilstošajām programmām tiks izmantoti jūsu atrašanās vietas dati, tostarp GPS dati."
+

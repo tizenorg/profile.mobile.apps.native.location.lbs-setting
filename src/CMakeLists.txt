@@ -1,0 +1,74 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+
+PROJECT(setting-location C)
+
+IF("${CMAKE_BUILD_TYPE}" STREQUAL "")
+	SET(CMAKE_BUILD_TYPE "Release")
+ENDIF("${CMAKE_BUILD_TYPE}" STREQUAL "")
+MESSAGE("Build type: ${CMAKE_BUILD_TYPE}")
+
+# Set ready to build
+SET(EXT_LIBS_DIRS "")
+SET(EXT_LIBS_DEFS "")
+SET(EXT_LIBS_LDFLAGS "")
+
+# Set external libraries
+SET(EXT_LIBS
+	E_APPFW
+	E_EA
+	E_EA_EXTENSION
+	E_ELEMENTARY
+	E_EDJE
+	E_EVAS
+	E_MANAGER
+	E_DLOG
+	E_VCONF
+	E_APPCORE_EFL
+	E_ECORE
+	E_ECORE_WAYLAND
+	E_SYSPOPUP
+	E_SYSTEM_POWER
+	E_FEEDBACK
+	E_PKGMGR
+)
+
+FOREACH(flag ${EXT_LIBS})
+	SET(EXT_LIBS_DIRS		${EXT_LIBS_DIRS}	${${flag}_INCLUDE_DIRS})
+	SET(EXT_LIBS_DEFS		${EXT_LIBS_DEFS}	${${flag}_CFLAGS_OTHER})
+	SET(EXT_LIBS_LDFLAGS	${EXT_LIBS_LDFLAGS} ${${flag}_LDFLAGS})
+ENDFOREACH(flag)
+
+# Set ready to build
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
+INCLUDE_DIRECTORIES(${EXT_LIBS_DIRS})
+
+ADD_DEFINITIONS(
+	${EXT_LIBS_DEFS}
+)
+
+SET(SRCS
+	lbs-setting.c
+	lbs-setting-window.c
+	lbs-setting-help.c
+	view/lbs-setting-view-location.c
+	view/lbs-setting-view-popup.c
+)
+
+ADD_DEFINITIONS("-DPREFIX=\"${PREFIX}\"")
+ADD_DEFINITIONS("-DRESDIR=\"${RESDIR}\"")
+ADD_DEFINITIONS("-DDATADIR=\"${DATADIR}\"")
+
+ADD_EXECUTABLE(${PROJECT_NAME} ${SRCS})
+TARGET_LINK_LIBRARIES(${PROJECT_NAME} "-Wl,--as-needed -pie" "-ldl" ${EXT_LIBS_LDFLAGS})
+
+message(${EXT_LIBS_LDFLAGS})
+
+#install binary & edj files
+INSTALL(TARGETS ${PROJECT_NAME} DESTINATION ${BINDIR})
+
+# install manifest file & icon
+INSTALL(FILES ${CMAKE_SOURCE_DIR}/org.tizen.setting-location.xml DESTINATION /usr/share/packages)
+INSTALL(FILES ${CMAKE_SOURCE_DIR}/org.tizen.setting-location.efl DESTINATION /etc/smack/accesses.d)
+
+# install application HOME directory
+INSTALL(DIRECTORY DESTINATION ${DATADIR})
