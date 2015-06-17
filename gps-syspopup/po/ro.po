@@ -1,0 +1,84 @@
+msgid "IDS_TPLATFORM_BODY_ON_OFF_BUTTON_T_TTS"
+msgstr "Buton pornit/oprit"
+
+msgid "IDS_ST_MBODY_USE_CURRENT_LOCATION"
+msgstr "Utilizaţi locaţia actuală"
+
+msgid "IDS_LBS_BODY_LOCATION_SERVICE"
+msgstr "Serviciu amplasare"
+
+msgid "IDS_ST_SK_PREVIOUS"
+msgstr "Anterior"
+
+msgid "IDS_ST_BUTTON_OK"
+msgstr "OK"
+
+msgid "IDS_ST_BUTTON2_LOCATION"
+msgstr "Locaţie"
+
+msgid "IDS_ST_BODY_DO_NOT_SHOW_AGAIN"
+msgstr "Nu se mai afişează"
+
+msgid "IDS_ST_BODY_GPS"
+msgstr "GPS"
+
+msgid "IDS_STU_BUTTON_PREVIOUS"
+msgstr "Înapoi"
+
+msgid "IDS_ST_HEADER_HELP"
+msgstr "Ajutor"
+
+msgid "IDS_ST_BUTTON_AGREE"
+msgstr "De acord"
+
+msgid "IDS_ST_BUTTON_DISAGREE"
+msgstr "Refuzare"
+
+msgid "IDS_ST_SK_NEXT"
+msgstr "Următor"
+
+msgid "IDS_LBS_BODY_ENABLING_NETWORK_POSITIONING_WILL_HELP_YOU_FIND_YOUR_LOCATION_EVEN_IF_YOU_ARE_INDOORS_MSG"
+msgstr "Activarea poziţionării în reţea vă va ajuta să vă găsiţi locaţia, chiar dacă nu vă aflaţi în exterior. Cu toate acestea, acţiunea poate genera costuri dacă nu reuşiţi să vă conectaţi la o reţea Wi-Fi din locaţia dvs."
+
+msgid "IDS_ST_BODY_LOCATION_SOURCES_ABB"
+msgstr "Surse de localizare"
+
+msgid "IDS_ST_BODY_WIRELESS_NETWORKS_ABB"
+msgstr "Reţele wireless"
+
+msgid "IDS_STU_BUTTON_ALLOWED_APPLICATIONS_ABB"
+msgstr "Aplicaţii permise"
+
+msgid "IDS_TPLATFORM_BODY_OFF"
+msgstr "Oprit"
+
+msgid "IDS_TPLATFORM_BODY_ON"
+msgstr "Pornit"
+
+msgid "IDS_ST_OPT_GPS"
+msgstr "GPS"
+
+msgid "IDS_STU_BODY_SAMSUNG_APPLICATIONS_MAY_USE_COLLECT_TRANSFER_AND_OR_TRANSMIT_THE_USERS_LOCATION_INFORMATION_IF_ALLOWED"
+msgstr "Aplicaţiile Samsung pot să utilizeze, să colecteze, să transfere şi/sau să transmită informaţiile utilizatorului privind locaţia, dacă li se permite."
+
+msgid "IDS_ST_BUTTON_NEXT"
+msgstr "Înainte"
+
+msgid "IDS_ST_POP_SECURITY_POLICY_PREVENTS_USE_OF_LOCATION_DATA"
+msgstr "Politica de securitate nu permite utilizarea datelor de localizare."
+
+msgid "IDS_ST_HEADER_LOCATION_LEGAL_INFORMATION_ABB"
+msgstr "Informaţii juridice locaţie"
+
+msgid "IDS_ST_BODY_USE_WI_FI_OR_MOBILE_NETWORKS_TO_HELP_FIND_YOUR_LOCATION_EVEN_IF_YOU_ARE_INDOORS_USING_MOBILE_NETWORKS_MAY_RESULT_IN_ADDITIONAL_CHARGES_MSG"
+msgstr "Utilizaţi reţelele Wi-Fi sau mobile pentru identificarea locaţiei dvs., chiar dacă sunteţi în interior. Utilizarea reţelelor mobile poate genera costuri suplimentare, în funcţie de planul tarifar."
+
+msgid "IDS_ST_BODY_ALLOW_APPLICATIONS_TO_USE_GPS_SATELLITES_TO_PINPOINT_YOUR_LOCATION"
+msgstr "Permiteţi aplicaţiilor să utilizeze sateliţii GPS pentru identificarea locaţiei."
+
+msgid "IDS_ST_HEADER_CONSENT_TO_LOCATION_INFO_USAGE_ABB"
+msgstr "Acord utilizare info. locaţie"
+
+msgid "IDS_ST_POP_YOUR_LOCATION_DATA_INCLUDING_GPS_DATA_WILL_BE_USED_BY_RELEVANT_APPLICATIONS"
+msgstr "Datele despre locaţie, inclusiv cele GPS, vor fi utilizate de aplicaţiile relevante."
+

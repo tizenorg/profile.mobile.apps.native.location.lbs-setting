@@ -1,0 +1,84 @@
+msgid "IDS_TPLATFORM_BODY_ON_OFF_BUTTON_T_TTS"
+msgstr "Gumb za uključivanje/isključivanje"
+
+msgid "IDS_ST_MBODY_USE_CURRENT_LOCATION"
+msgstr "Koristi trenutnu lokaciju"
+
+msgid "IDS_LBS_BODY_LOCATION_SERVICE"
+msgstr "Usluga lokacije"
+
+msgid "IDS_ST_SK_PREVIOUS"
+msgstr "Nazad"
+
+msgid "IDS_ST_BUTTON_OK"
+msgstr "OK"
+
+msgid "IDS_ST_BUTTON2_LOCATION"
+msgstr "Lokacija"
+
+msgid "IDS_ST_BODY_DO_NOT_SHOW_AGAIN"
+msgstr "Ne prikazuj više"
+
+msgid "IDS_ST_BODY_GPS"
+msgstr "GPS"
+
+msgid "IDS_STU_BUTTON_PREVIOUS"
+msgstr "Nazad"
+
+msgid "IDS_ST_HEADER_HELP"
+msgstr "Upute"
+
+msgid "IDS_ST_BUTTON_AGREE"
+msgstr "Prihvaćam"
+
+msgid "IDS_ST_BUTTON_DISAGREE"
+msgstr "Ne prihvaćam"
+
+msgid "IDS_ST_SK_NEXT"
+msgstr "Dalje"
+
+msgid "IDS_LBS_BODY_ENABLING_NETWORK_POSITIONING_WILL_HELP_YOU_FIND_YOUR_LOCATION_EVEN_IF_YOU_ARE_INDOORS_MSG"
+msgstr "Uključenje mrežnog pozicioniranja pomaže vam pronaći lokaciju, čak i u zatvorenim prostorima. Moguće povećanje troškova ako se ne spajate preko Wi-Fi."
+
+msgid "IDS_ST_BODY_LOCATION_SOURCES_ABB"
+msgstr "Izvori lokacije"
+
+msgid "IDS_ST_BODY_WIRELESS_NETWORKS_ABB"
+msgstr "Bežične mreže"
+
+msgid "IDS_STU_BUTTON_ALLOWED_APPLICATIONS_ABB"
+msgstr "Dopuštene aplikacije"
+
+msgid "IDS_TPLATFORM_BODY_OFF"
+msgstr "Isključeno"
+
+msgid "IDS_TPLATFORM_BODY_ON"
+msgstr "Uključeno"
+
+msgid "IDS_ST_OPT_GPS"
+msgstr "GPS"
+
+msgid "IDS_STU_BODY_SAMSUNG_APPLICATIONS_MAY_USE_COLLECT_TRANSFER_AND_OR_TRANSMIT_THE_USERS_LOCATION_INFORMATION_IF_ALLOWED"
+msgstr "Samsung aplikacije mogu koristiti, prikupljati, prenositi i/ili slati informacije o lokaciji korisnika ako je to dopušteno."
+
+msgid "IDS_ST_BUTTON_NEXT"
+msgstr "Dalje"
+
+msgid "IDS_ST_POP_SECURITY_POLICY_PREVENTS_USE_OF_LOCATION_DATA"
+msgstr "Sigurnosne odredbe sprečavaju upotrebu podataka o lokaciji."
+
+msgid "IDS_ST_HEADER_LOCATION_LEGAL_INFORMATION_ABB"
+msgstr "Pravni podaci o lokaciji"
+
+msgid "IDS_ST_BODY_USE_WI_FI_OR_MOBILE_NETWORKS_TO_HELP_FIND_YOUR_LOCATION_EVEN_IF_YOU_ARE_INDOORS_USING_MOBILE_NETWORKS_MAY_RESULT_IN_ADDITIONAL_CHARGES_MSG"
+msgstr "Koristite Wi-Fi ili mobilne mreže da biste lakše pronašli svoju lokaciju, čak i kada ste u zatvorenom prostoru. Korištenje mobilnih mreža može uzrokovati dodatne troškove ovisno o vašoj tarifi."
+
+msgid "IDS_ST_BODY_ALLOW_APPLICATIONS_TO_USE_GPS_SATELLITES_TO_PINPOINT_YOUR_LOCATION"
+msgstr "Dopustite aplikacijama korištenje GPS satelita da bi utvrdile gdje se nalazite."
+
+msgid "IDS_ST_HEADER_CONSENT_TO_LOCATION_INFO_USAGE_ABB"
+msgstr "Pristanak za kor. pod. o lok."
+
+msgid "IDS_ST_POP_YOUR_LOCATION_DATA_INCLUDING_GPS_DATA_WILL_BE_USED_BY_RELEVANT_APPLICATIONS"
+msgstr "Podatke o lokaciji, uključujući GPS podatke, koristit će odgovarajuće aplikacije."
+

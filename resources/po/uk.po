@@ -1,0 +1,87 @@
+msgid "IDS_TPLATFORM_BODY_ON_OFF_BUTTON_T_TTS"
+msgstr "Кнопка ввімкнення/вимкнення"
+
+msgid "IDS_ST_MBODY_USE_CURRENT_LOCATION"
+msgstr "Використовувати поточне розташування"
+
+msgid "IDS_LBS_BODY_LOCATION_SERVICE"
+msgstr "Послуга розташування"
+
+msgid "IDS_ST_SK_PREVIOUS"
+msgstr "Назад"
+
+msgid "IDS_MAPS_BODY_MY_PLACES"
+msgstr "Мої місця"
+
+msgid "IDS_ST_BUTTON_OK"
+msgstr "OK"
+
+msgid "IDS_ST_BUTTON2_LOCATION"
+msgstr "Розташування"
+
+msgid "IDS_ST_BODY_DO_NOT_SHOW_AGAIN"
+msgstr "Більше не показувати"
+
+msgid "IDS_ST_BODY_GPS"
+msgstr "GPS"
+
+msgid "IDS_STU_BUTTON_PREVIOUS"
+msgstr "Попередній"
+
+msgid "IDS_ST_HEADER_HELP"
+msgstr "Довідка"
+
+msgid "IDS_ST_BUTTON_AGREE"
+msgstr "Згоден(а)"
+
+msgid "IDS_ST_BUTTON_DISAGREE"
+msgstr "Не погоджуюсь"
+
+msgid "IDS_ST_SK_NEXT"
+msgstr "Далі"
+
+msgid "IDS_LBS_BODY_ENABLING_NETWORK_POSITIONING_WILL_HELP_YOU_FIND_YOUR_LOCATION_EVEN_IF_YOU_ARE_INDOORS_MSG"
+msgstr "Увімкнення позиціонування через мережу допомагає визначити розташування, навіть якщо ви перебуваєте у приміщенні. Однак це може призвести до додаткових витрат, якщо неможливо підключитися до мережі Wi-Fi з вашого розташування."
+
+msgid "IDS_ST_BODY_LOCATION_SOURCES_ABB"
+msgstr "Джерела розташувань"
+
+msgid "IDS_ST_BODY_WIRELESS_NETWORKS_ABB"
+msgstr "Безпроводові мережі"
+
+msgid "IDS_STU_BUTTON_ALLOWED_APPLICATIONS_ABB"
+msgstr "Дозволені програми"
+
+msgid "IDS_TPLATFORM_BODY_OFF"
+msgstr "Вимкнено"
+
+msgid "IDS_TPLATFORM_BODY_ON"
+msgstr "Увімкнено"
+
+msgid "IDS_ST_OPT_GPS"
+msgstr "GPS"
+
+msgid "IDS_STU_BODY_SAMSUNG_APPLICATIONS_MAY_USE_COLLECT_TRANSFER_AND_OR_TRANSMIT_THE_USERS_LOCATION_INFORMATION_IF_ALLOWED"
+msgstr "Програми Samsung можуть використовувати, збирати та/або передавати інформацію про розташування користувача, якщо це дозволено."
+
+msgid "IDS_ST_BUTTON_NEXT"
+msgstr "Далі"
+
+msgid "IDS_ST_POP_SECURITY_POLICY_PREVENTS_USE_OF_LOCATION_DATA"
+msgstr "Політика безпеки попереджає використання даних розташування."
+
+msgid "IDS_ST_HEADER_LOCATION_LEGAL_INFORMATION_ABB"
+msgstr "Юр. інф. про дані про розташ."
+
+msgid "IDS_ST_BODY_USE_WI_FI_OR_MOBILE_NETWORKS_TO_HELP_FIND_YOUR_LOCATION_EVEN_IF_YOU_ARE_INDOORS_USING_MOBILE_NETWORKS_MAY_RESULT_IN_ADDITIONAL_CHARGES_MSG"
+msgstr "Використання підключення до мережі Wi-Fi або мобільних мереж для визначення поточного розташування навіть під час перебування у приміщенні. Використання підключення до мобільної мережі може призвести до додаткових витрат відповідно до умов тарифного плану."
+
+msgid "IDS_ST_BODY_ALLOW_APPLICATIONS_TO_USE_GPS_SATELLITES_TO_PINPOINT_YOUR_LOCATION"
+msgstr "Дозволяє програмам використовувати супутники GPS для точного визначення вашого розташування."
+
+msgid "IDS_ST_HEADER_CONSENT_TO_LOCATION_INFO_USAGE_ABB"
+msgstr "Згода на вик.інфор.про розташ."
+
+msgid "IDS_ST_POP_YOUR_LOCATION_DATA_INCLUDING_GPS_DATA_WILL_BE_USED_BY_RELEVANT_APPLICATIONS"
+msgstr "Дані розташування, включно з даними GPS, використовуватимуться відповідними програмами."
+

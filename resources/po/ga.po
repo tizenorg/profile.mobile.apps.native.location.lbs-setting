@@ -1,0 +1,87 @@
+msgid "IDS_TPLATFORM_BODY_ON_OFF_BUTTON_T_TTS"
+msgstr "Cnaipe Air/As"
+
+msgid "IDS_ST_MBODY_USE_CURRENT_LOCATION"
+msgstr "Úsáid an suíomh reatha"
+
+msgid "IDS_LBS_BODY_LOCATION_SERVICE"
+msgstr "Seirbhís suímh"
+
+msgid "IDS_ST_SK_PREVIOUS"
+msgstr "Roimhe"
+
+msgid "IDS_MAPS_BODY_MY_PLACES"
+msgstr "M'Áiteanna"
+
+msgid "IDS_ST_BUTTON_OK"
+msgstr "OK"
+
+msgid "IDS_ST_BUTTON2_LOCATION"
+msgstr "Suíomh"
+
+msgid "IDS_ST_BODY_DO_NOT_SHOW_AGAIN"
+msgstr "Ná taispeáin arís"
+
+msgid "IDS_ST_BODY_GPS"
+msgstr "GPS"
+
+msgid "IDS_STU_BUTTON_PREVIOUS"
+msgstr "Roimhe"
+
+msgid "IDS_ST_HEADER_HELP"
+msgstr "Cuidiú"
+
+msgid "IDS_ST_BUTTON_AGREE"
+msgstr "Aontaim"
+
+msgid "IDS_ST_BUTTON_DISAGREE"
+msgstr "Ní aontaím"
+
+msgid "IDS_ST_SK_NEXT"
+msgstr "Ar aghaidh"
+
+msgid "IDS_LBS_BODY_ENABLING_NETWORK_POSITIONING_WILL_HELP_YOU_FIND_YOUR_LOCATION_EVEN_IF_YOU_ARE_INDOORS_MSG"
+msgstr "Cuideoidh cumasú an tsuí líonra leat do shuíomh a aimsiú, fiú agus tú istigh. Ach, is féidir go ngearrfar táillí air seo mura mbeidh tú in ann nascadh trí Wi-Fi ó do shuíomh."
+
+msgid "IDS_ST_BODY_LOCATION_SOURCES_ABB"
+msgstr "Foinsí suímh"
+
+msgid "IDS_ST_BODY_WIRELESS_NETWORKS_ABB"
+msgstr "Líonraí gan sreang"
+
+msgid "IDS_STU_BUTTON_ALLOWED_APPLICATIONS_ABB"
+msgstr "Feidhmchláir cheadaithe"
+
+msgid "IDS_TPLATFORM_BODY_OFF"
+msgstr "As"
+
+msgid "IDS_TPLATFORM_BODY_ON"
+msgstr "Air"
+
+msgid "IDS_ST_OPT_GPS"
+msgstr "GPS"
+
+msgid "IDS_STU_BODY_SAMSUNG_APPLICATIONS_MAY_USE_COLLECT_TRANSFER_AND_OR_TRANSMIT_THE_USERS_LOCATION_INFORMATION_IF_ALLOWED"
+msgstr "Is féidir le feidhmchláir Samsung faisnéis faoi shuíomh an úsáideora a úsáid, a bhailiú, a aistriú agus/nó a tharchur má cheadaítear dóibh."
+
+msgid "IDS_ST_BUTTON_NEXT"
+msgstr "Ar aghaidh"
+
+msgid "IDS_ST_POP_SECURITY_POLICY_PREVENTS_USE_OF_LOCATION_DATA"
+msgstr "Cuireann an beartas slándála bac úsáid sonraí suímh"
+
+msgid "IDS_ST_HEADER_LOCATION_LEGAL_INFORMATION_ABB"
+msgstr "Fais. dhlíthiúil faoi shuíomh"
+
+msgid "IDS_ST_BODY_USE_WI_FI_OR_MOBILE_NETWORKS_TO_HELP_FIND_YOUR_LOCATION_EVEN_IF_YOU_ARE_INDOORS_USING_MOBILE_NETWORKS_MAY_RESULT_IN_ADDITIONAL_CHARGES_MSG"
+msgstr "Úsáid Wi-Fi nó líonraí móibíleacha le haimsiú do shuímh a éascú, fiú má bhíonn tú taobh istigh. Is féidir go ngearrfar táillí breise ar úsáid líonraí móibíleacha ag brath ar do phlean íocaíochta."
+
+msgid "IDS_ST_BODY_ALLOW_APPLICATIONS_TO_USE_GPS_SATELLITES_TO_PINPOINT_YOUR_LOCATION"
+msgstr "Ceadaigh d'fheidhmchláir satailítí GPS a úsáid le do shuíomh a aimsiú go beacht."
+
+msgid "IDS_ST_HEADER_CONSENT_TO_LOCATION_INFO_USAGE_ABB"
+msgstr "Toiligh le húsáid fais. suímh"
+
+msgid "IDS_ST_POP_YOUR_LOCATION_DATA_INCLUDING_GPS_DATA_WILL_BE_USED_BY_RELEVANT_APPLICATIONS"
+msgstr "Úsáidfear do shonraí suímh, sonraí GPS san áireamh, i bhfeidhmchláir ábhartha."
+

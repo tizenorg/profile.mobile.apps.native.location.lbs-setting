@@ -1,0 +1,84 @@
+msgid "IDS_TPLATFORM_BODY_ON_OFF_BUTTON_T_TTS"
+msgstr "Botón de activación/desactivación"
+
+msgid "IDS_ST_MBODY_USE_CURRENT_LOCATION"
+msgstr "Usar localización actual"
+
+msgid "IDS_LBS_BODY_LOCATION_SERVICE"
+msgstr "Servizo de localización"
+
+msgid "IDS_ST_SK_PREVIOUS"
+msgstr "Anterior"
+
+msgid "IDS_ST_BUTTON_OK"
+msgstr "Aceptar"
+
+msgid "IDS_ST_BUTTON2_LOCATION"
+msgstr "Localización"
+
+msgid "IDS_ST_BODY_DO_NOT_SHOW_AGAIN"
+msgstr "Non volver mostrar"
+
+msgid "IDS_ST_BODY_GPS"
+msgstr "GPS"
+
+msgid "IDS_STU_BUTTON_PREVIOUS"
+msgstr "Anterior"
+
+msgid "IDS_ST_HEADER_HELP"
+msgstr "Axuda"
+
+msgid "IDS_ST_BUTTON_AGREE"
+msgstr "Acepto"
+
+msgid "IDS_ST_BUTTON_DISAGREE"
+msgstr "Non acepto"
+
+msgid "IDS_ST_SK_NEXT"
+msgstr "Seguinte"
+
+msgid "IDS_LBS_BODY_ENABLING_NETWORK_POSITIONING_WILL_HELP_YOU_FIND_YOUR_LOCATION_EVEN_IF_YOU_ARE_INDOORS_MSG"
+msgstr "Activar o posicionamento de rede axudarache a atopar a túa localización, aínda que esteas en lugares interiores. Non obstante, isto pode carrexar custos se non podes conectarte a través dunha Wi-Fi desde a túa localización."
+
+msgid "IDS_ST_BODY_LOCATION_SOURCES_ABB"
+msgstr "Fontes de localización"
+
+msgid "IDS_ST_BODY_WIRELESS_NETWORKS_ABB"
+msgstr "Redes sen fíos"
+
+msgid "IDS_STU_BUTTON_ALLOWED_APPLICATIONS_ABB"
+msgstr "Aplicacións permitidas"
+
+msgid "IDS_TPLATFORM_BODY_OFF"
+msgstr "Desactivado"
+
+msgid "IDS_TPLATFORM_BODY_ON"
+msgstr "Activado"
+
+msgid "IDS_ST_OPT_GPS"
+msgstr "GPS"
+
+msgid "IDS_STU_BODY_SAMSUNG_APPLICATIONS_MAY_USE_COLLECT_TRANSFER_AND_OR_TRANSMIT_THE_USERS_LOCATION_INFORMATION_IF_ALLOWED"
+msgstr "É posible que as aplicacións de Samsung utilicen, recompilen, transfiran ou transmitan a información de localización do usuario se están autorizadas para facelo."
+
+msgid "IDS_ST_BUTTON_NEXT"
+msgstr "Seguinte"
+
+msgid "IDS_ST_POP_SECURITY_POLICY_PREVENTS_USE_OF_LOCATION_DATA"
+msgstr "A política de seguridade impide o uso dos datos de localización"
+
+msgid "IDS_ST_HEADER_LOCATION_LEGAL_INFORMATION_ABB"
+msgstr "Información legal localización"
+
+msgid "IDS_ST_BODY_USE_WI_FI_OR_MOBILE_NETWORKS_TO_HELP_FIND_YOUR_LOCATION_EVEN_IF_YOU_ARE_INDOORS_USING_MOBILE_NETWORKS_MAY_RESULT_IN_ADDITIONAL_CHARGES_MSG"
+msgstr "Utiliza as redes Wi-Fi ou móbiles para axudar a atopar a túa localización, aínda que te atopes nun lugar exterior. O uso de redes móbiles pode carrexar custos adicionais dependendo do teu plan de pagamento."
+
+msgid "IDS_ST_BODY_ALLOW_APPLICATIONS_TO_USE_GPS_SATELLITES_TO_PINPOINT_YOUR_LOCATION"
+msgstr "Permite que as aplicacións utilicen satélites GPS para marcar a túa localización."
+
+msgid "IDS_ST_HEADER_CONSENT_TO_LOCATION_INFO_USAGE_ABB"
+msgstr "Consentiment.uso info.localiz."
+
+msgid "IDS_ST_POP_YOUR_LOCATION_DATA_INCLUDING_GPS_DATA_WILL_BE_USED_BY_RELEVANT_APPLICATIONS"
+msgstr "Os datos da túa localización, incluídos os datos do GPS, serán utilizados por aplicacións relevantes."
+

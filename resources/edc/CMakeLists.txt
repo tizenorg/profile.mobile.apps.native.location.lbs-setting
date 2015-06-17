@@ -1,0 +1,12 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+PROJECT(setting-location C CXX)
+
+ADD_CUSTOM_TARGET(setting.edj
+	COMMAND edje_cc -no-save -id ${CMAKE_CURRENT_SOURCE_DIR}/../data/images
+		${CMAKE_CURRENT_SOURCE_DIR}/setting.edc ${CMAKE_CURRENT_SOURCE_DIR}/setting.edj
+		DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/setting.edc
+)
+ADD_DEPENDENCIES(${PROJECT_NAME} setting.edj)
+
+#install binary & edj files
+INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/setting.edj DESTINATION ${LBS_SETTING_EDJ_DIR})

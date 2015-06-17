@@ -1,0 +1,87 @@
+msgid "IDS_TPLATFORM_BODY_ON_OFF_BUTTON_T_TTS"
+msgstr "开/关按钮"
+
+msgid "IDS_ST_MBODY_USE_CURRENT_LOCATION"
+msgstr "使用当前位置"
+
+msgid "IDS_LBS_BODY_LOCATION_SERVICE"
+msgstr "位置服务"
+
+msgid "IDS_ST_SK_PREVIOUS"
+msgstr "上一步"
+
+msgid "IDS_MAPS_BODY_MY_PLACES"
+msgstr "我的位置"
+
+msgid "IDS_ST_BUTTON_OK"
+msgstr "确定"
+
+msgid "IDS_ST_BUTTON2_LOCATION"
+msgstr "位置"
+
+msgid "IDS_ST_BODY_DO_NOT_SHOW_AGAIN"
+msgstr "不要再显示"
+
+msgid "IDS_ST_BODY_GPS"
+msgstr "GPS"
+
+msgid "IDS_STU_BUTTON_PREVIOUS"
+msgstr "上一个"
+
+msgid "IDS_ST_HEADER_HELP"
+msgstr "帮助"
+
+msgid "IDS_ST_BUTTON_AGREE"
+msgstr "同意"
+
+msgid "IDS_ST_BUTTON_DISAGREE"
+msgstr "不同意"
+
+msgid "IDS_ST_SK_NEXT"
+msgstr "下一步"
+
+msgid "IDS_LBS_BODY_ENABLING_NETWORK_POSITIONING_WILL_HELP_YOU_FIND_YOUR_LOCATION_EVEN_IF_YOU_ARE_INDOORS_MSG"
+msgstr "启动网络定位功能将帮助您即时在室内也能找到您的位置。但是，如果您不能在您的位置通过Wi-Fi连接，可能会产生额外费用。"
+
+msgid "IDS_ST_BODY_LOCATION_SOURCES_ABB"
+msgstr "位置来源"
+
+msgid "IDS_ST_BODY_WIRELESS_NETWORKS_ABB"
+msgstr "无线网络"
+
+msgid "IDS_STU_BUTTON_ALLOWED_APPLICATIONS_ABB"
+msgstr "允許的應用程式"
+
+msgid "IDS_TPLATFORM_BODY_OFF"
+msgstr "关"
+
+msgid "IDS_TPLATFORM_BODY_ON"
+msgstr "开"
+
+msgid "IDS_ST_OPT_GPS"
+msgstr "GPS"
+
+msgid "IDS_STU_BODY_SAMSUNG_APPLICATIONS_MAY_USE_COLLECT_TRANSFER_AND_OR_TRANSMIT_THE_USERS_LOCATION_INFORMATION_IF_ALLOWED"
+msgstr "如果允许，三星应用程序可能使用、收集、转移和/或传输用户的位置信息。"
+
+msgid "IDS_ST_BUTTON_NEXT"
+msgstr "下一步"
+
+msgid "IDS_ST_POP_SECURITY_POLICY_PREVENTS_USE_OF_LOCATION_DATA"
+msgstr "安全策略可防止位置数据的使用。"
+
+msgid "IDS_ST_HEADER_LOCATION_LEGAL_INFORMATION_ABB"
+msgstr "定位法律信息"
+
+msgid "IDS_ST_BODY_USE_WI_FI_OR_MOBILE_NETWORKS_TO_HELP_FIND_YOUR_LOCATION_EVEN_IF_YOU_ARE_INDOORS_USING_MOBILE_NETWORKS_MAY_RESULT_IN_ADDITIONAL_CHARGES_MSG"
+msgstr "即使您在室内，也可使用 Wi-Fi 或移动网络以帮助查找您的位置。根据您的付款方案，使用移动网络可能产生额外费用。"
+
+msgid "IDS_ST_BODY_ALLOW_APPLICATIONS_TO_USE_GPS_SATELLITES_TO_PINPOINT_YOUR_LOCATION"
+msgstr "允许应用程序使用 GPS 卫星标记您的位置。"
+
+msgid "IDS_ST_HEADER_CONSENT_TO_LOCATION_INFO_USAGE_ABB"
+msgstr "同意使用位置信息"
+
+msgid "IDS_ST_POP_YOUR_LOCATION_DATA_INCLUDING_GPS_DATA_WILL_BE_USED_BY_RELEVANT_APPLICATIONS"
+msgstr "包括 GPS 数据在内的位置数据将被相关应用程序使用。"
+
