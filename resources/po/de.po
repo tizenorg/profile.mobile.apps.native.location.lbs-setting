@@ -1,0 +1,87 @@
+msgid "IDS_TPLATFORM_BODY_ON_OFF_BUTTON_T_TTS"
+msgstr "Ein/Aus-Taste"
+
+msgid "IDS_ST_MBODY_USE_CURRENT_LOCATION"
+msgstr "Aktuellen Standort verwenden"
+
+msgid "IDS_LBS_BODY_LOCATION_SERVICE"
+msgstr "Navigationsdienst"
+
+msgid "IDS_ST_SK_PREVIOUS"
+msgstr "Zurück"
+
+msgid "IDS_MAPS_BODY_MY_PLACES"
+msgstr "Meine Orte"
+
+msgid "IDS_ST_BUTTON_OK"
+msgstr "OK"
+
+msgid "IDS_ST_BUTTON2_LOCATION"
+msgstr "Standort"
+
+msgid "IDS_ST_BODY_DO_NOT_SHOW_AGAIN"
+msgstr "Nicht mehr anzeigen"
+
+msgid "IDS_ST_BODY_GPS"
+msgstr "GPS"
+
+msgid "IDS_STU_BUTTON_PREVIOUS"
+msgstr "Vorherige"
+
+msgid "IDS_ST_HEADER_HELP"
+msgstr "Hilfe"
+
+msgid "IDS_ST_BUTTON_AGREE"
+msgstr "Zustimmen"
+
+msgid "IDS_ST_BUTTON_DISAGREE"
+msgstr "Ablehnen"
+
+msgid "IDS_ST_SK_NEXT"
+msgstr "Weiter"
+
+msgid "IDS_LBS_BODY_ENABLING_NETWORK_POSITIONING_WILL_HELP_YOU_FIND_YOUR_LOCATION_EVEN_IF_YOU_ARE_INDOORS_MSG"
+msgstr "Das Aktivieren der Netzpositionierung unterstützt Sie bei der Suche nach Ihrem Standort, sogar wenn Sie sich in geschlossenen Räumen befinden. Dies kann jedoch zusätzliche Kosten verursachen, wenn Sie sich von Ihrem Standort aus nicht bei einem WLAN-Netz anmelden können."
+
+msgid "IDS_ST_BODY_LOCATION_SOURCES_ABB"
+msgstr "Standortquellen"
+
+msgid "IDS_ST_BODY_WIRELESS_NETWORKS_ABB"
+msgstr "Drahtlosnetzwerke"
+
+msgid "IDS_STU_BUTTON_ALLOWED_APPLICATIONS_ABB"
+msgstr "Zugelassene Anwendungen"
+
+msgid "IDS_TPLATFORM_BODY_OFF"
+msgstr "Aus"
+
+msgid "IDS_TPLATFORM_BODY_ON"
+msgstr "Ein"
+
+msgid "IDS_ST_OPT_GPS"
+msgstr "GPS"
+
+msgid "IDS_STU_BODY_SAMSUNG_APPLICATIONS_MAY_USE_COLLECT_TRANSFER_AND_OR_TRANSMIT_THE_USERS_LOCATION_INFORMATION_IF_ALLOWED"
+msgstr "Samsung-Anwendungen verwenden, erfassen und übertragen die Standortinformationen des Benutzers, falls zugelassen."
+
+msgid "IDS_ST_BUTTON_NEXT"
+msgstr "Weiter"
+
+msgid "IDS_ST_POP_SECURITY_POLICY_PREVENTS_USE_OF_LOCATION_DATA"
+msgstr "Sicherheitsrichtlinie verhindert die Verwendung von Standortdaten."
+
+msgid "IDS_ST_HEADER_LOCATION_LEGAL_INFORMATION_ABB"
+msgstr "Rechtliche Informationen"
+
+msgid "IDS_ST_BODY_USE_WI_FI_OR_MOBILE_NETWORKS_TO_HELP_FIND_YOUR_LOCATION_EVEN_IF_YOU_ARE_INDOORS_USING_MOBILE_NETWORKS_MAY_RESULT_IN_ADDITIONAL_CHARGES_MSG"
+msgstr "Ihren Standort mithilfe von WLAN oder mobilen Netzwerken auch in Innenräumen ermitteln. Bei der Verwendung von mobilen Netzwerken können je nach Tarif zusätzliche Gebühren anfallen."
+
+msgid "IDS_ST_BODY_ALLOW_APPLICATIONS_TO_USE_GPS_SATELLITES_TO_PINPOINT_YOUR_LOCATION"
+msgstr "Anwendungen erlauben, Ihren Standort mittels GPS-Satelliten zu bestimmen."
+
+msgid "IDS_ST_HEADER_CONSENT_TO_LOCATION_INFO_USAGE_ABB"
+msgstr "Zustimmung zur Standortverwendung"
+
+msgid "IDS_ST_POP_YOUR_LOCATION_DATA_INCLUDING_GPS_DATA_WILL_BE_USED_BY_RELEVANT_APPLICATIONS"
+msgstr "Ihre Standortdaten einschließlich GPS-Daten werden von relevanten Anwendungen verwendet."
+

@@ -1,0 +1,24 @@
+<manifest>
+	<define>
+		<domain name="org.tizen.gps-syspopup" policy="shared" />
+		<provide>
+			<label name="org.tizen.gps-syspopup::vconf" />
+		</provide>
+			<request>
+				<smack request="system::vconf" type="rwxat"/>
+				<smack request="system::homedir" type="rwxat"/>
+				<smack request="system::share" type="rwxat"/>
+				<smack request="syspopup::db" type="rw"/>
+				<smack request="ail::db" type="rw"/>
+				<smack request="location_fw::vconf" type="rwxat"/>
+				<smack request="sdbd" type="x"/>
+				<smack request="data-provider-master" type="r"/>
+				<smack request="isf" type="rwx"/>
+				<smack request="sound_server" type="rwxat"/>
+			</request>
+	</define>
+	<request>
+		<domain name="org.tizen.gps-syspopup" />
+	</request>
+</manifest>
+

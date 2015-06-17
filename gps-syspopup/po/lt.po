@@ -1,0 +1,84 @@
+msgid "IDS_TPLATFORM_BODY_ON_OFF_BUTTON_T_TTS"
+msgstr "Įjungimo / išjungimo mygtukas"
+
+msgid "IDS_ST_MBODY_USE_CURRENT_LOCATION"
+msgstr "Naudoti dabartinę vietą"
+
+msgid "IDS_LBS_BODY_LOCATION_SERVICE"
+msgstr "Vietos tarnyba"
+
+msgid "IDS_ST_SK_PREVIOUS"
+msgstr "Ankst."
+
+msgid "IDS_ST_BUTTON_OK"
+msgstr "Gerai"
+
+msgid "IDS_ST_BUTTON2_LOCATION"
+msgstr "Vieta"
+
+msgid "IDS_ST_BODY_DO_NOT_SHOW_AGAIN"
+msgstr "Daugiau nerodyti"
+
+msgid "IDS_ST_BODY_GPS"
+msgstr "GPS"
+
+msgid "IDS_STU_BUTTON_PREVIOUS"
+msgstr "Ankstesnis"
+
+msgid "IDS_ST_HEADER_HELP"
+msgstr "Pagalba"
+
+msgid "IDS_ST_BUTTON_AGREE"
+msgstr "Sutikti"
+
+msgid "IDS_ST_BUTTON_DISAGREE"
+msgstr "Nesutikti"
+
+msgid "IDS_ST_SK_NEXT"
+msgstr "Kitas"
+
+msgid "IDS_LBS_BODY_ENABLING_NETWORK_POSITIONING_WILL_HELP_YOU_FIND_YOUR_LOCATION_EVEN_IF_YOU_ARE_INDOORS_MSG"
+msgstr "Įjungę buvimo vietos rodymą per tinklą, galėsite surasti vietą, net jei esate patalpoje. Tačiau dėl to gali būti taikomi mokesčiai, jei prie „Wi-Fi“ tinklo negalite prisijungti iš savo vietos."
+
+msgid "IDS_ST_BODY_LOCATION_SOURCES_ABB"
+msgstr "Vietos šaltiniai"
+
+msgid "IDS_ST_BODY_WIRELESS_NETWORKS_ABB"
+msgstr "Belaidžiai tinklai"
+
+msgid "IDS_STU_BUTTON_ALLOWED_APPLICATIONS_ABB"
+msgstr "Leistinos programos"
+
+msgid "IDS_TPLATFORM_BODY_OFF"
+msgstr "Išjungta"
+
+msgid "IDS_TPLATFORM_BODY_ON"
+msgstr "Įjungta"
+
+msgid "IDS_ST_OPT_GPS"
+msgstr "GPS"
+
+msgid "IDS_STU_BODY_SAMSUNG_APPLICATIONS_MAY_USE_COLLECT_TRANSFER_AND_OR_TRANSMIT_THE_USERS_LOCATION_INFORMATION_IF_ALLOWED"
+msgstr "Jei leidžiate, „Samsung“ programos gali naudoti, rinkti, perduoti ir (arba) siųsti informaciją apie naudotojo vietą."
+
+msgid "IDS_ST_BUTTON_NEXT"
+msgstr "Kitas"
+
+msgid "IDS_ST_POP_SECURITY_POLICY_PREVENTS_USE_OF_LOCATION_DATA"
+msgstr "Saugos politika neleidžia naudoti vietos duomenų."
+
+msgid "IDS_ST_HEADER_LOCATION_LEGAL_INFORMATION_ABB"
+msgstr "Teisinė vietos informacija"
+
+msgid "IDS_ST_BODY_USE_WI_FI_OR_MOBILE_NETWORKS_TO_HELP_FIND_YOUR_LOCATION_EVEN_IF_YOU_ARE_INDOORS_USING_MOBILE_NETWORKS_MAY_RESULT_IN_ADDITIONAL_CHARGES_MSG"
+msgstr "Naudojami „Wi-Fi“ ar mobilieji duomenys vietai surasti, net jei esate patalpoje. Naudojant mobiliuosius tinklus gali būti taikomi papildomi mokesčiai pagal jūsų mokėjimo planą."
+
+msgid "IDS_ST_BODY_ALLOW_APPLICATIONS_TO_USE_GPS_SATELLITES_TO_PINPOINT_YOUR_LOCATION"
+msgstr "Leidžia programoms naudoti GPS palydovus ir tiksliai nustatyti jūsų buvimo vietą."
+
+msgid "IDS_ST_HEADER_CONSENT_TO_LOCATION_INFO_USAGE_ABB"
+msgstr "Sutikimas dėl vietos inf.naud."
+
+msgid "IDS_ST_POP_YOUR_LOCATION_DATA_INCLUDING_GPS_DATA_WILL_BE_USED_BY_RELEVANT_APPLICATIONS"
+msgstr "Jūsų vietos duomenis, įskaitant GPS duomenis, naudos susijusios programos."
+

@@ -1,0 +1,686 @@
+#define POPUP_CHECK_VIEW_LAYOUT_CONTENT_MIN_INC 0 162
+#define POPUP_CHECK_VIEW_LAYOUT_BOTTOM_MIN_INC 0 90
+#define POPUP_CHECK_VIEW_SWALLOW_END_MIN_INC 40 40
+#define POPUP_CHECK_VIEW_LAYOUT_MIN_INC 0 252
+#define POPUP_CONTENT_DEFAULT_PADDING_LEFT_MIN_INC 15
+#define POPUP_CONTENT_DEFAULT_PADDING_RIGHT_MIN_INC 15
+
+collections {
+base_scale: 1.8;
+group { name: "popup_gps_layout";
+	parts {
+		part { name: "bg";
+			scale: 1;
+			type: SPACER;
+			description { state: "default" 0.0;
+				min: POPUP_CHECK_VIEW_LAYOUT_MIN_INC;
+				fixed: 1 0;
+			}
+		}
+		part { name: "pad_l";
+			type: SPACER;
+			scale: 1;
+			description { state: "default" 0.0;
+				min: POPUP_CONTENT_DEFAULT_PADDING_LEFT_MIN_INC 0;
+				fixed: 1 0;
+				rel1.relative: 0.0 0.0;
+				rel2.relative: 0.0 1.0;
+				align: 0.0 0.0;
+			}
+		}
+		part { name: "pad_r";
+			type: SPACER;
+			scale: 1;
+			description { state: "default" 0.0;
+				min: POPUP_CONTENT_DEFAULT_PADDING_RIGHT_MIN_INC 0;
+				fixed: 1 0;
+				rel1.relative: 1.0 0.0;
+				rel2.relative: 1.0 1.0;
+				align: 1.0 0.0;
+			}
+		}
+		part { name: "elm.swallow.content";
+			type: SWALLOW;
+			scale: 1;
+			description { state: "default" 0.0;
+				fixed: 0 1;
+				min: POPUP_CHECK_VIEW_LAYOUT_CONTENT_MIN_INC;
+				align: 0.5 0.0;
+				rel2 {
+					relative: 1.0 0.0;
+					to: "pad_b";
+				}
+			}
+		}
+		part { name: "pad_b";
+			type: SPACER;
+			scale: 1;
+			description { state: "default" 0.0;
+				align: 0.0 1.0;
+				min: POPUP_CHECK_VIEW_LAYOUT_BOTTOM_MIN_INC;
+				fixed: 0 1;
+				rel1.relative: 0.0 1.0;
+			}
+		}
+		part { name: "elm.swallow.end";
+			type: SWALLOW;
+			scale: 1;
+			description { state: "default" 0.0;
+				align: 0.0 0.5;
+				min: POPUP_CHECK_VIEW_SWALLOW_END_MIN_INC;
+				fixed: 1 1;
+				rel1 {
+					relative: 1.0 1.0;
+					to_x: "pad_l";
+					to_y: "pad_b";
+				}
+				rel2 {
+					relative: 0.0 0.0;
+					to_x: "pad_r";
+					to_y: "pad_b";
+				}
+			}
+		}
+	}
+}
+
+
+group { name: "elm/label/base/popup/custom_default";
+	styles {
+		style { name: "popup_desc_style";
+			base: "font=Tizen:style=Regular font_size=25 color=#FFFFFF color_class=T123 wrap=mixed text_class=T123";
+			tag: "br" "\n";
+			tag: "ps" "ps";
+			tag: "whitecolor" "+ color=#ffffff";
+			tag: "tab" "\t";
+		}
+	}
+	parts {
+		part { name: "pad_t";
+			type: RECT;
+			scale: 1;
+			description { state: "default" 0.0;
+				align: 0.5 0.0;
+				min: 0 0;
+				max: 0 0;
+				fixed: 0 1;
+				visible: 0;
+				rel1 {
+					relative: 1.0 0.0;
+					to_x: "pad_l";
+				}
+				rel2 {
+					relative: 0.0 0.0;
+					to_x: "pad_r";
+				}
+			}
+		}
+		part { name: "pad_l";
+			type: RECT;
+			scale: 1;
+			description { state: "default" 0.0;
+				min: 15 0;
+				max: 15 0;
+				fixed: 1 0;
+				visible: 0;
+				rel2.relative: 0.0 1.0;
+				align: 0.0 0.0;
+			}
+		}
+		part { name: "pad_r";
+			type: RECT;
+			scale: 1;
+			description { state: "default" 0.0;
+				min: 15 0;
+				max: 15 0;
+				fixed: 1 0;
+				visible: 0;
+				rel1.relative: 1.0 0.0;
+				align: 1.0 0.0;
+			}
+		}
+		part { name: "elm.text";
+			type: TEXTBLOCK;
+			scale: 1;
+			description { state: "default" 0.0;
+				fixed: 1 0;
+				rel1 {
+					relative: 1.0 1.0;
+					to_x: "pad_l";
+					to_y: "pad_t";
+				}
+				rel2 {
+					relative: 0.0 0.0;
+					to_x: "pad_r";
+					to_y: "pad_b";
+				}
+				text {
+					style: "popup_desc_style";
+					min: 0 1;
+					max: 0 1;
+				}
+			}
+		}
+		part { name: "pad_b";
+			type: RECT;
+			scale: 1;
+			description { state: "default" 0.0;
+				align: 0.5 1.0;
+				min: 0 14;
+				max: 0 14;
+				fixed: 0 1;
+				visible: 0;
+				rel1 {
+					relative: 0.0 1.0;
+					to_x: "pad_l";
+				}
+				rel2.to_x: "pad_r";
+			}
+		}
+	}
+}
+
+group { name: "popup_checkview_layout";
+	parts {
+		part { name: "bg";
+			scale: 1;
+			type: SPACER;
+			description { state: "default" 0.0;
+				min: 0 530;
+				fixed: 1 0;
+			}
+		}
+		part { name: "elm.swallow.content";
+			type: SWALLOW;
+			scale: 1;
+			description { state: "default" 0.0;
+				fixed: 0 1;
+				align: 0.5 0.0;
+				rel2 {
+					relative: 1.0 1.0;
+				}
+			}
+		}
+	}
+}
+
+
+
+
+group {
+	name: "help";
+
+	parts {
+		part {
+			name: "top";
+			type: RECT;
+			mouse_events: 0;
+			description {
+				state: "default" 0.0;
+				min: 0 32;
+				rel1 { relative: 0.0 0.0; }
+				rel2 { relative: 1.0 0.0; }
+				align: 0 0;
+			}
+		}
+		part {
+			name: "left";
+			type: RECT;
+			mouse_events: 0;
+			description {
+				state: "default" 0.0;
+				min: 38 0;
+				rel1 { relative: 0.0 0.0; }
+				rel2 { relative: 0.0 1.0; }
+				align: 0 0;
+			}
+		}
+		part {
+			name: "right";
+			type: RECT;
+			mouse_events: 0;
+			description {
+				state: "default" 0.0;
+				min: 30 0;
+				rel1 { relative: 1.0 0.0; }
+				rel2 { relative: 1.0 1.0; }
+				align: 1 0;
+			}
+		}
+		part {
+			name: "help_msg";
+			type: SWALLOW;
+			scale: 1;
+			description {
+				align: 0.0 0.0;
+				rel1 { relative: 1.0 1.0; to_x: "left"; to_y: "top"; }
+				rel2 { relative: 0.0 1.0; to_x: "right"; }
+			}
+		}
+		part {
+			name: "access";
+			type: RECT;
+			repeat_events: 1;
+			description {
+				state: "default" 0.0;
+				rel1 { relative: 0.0 0.0; to: "help_msg"; }
+				rel2 { relative: 1.0 1.0; to: "help_msg"; }
+			}
+		}
+	}
+}
+
+group { name: "entry_consent_2button";
+	parts {
+		part {
+			name: "base";
+			type: SPACER;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 0 252;
+				fixed: 1 0;
+			}
+		}
+		part {
+			name: "content_top_padding";
+			type: SPACER;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 0 27;
+				fixed: 0 1;
+				align: 0.0 0.0;
+				rel1 {
+					relative: 1.0 0.0;
+					to_x: "content_left_padding";
+				}
+				rel2 {
+					relative: 0.0 0.0;
+					to_x: "content_right_padding";
+				}
+			}
+		}
+		part {
+			name: "content_left_padding";
+			type: SPACER;
+			scale: 1;
+			description {
+			state: "default" 0.0;
+				min: 15 0;
+				fixed: 1 0;
+				align: 0.0 0.0;
+				rel1 {
+					to: "base";
+					relative: 0.0 0.0;
+				}
+				rel2 {
+					to: "base";
+					relative: 0.0 1.0;
+				}
+			}
+		}
+		part {
+			name: "content_right_padding";
+			type: SPACER;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 15 0;
+				fixed: 1 0;
+				align: 1.0 0.0;
+				rel1 {
+					to: "base";
+					relative: 1.0 0.0;
+				}
+				rel2 {
+					to: "base";
+					relative: 1.0 1.0;
+				}
+			}
+		}
+		part {
+			name: "content_bottom_padding";
+			type: SPACER;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 0 27;
+				fixed: 0 1;
+				align: 0.0 1.0;
+				rel1 {
+					relative: 1.0 1.0;
+					to_x: "content_left_padding";
+				}
+				rel2 {
+					relative: 0.0 1.0;
+					to_x: "content_right_padding";
+				}
+			}
+		}
+		part {
+			name: "content_field";
+			type: SPACER;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 0 200;
+				fixed: 0 1;
+				align: 0.5 0.0;
+				rel1 {
+					relative: 0.0 1.0;
+					to: "content_top_padding";
+				}
+				rel2.to: "content_top_padding";
+			}
+		}
+		part {
+			name: "elm.swallow.content";
+			type: SWALLOW;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 0 200;
+				fixed: 1 1;
+				align: 0.5 0.5;
+				rel1.to: "content_field";
+				rel2.to: "content_field";
+				}
+		}
+	}
+}
+
+styles {
+	style {
+		name: "style_title_text";
+		base: "font=Tizen:style=Regular  font_size=30 align=left color=#000000 text_class=tizen";
+		tag: "br" "\n";
+		tag: "hilight" "+ color=#ffff";
+		tag: "b" "+ color=#ffff";
+		tag: "tab" "\t";
+	}
+}
+
+group { name: "wizard";
+	parts {
+		part {
+			name: "bg";
+			type: RECT;
+			scale: 1;
+			description { state: "default" 0.0;
+				fixed: 1 1;
+				rel1 { relative: 0.0 0.0; }
+				rel2 { relative: 1.0 1.0; }
+				color_class: "B0211";
+			}
+			description { state: "horizontal" 0.0;
+				rel1 { relative: 0.0 0.0; }
+				rel2 { relative: 1.0 1.0; }
+				color_class: "B0215";
+			}
+		}
+
+		part {
+			name: "bg1";
+				type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				rel1 { relative: 0.0 0.0; offset: 0 0; to: "wizard.genlist";}
+				rel2 { relative: 1.0 1.0; offset: 0 0; to: "wizard.genlist";}
+				color: 246 246 245 255;
+			}
+		}
+		part {
+			name: "bg2";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				rel1 { relative: 0.0 1.0; offset: 0 0; to: "wizard.genlist";}
+				rel2 { relative: 1.0 1.0; offset: 0 380; to: "wizard.genlist";}
+				color: 237 241 241 255;
+			}
+		}
+		part {
+			name: "bg3";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				rel1 { relative: 0.0 1.0; offset: 0 0; to: "bg2";}
+				rel2 { relative: 1.0 0.0; offset: 0 116; to: "button_bg";}
+				color: 228 235 237 255;
+			}
+		}
+		part {
+			name: "wizard.genlist";
+			type: RECT;
+			scale: 1;
+
+			description { state: "default" 0.0;
+			color: 246 246 245 255;
+				rel1 {
+					relative: 0.0 0.0;
+					to: "bg";
+				}
+				rel2 {
+					relative: 1.0 0.0;
+					to: "bg";
+					offset: 0 96;
+				}
+			}
+			description { state: "horizontal" 0.0;
+				rel1 {
+					relative: 0.0 0.0;
+					to: "bg";
+					offset: 0 55;
+				}
+				rel2 {
+					relative: 1.0 0.0;
+					to: "bg";
+					offset: 0 155;
+				}
+			}
+		}
+
+		part {
+			name: "wizard.text";
+			type: TEXTBLOCK;
+			scale: 1;
+			description { state: "default" 0.0;
+			fixed: 1 1;
+				rel1 {
+					relative: 0.0 0.0;
+					to: "wizard.genlist";
+					offset: 15 29;
+				}
+				rel2 {
+					relative: 1.0 1.0;
+					to: "wizard.genlist";
+					offset: -91 -29;
+				}
+				text{
+					style: style_title_text;
+					min: 1 1;
+				}
+			}
+		}
+
+		part {
+			name: "wizard.check";
+			type: SWALLOW;
+			scale: 1;
+
+			description { state: "default" 0.0;
+			//color: 255 0  0 255;
+			fixed: 1 1;
+				rel1 {
+					relative: 1.0 1.0;
+					to: "wizard.genlist";
+					offset: -75 -78;
+				}
+				rel2 {
+					relative: 1.0 1.0;
+					to: "wizard.genlist";
+					offset: -15 -18;
+				}
+			}
+		}
+
+
+		part {
+			name: "sw.allow.text";
+			type: "SWALLOW";
+			scale: 1;
+			description {	state: "default" 0.0;
+				fixed: 1 1;
+				rel1 {
+					relative: 0.0 0.0;
+					to: "bg";
+					offset: 15 104;
+				}
+				rel2 {
+					relative: 1.0 0;
+					to: "bg";
+					offset: 0 420;
+				}
+			}
+			description {	state: "horizontal" 0.0;
+				fixed: 0 0;
+				rel1 {
+					relative: 0.0 0.0;
+					to: "bg";
+					offset: 14 167;
+				}
+				rel2 {
+					relative: 0.5 0.0;
+					to: "bg";
+					offset: -6 345;
+				}
+			}
+		}
+		part {
+			name: "allow.btn";
+			type: "SWALLOW";
+			scale: 1;
+			description {	state: "default" 0.0;
+				fixed: 1 1;
+				rel1 {
+					relative: 0.0 1.0;
+					to: "sw.allow.text";
+					offset: 0 65;
+				}
+				rel2 {
+					relative: 1.0 1.0;
+					to: "sw.allow.text";
+					offset: -15 141;
+				}
+			}
+			description {	state: "horizontal" 0.0;
+				fixed: 1 1;
+				rel1 {
+					relative: 0.0 1.0;
+					to: "sw.allow.text";
+					offset: 0 15;
+				}
+				rel2 {
+					relative: 1.0 1.0;
+					to: "sw.allow.text";
+					offset: 0 55;
+				}
+			}
+		}
+
+		part {
+			name: "button_bg";
+			type: RECT;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 400 108;
+				max: -1 108;
+				fixed: 1 1;
+				rel1 {
+					relative: 0.0 1.0;
+					offset: 0 -108;
+				}
+				rel2 {
+					relative: 1.0 1.0;
+					offset: 0 0;
+				}
+				color_class: "B062";
+			}
+		}
+
+		part {
+			name: "button.prev";
+			type: SWALLOW;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 0 74;
+				max: -1 108;
+				fixed: 1 1;
+				rel1 {
+					relative: 0.0 1.0;
+					offset: 15 -108;
+				}
+				rel2 {
+					relative: 0.5 1.0;
+					offset: -10 0;
+				}
+			}
+			description { state: "horizontal" 0.0;
+				inherit: "default" 0.0;
+			}
+		}
+
+		part {
+			name: "button.next";
+			type: SWALLOW;
+			scale: 1;
+			description {
+				state: "default" 0.0;
+				min: 0 74;
+				max: -1 108;
+				fixed: 1 1;
+				rel1 {
+					relative: 0.5 1.0;
+					offset: 10 -108;
+				}
+				rel2 {
+					relative: 1.0 1.0;
+					offset: -15 0;
+				}
+			}
+			description { state: "horizontal" 0.0;
+				inherit: "default" 0.0;
+			}
+		}
+	}
+
+	programs {
+		program {
+			name: "location_vertical";
+			signal: "location,vertical";
+			source: "elm";
+			action: STATE_SET "default" 0.0;
+			target: "wizard.genlist";
+			target: "sw.allow.text";
+			target: "allow.btn";
+		}
+		program {
+			name: "location_horizontal";
+			signal: "location,horizontal";
+			source: "elm";
+			action: STATE_SET "horizontal" 0.0;
+			target: "wizard.genlist";
+			target: "sw.allow.text";
+			target: "allow.btn";
+		}
+	}
+}
+
+}
+

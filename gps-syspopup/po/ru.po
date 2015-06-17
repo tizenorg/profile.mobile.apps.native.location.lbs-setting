@@ -1,0 +1,84 @@
+msgid "IDS_TPLATFORM_BODY_ON_OFF_BUTTON_T_TTS"
+msgstr "Кнопка включения и отключения"
+
+msgid "IDS_ST_MBODY_USE_CURRENT_LOCATION"
+msgstr "Текущее местоположение"
+
+msgid "IDS_LBS_BODY_LOCATION_SERVICE"
+msgstr "Услуга определения местоположения"
+
+msgid "IDS_ST_SK_PREVIOUS"
+msgstr "Назад"
+
+msgid "IDS_ST_BUTTON_OK"
+msgstr "ОК"
+
+msgid "IDS_ST_BUTTON2_LOCATION"
+msgstr "Геоданные"
+
+msgid "IDS_ST_BODY_DO_NOT_SHOW_AGAIN"
+msgstr "Не показывать снова"
+
+msgid "IDS_ST_BODY_GPS"
+msgstr "GPS"
+
+msgid "IDS_STU_BUTTON_PREVIOUS"
+msgstr "Назад"
+
+msgid "IDS_ST_HEADER_HELP"
+msgstr "Справка"
+
+msgid "IDS_ST_BUTTON_AGREE"
+msgstr "Принять"
+
+msgid "IDS_ST_BUTTON_DISAGREE"
+msgstr "Отказаться"
+
+msgid "IDS_ST_SK_NEXT"
+msgstr "Далее"
+
+msgid "IDS_LBS_BODY_ENABLING_NETWORK_POSITIONING_WILL_HELP_YOU_FIND_YOUR_LOCATION_EVEN_IF_YOU_ARE_INDOORS_MSG"
+msgstr "Параметр 'Сеть оператора' позволит определять ваше положение, даже если вы находитесь в здании. Тем не менее это может привести к дополнительным затратам, если отсутствует подключение к Wi-Fi."
+
+msgid "IDS_ST_BODY_LOCATION_SOURCES_ABB"
+msgstr "Ресурсы определения местоположения"
+
+msgid "IDS_ST_BODY_WIRELESS_NETWORKS_ABB"
+msgstr "Беспроводные сети"
+
+msgid "IDS_STU_BUTTON_ALLOWED_APPLICATIONS_ABB"
+msgstr "Разрешенные приложения"
+
+msgid "IDS_TPLATFORM_BODY_OFF"
+msgstr "Выключено"
+
+msgid "IDS_TPLATFORM_BODY_ON"
+msgstr "Включено"
+
+msgid "IDS_ST_OPT_GPS"
+msgstr "GPS"
+
+msgid "IDS_STU_BODY_SAMSUNG_APPLICATIONS_MAY_USE_COLLECT_TRANSFER_AND_OR_TRANSMIT_THE_USERS_LOCATION_INFORMATION_IF_ALLOWED"
+msgstr "Приложения Samsung могут использовать, собирать, передавать и пересылать данные о местоположении пользователя, если это разрешено."
+
+msgid "IDS_ST_BUTTON_NEXT"
+msgstr "Далее"
+
+msgid "IDS_ST_POP_SECURITY_POLICY_PREVENTS_USE_OF_LOCATION_DATA"
+msgstr "Политика безопасности ограничивает использование данных о местоположении."
+
+msgid "IDS_ST_HEADER_LOCATION_LEGAL_INFORMATION_ABB"
+msgstr "Юрид. инф. о местоположениии"
+
+msgid "IDS_ST_BODY_USE_WI_FI_OR_MOBILE_NETWORKS_TO_HELP_FIND_YOUR_LOCATION_EVEN_IF_YOU_ARE_INDOORS_USING_MOBILE_NETWORKS_MAY_RESULT_IN_ADDITIONAL_CHARGES_MSG"
+msgstr "Использовать Wi-Fi или мобильные сети, чтобы определять местоположение, даже если вы в здании. За использование мобильной сети может взиматься дополнительная плата (зависит от тарифного плана)."
+
+msgid "IDS_ST_BODY_ALLOW_APPLICATIONS_TO_USE_GPS_SATELLITES_TO_PINPOINT_YOUR_LOCATION"
+msgstr "Разрешить приложениям использовать GPS для определения местоположения."
+
+msgid "IDS_ST_HEADER_CONSENT_TO_LOCATION_INFO_USAGE_ABB"
+msgstr "Согласие на исп.свед.о местоп."
+
+msgid "IDS_ST_POP_YOUR_LOCATION_DATA_INCLUDING_GPS_DATA_WILL_BE_USED_BY_RELEVANT_APPLICATIONS"
+msgstr "Данные о местонахождении, включая данные GPS, будут использоваться соответствующими приложениями."
+

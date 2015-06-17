@@ -1,0 +1,61 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-08-10 11:05+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: libug-setting-location-efl.c:39 libug-setting-location-efl-help.c:28
+msgid "Location service"
+msgstr ""
+
+#: libug-setting-location-efl.c:40 libug-setting-location-efl-help.c:29
+msgid "Advanced GPS"
+msgstr ""
+
+#: libug-setting-location-efl.c:41 libug-setting-location-efl-help.c:30
+msgid "Network position"
+msgstr ""
+
+#: libug-setting-location-efl.c:42 libug-setting-location-efl-help.c:31
+msgid "Sensor aiding"
+msgstr ""
+
+#: libug-setting-location-efl.c:43 libug-setting-location-efl-mypos.c:285
+msgid "My position"
+msgstr ""
+
+#: libug-setting-location-efl.c:44 libug-setting-location-efl-help.c:84
+msgid "Help"
+msgstr ""
+
+#: libug-setting-location-efl.c:456
+msgid "Location"
+msgstr ""
+
+#: libug-setting-location-efl-mypos.c:29
+msgid "Latitude"
+msgstr ""
+
+#: libug-setting-location-efl-mypos.c:30
+msgid "Longitude"
+msgstr ""
+
+#: libug-setting-location-efl-mypos.c:31
+msgid "Altitude"
+msgstr ""
+
+#: libug-setting-location-efl-mypos.c:32
+msgid "Speed"
+msgstr ""
