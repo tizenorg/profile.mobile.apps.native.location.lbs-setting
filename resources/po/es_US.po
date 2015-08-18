@@ -85,3 +85,5 @@ msgstr "Consent. uso de info. de ubic."
 msgid "IDS_ST_POP_YOUR_LOCATION_DATA_INCLUDING_GPS_DATA_WILL_BE_USED_BY_RELEVANT_APPLICATIONS"
 msgstr "Los datos de ubicación, incluidos los datos del GPS, serán utilizados por las aplicaciones relevantes."
 
+msgid "IDS_POSITIONING_CONSENT_BODY"
+msgstr "Tu dispositivo utiliza la tecnología de posicionamiento de HERE. Para proporcionarte servicios de posicionamiento y mejorar la calidad de los mismos, HERE recopila información sobre las torres de telefonía celular cercanas y los puntos Wi-Fi alrededor de tu ubicación actual cuando encuentra tu posición. La información recopilada se utiliza para analizar el servicio y mejorar el uso del mismo, pero no para identificarte personalmente. Si continúas, aceptas las Condiciones del servicio de la plataforma HERE: %sy la Política de privacidad: %s"

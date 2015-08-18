@@ -10,6 +10,9 @@ msgstr "位置サービス"
 msgid "IDS_ST_SK_PREVIOUS"
 msgstr "前へ"
 
+msgid "IDS_MAPS_BODY_MY_PLACES"
+msgstr "マイプレイス"
+
 msgid "IDS_ST_BUTTON_OK"
 msgstr "OK"
 
@@ -82,3 +85,5 @@ msgstr "位置情報の利用に同意"
 msgid "IDS_ST_POP_YOUR_LOCATION_DATA_INCLUDING_GPS_DATA_WILL_BE_USED_BY_RELEVANT_APPLICATIONS"
 msgstr "GPSデータを含む位置情報は、関連するアプリケーションで使用されます。"
 
+msgid "IDS_POSITIONING_CONSENT_BODY"
+msgstr "Your device uses positioning technologies provided by HERE. To provide you with positioning services and to improve their quality, HERE collects information about nearby cell towers and Wi-Fi hot spots around your current location whenever your position is being found. The information collected is used to analyze the service and improve the use of service, but not to identify you personally. By continuing, you agree to the HERE platform Service Terms: %sand Privacy Policy: %s"

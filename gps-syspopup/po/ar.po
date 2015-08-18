@@ -10,6 +10,9 @@ msgstr "خدمة الموقع"
 msgid "IDS_ST_SK_PREVIOUS"
 msgstr "السابق"
 
+msgid "IDS_MAPS_BODY_MY_PLACES"
+msgstr "الأماكن المفضلة لدي"
+
 msgid "IDS_ST_BUTTON_OK"
 msgstr "موافق"
 
@@ -82,3 +85,5 @@ msgstr "موافقة على استخدام معلومات الموقع"
 msgid "IDS_ST_POP_YOUR_LOCATION_DATA_INCLUDING_GPS_DATA_WILL_BE_USED_BY_RELEVANT_APPLICATIONS"
 msgstr "سيتم استخدام بيانات الموقع، بما في ذلك بيانات GPS بواسطة التطبيقات ذات الصلة."
 
+msgid "IDS_POSITIONING_CONSENT_BODY"
+msgstr "Your device uses positioning technologies provided by HERE. To provide you with positioning services and to improve their quality, HERE collects information about nearby cell towers and Wi-Fi hot spots around your current location whenever your position is being found. The information collected is used to analyze the service and improve the use of service, but not to identify you personally. By continuing, you agree to the HERE platform Service Terms: %sand Privacy Policy: %s"

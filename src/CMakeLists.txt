@@ -25,7 +25,6 @@ SET(EXT_LIBS
 	E_VCONF
 	E_APPCORE_EFL
 	E_ECORE
-	E_ECORE_WAYLAND
 	E_SYSPOPUP
 	E_SYSTEM_POWER
 	E_FEEDBACK
@@ -68,7 +67,6 @@ INSTALL(TARGETS ${PROJECT_NAME} DESTINATION ${BINDIR})
 
 # install manifest file & icon
 INSTALL(FILES ${CMAKE_SOURCE_DIR}/org.tizen.setting-location.xml DESTINATION /usr/share/packages)
-INSTALL(FILES ${CMAKE_SOURCE_DIR}/org.tizen.setting-location.efl DESTINATION /etc/smack/accesses.d)
 
 # install application HOME directory
 INSTALL(DIRECTORY DESTINATION ${DATADIR})

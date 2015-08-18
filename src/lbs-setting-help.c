@@ -72,6 +72,14 @@ static void _setting_location_free_itc(Elm_Genlist_Item_Class *itc)
 	}
 }
 
+static void __setting_location_back_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	LS_FUNC_ENTER
+	LS_RETURN_IF_FAILED(data);
+	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
+	elm_naviframe_item_pop(ad->nf);
+}
+
 static Eina_Bool _pop_cb(void *data, Elm_Object_Item *it)
 {
 	LS_LOGD("_pop_cb,try to free the memory");
@@ -178,6 +186,11 @@ void _setting_location_help_view(void *data)
 	elm_genlist_item_select_mode_set(item_wps, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
 	evas_object_show(genlist);
-	navi_it = elm_naviframe_item_push(ad->nf, P_("IDS_ST_HEADER_HELP"), NULL, NULL, genlist, NULL);
+
+	Evas_Object *back_btn = elm_button_add(ad->nf);
+	elm_object_style_set(back_btn, "naviframe/back_btn/default");
+	evas_object_smart_callback_add(back_btn, "clicked", __setting_location_back_cb, ad);
+
+	navi_it = elm_naviframe_item_push(ad->nf, P_("IDS_ST_HEADER_HELP"), back_btn, NULL, genlist, NULL);
 	elm_naviframe_item_pop_cb_set(navi_it, _pop_cb, genlist_item);
 }
