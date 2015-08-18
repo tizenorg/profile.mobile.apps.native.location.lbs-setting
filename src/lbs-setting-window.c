@@ -34,11 +34,15 @@
 #include <efl_extension.h>
 #include <bundle_internal.h>
 #include <eventsystem.h>
-#include <package_manager.h>
+#include <system_info.h>
 #include "lbs-setting-common.h"
 #include "lbs-setting-window.h"
 #include "lbs-setting-help.h"
 
+static void _anchor_clicked_cb(void *data, Evas_Object *obj, void *event_info);
+static void __setting_reply_gps_wifi_status(void *data);
+static int __eventsystem_set_value(const char *path, int val);
+void location_wifi_popup(void *data);
 
 Evas_Object *create_indicator_bg(Evas_Object *parent)
 {
@@ -135,149 +139,1178 @@ Evas_Object *create_win(const char *name)
 	return eo;
 }
 
-
-/* set the screen reader info about the sub obj */
-int _loc_sr_set_sub_obj_info(Evas_Object *parent, Evas_Object *obj, int state)
-{
-	if (!parent || !obj) {
-		return -1;
-	}
-	char sr_msg[256] = {0,};
-	if (state) {
-		snprintf(sr_msg, strlen(P_("IDS_TPLATFORM_BODY_ON_OFF_BUTTON_T_TTS")) + strlen(P_("IDS_TPLATFORM_BODY_ON")) - 1, "%s%s", P_("IDS_TPLATFORM_BODY_ON_OFF_BUTTON_T_TTS"), P_("IDS_TPLATFORM_BODY_ON"));
-	} else {
-		snprintf(sr_msg, strlen(P_("IDS_TPLATFORM_BODY_ON_OFF_BUTTON_T_TTS")) + strlen(P_("IDS_TPLATFORM_BODY_OFF")) - 1, "%s%s", P_("IDS_TPLATFORM_BODY_ON_OFF_BUTTON_T_TTS"), P_("IDS_TPLATFORM_BODY_OFF"));
-	}
-	if (strlen(sr_msg) > 0) {
-		elm_access_info_set(obj, ELM_ACCESS_CONTEXT_INFO, sr_msg);
-	}
-	return 0;
-}
-
-int _loc_sr_set_check_obj_info(Elm_Object_Item *item, int state)
-{
-	if (!item) {
-		LS_LOGE("_item is NULL");
-		return -1;
-	}
-	char sr_msg[256] = {0,};
-	if (state) {
-		snprintf(sr_msg, strlen(P_("IDS_TPLATFORM_BODY_ON_OFF_BUTTON_T_TTS")) + strlen(P_("IDS_TPLATFORM_BODY_ON")) - 1, "%s%s", P_("IDS_TPLATFORM_BODY_ON_OFF_BUTTON_T_TTS"), P_("IDS_TPLATFORM_BODY_ON"));
-	} else {
-		snprintf(sr_msg, strlen(P_("IDS_TPLATFORM_BODY_ON_OFF_BUTTON_T_TTS")) + strlen(P_("IDS_TPLATFORM_BODY_OFF")) - 1, "%s%s", P_("IDS_TPLATFORM_BODY_ON_OFF_BUTTON_T_TTS"), P_("IDS_TPLATFORM_BODY_OFF"));
-	}
-	if (strlen(sr_msg) > 0) {
-		Evas_Object *ao = NULL;
-		ao = elm_object_item_access_object_get(item);
-		if (!ao) {
-			LS_LOGE("access_object is NULL");
-		}
-		elm_access_info_set(ao, ELM_ACCESS_CONTEXT_INFO, sr_msg);
-	} else {
-		LS_LOGE("screen reader message create fail!");
-		return -1;
-	}
-	return 0;
-}
-
-static char *__convert_event_from_path(const char *path)
-{
-	char *event = NULL;
-	if (g_strcmp0(path, VCONFKEY_LOCATION_USE_MY_LOCATION) == 0) {
-		event = g_strdup(SYS_EVENT_LOCATION_ENABLE_STATE);
-	} else if (g_strcmp0(path, VCONFKEY_LOCATION_ENABLED) == 0) {
-		event = g_strdup(SYS_EVENT_GPS_ENABLE_STATE);
-	} else if (g_strcmp0(path, VCONFKEY_LOCATION_NETWORK_ENABLED) == 0) {
-		event = g_strdup(SYS_EVENT_NPS_ENABLE_STATE);
-	}
-
-	return event;
-}
-
-static char *__convert_key_from_event(const char *event)
-{
-	char *key = NULL;
-	if (g_strcmp0(event, SYS_EVENT_LOCATION_ENABLE_STATE) == 0) {
-		key = g_strdup(EVT_KEY_LOCATION_ENABLE_STATE);
-	} else if (g_strcmp0(event, SYS_EVENT_GPS_ENABLE_STATE) == 0) {
-		key = g_strdup(EVT_KEY_GPS_ENABLE_STATE);
-	} else if (g_strcmp0(event, SYS_EVENT_NPS_ENABLE_STATE) == 0) {
-		key = g_strdup(EVT_KEY_NPS_ENABLE_STATE);
-	}
-	return key;
-}
-
-static char *__convert_event_value(int val)
-{
-	char *value = NULL;
-	if (val == KEY_DISABLED) {
-		value = g_strdup(EVT_VAL_GPS_DISABLED);
-	} else {
-		value = g_strdup(EVT_VAL_GPS_ENABLED);
-	}
-	return value;
-}
-
-static int __eventsystem_set_value(const char *path, int val)
-{
-	int ret;
-	const char *event = NULL;
-	const char *key = NULL;
-	const char *value = NULL;
-	bundle *b = NULL;
-	event = __convert_event_from_path(path);
-	key = __convert_key_from_event(event);
-	value = __convert_event_value(val);
-
-	b = bundle_create();
-	bundle_add_str(b, key, value);
-	ret = eventsystem_request_sending_system_event(event, b);
-	bundle_free(b);
-	return ret;
-}
-
 static int __setting_location_set_int(const char *path, int val)
 {
+	int enabled = 0;
+	int ret = 0;
+	ret = vconf_get_int(path, &enabled);
+	if (ret != 0) {
+		LS_LOGD("Fail to get vconf value");
+		return -1;
+	}
+
+	if (enabled != val) {
+		ret = vconf_set_int(path, val);
+		if (ret != 0) {
+			LS_LOGD("Fail to set vconf value");
+			return -1;
+		}
+	}
+
 	if (__eventsystem_set_value(path, val) != ES_R_OK) {
 		LS_LOGD("Fail to set event value");
 		return -1;
 	}
-
-	int ret = vconf_set_int(path, val);
-	if (ret == 0) {
-		return -1;
-	}
 	return 0;
 }
 
-static void __setting_location_check_di(void *data)
+static void __setting_location_back_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	LS_FUNC_ENTER
+	LS_RETURN_IF_FAILED(data);
+	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
+	elm_naviframe_item_pop(ad->nf);
+}
+
+static void __setting_location_ea_back_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	LS_RETURN_IF_FAILED(data);
 	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
 
-	if (!ad->is_myloc) {
-		elm_object_item_disabled_set(ad->gi_gps, EINA_TRUE);
-	} else {
-		elm_object_item_disabled_set(ad->gi_gps, EINA_FALSE);
+	if (ad->gps_popup) {
+		evas_object_del(ad->gps_popup);
+		ad->gps_popup = NULL;
+	}
+
+#ifdef TIZEN_FEATURE_WPS
+	if (ad->wifi_popup) {
+		evas_object_del(ad->wifi_popup);
+		ad->wifi_popup = NULL;
+	}
+#endif
+}
+
+static Eina_Bool __setting_location_pop_cb(void *data, Elm_Object_Item *item)
+{
+	LS_FUNC_ENTER
+	__setting_reply_gps_wifi_status(data);
+	elm_exit();
+	return EINA_FALSE;
+}
+
+static void __setting_location_help_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	LS_RETURN_IF_FAILED(data);
+	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
+
+	evas_object_del(ad->ctx_popup);
+	ad->ctx_popup = NULL;
+
+	_setting_location_help_view(data);
+}
+
+void _mouseup_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+	LS_RETURN_IF_FAILED(event_info);
+	Evas_Event_Mouse_Up *ev = event_info;
+	if (ev->button == 3) {/* if mouse right button is up */
+		LS_RETURN_IF_FAILED(obj);
+		evas_object_del(obj);
 	}
 }
 
-void _setting_location_free_itc(Elm_Genlist_Item_Class *itc)
+static void __setting_location_item_disabled_update(void *data)
 {
-	if (itc) {
-		itc->item_style = NULL;
-		itc->func.text_get = NULL;
-		itc->func.content_get = NULL;
-		itc->func.state_get = NULL;
-		itc->func.del = NULL;
-		elm_genlist_item_class_free(itc);
-		itc = NULL;
+	LS_RETURN_IF_FAILED(data);
+	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
+
+	Eina_Bool state = EINA_FALSE;
+
+	if (ad->is_myloc) {
+		state = elm_object_item_disabled_get(ad->gi_gps);
+		if (state == EINA_TRUE) {
+			elm_object_item_disabled_set(ad->gi_gps, EINA_FALSE);
+			elm_genlist_item_update(ad->gi_gps);
+		}
+#ifdef TIZEN_FEATURE_WPS
+		state = elm_object_item_disabled_get(ad->gi_wifi);
+		if (state == EINA_TRUE) {
+			elm_object_item_disabled_set(ad->gi_wifi, EINA_FALSE);
+			elm_genlist_item_update(ad->gi_wifi);
+		}
+#endif
+
+	} else {
+		state = elm_object_item_disabled_get(ad->gi_gps);
+		if (state == EINA_FALSE) {
+			elm_object_item_disabled_set(ad->gi_gps, EINA_TRUE);
+			elm_genlist_item_update(ad->gi_gps);
+		}
+#ifdef TIZEN_FEATURE_WPS
+		state = elm_object_item_disabled_get(ad->gi_wifi);
+		if (state == EINA_FALSE) {
+			elm_object_item_disabled_set(ad->gi_wifi, EINA_TRUE);
+			elm_genlist_item_update(ad->gi_wifi);
+		}
+#endif
 	}
+}
+
+static void __setting_location_loc_set_key(void *data)
+{
+	LS_RETURN_IF_FAILED(data);
+	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
+
+	__setting_location_set_int(VCONFKEY_LOCATION_USE_MY_LOCATION, ad->is_myloc);
+	elm_check_state_set(ad->gi_loc_check, ad->is_myloc);
+	__setting_location_item_disabled_update(ad);
+	elm_genlist_item_update(ad->gi_loc);
+}
+
+static void __setting_location_gps_set_key(void *data)
+{
+	LS_RETURN_IF_FAILED(data);
+	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
+
+	__setting_location_set_int(VCONFKEY_LOCATION_ENABLED, ad->is_gps);
+	elm_check_state_set(ad->gi_gps_check, ad->is_gps);
+
+	if (ad->is_gps) {
+		if (ad->is_myloc == false) {
+			ad->is_myloc = true;
+			__setting_location_loc_set_key(ad);
+		}
+	} else {
+#ifdef TIZEN_FEATURE_WPS
+		if (!ad->is_wifi) {
+			ad->is_myloc = false;
+			__setting_location_loc_set_key(ad);
+		}
+#else
+		ad->is_myloc = false;
+		__setting_location_loc_set_key(ad);
+#endif
+	}
+
+	__setting_location_item_disabled_update(ad);
+	elm_genlist_item_update(ad->gi_gps);
+}
+
+static void __setting_location_wifi_set_key(void *data)
+{
+	LS_RETURN_IF_FAILED(data);
+	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
+
+	__setting_location_set_int(VCONFKEY_LOCATION_NETWORK_ENABLED, ad->is_wifi);
+	elm_check_state_set(ad->gi_wifi_check, ad->is_wifi);
+
+	if (ad->is_wifi) {
+		if (ad->is_myloc == false) {
+			ad->is_myloc = true;
+			__setting_location_loc_set_key(ad);
+		}
+	} else {
+		if (!ad->is_gps) {
+			ad->is_myloc = false;
+			__setting_location_loc_set_key(ad);
+		}
+	}
+
+	__setting_location_item_disabled_update(ad);
+	elm_genlist_item_update(ad->gi_wifi);
+}
+
+static void __location_gps_popup_agree_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	LS_FUNC_ENTER
+	LS_RETURN_IF_FAILED(data);
+	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
+
+	if (ad->gps_popup) {
+		evas_object_del(ad->gps_popup);
+		ad->gps_popup = NULL;
+	}
+
+	if (ad->ask_check) {
+		Eina_Bool ischoose = false;
+		ischoose = elm_check_state_get(ad->ask_check);
+		if (ischoose == EINA_TRUE) {
+			int ret = vconf_set_int(VCONFKEY_LBS_SETTING_IS_SHOW_GPS_POPUP, KEY_DISABLED);
+			LS_LOGE("ret:%d", ret);
+		}
+	}
+
+	ad->is_gps = true;
+	__setting_location_gps_set_key(ad);
+
+#ifdef TIZEN_FEATURE_WPS
+	if (!ad->is_wifi) {
+		location_wifi_popup(ad);
+	}
+#endif
+}
+
+static void __location_gps_popup_disagree_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	LS_FUNC_ENTER
+	LS_RETURN_IF_FAILED(data);
+	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
+
+	if (ad->gps_popup) {
+		evas_object_del(ad->gps_popup);
+		ad->gps_popup = NULL;
+	}
+
+#ifdef TIZEN_FEATURE_WPS
+	if (!ad->is_wifi) {
+		location_wifi_popup(ad);
+	}
+#endif
+}
+
+static void __location_wifi_popup_agree_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	LS_FUNC_ENTER
+	LS_RETURN_IF_FAILED(data);
+	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
+
+	if(ad->wifi_popup) {
+		evas_object_del(ad->wifi_popup);
+		ad->wifi_popup = NULL;
+	}
+
+	if (!ad->is_myloc) {
+		ad->is_myloc = true;
+		__setting_location_loc_set_key(ad);
+	}
+	ad->is_wifi = true;
+	__setting_location_wifi_set_key(ad);
+}
+
+static void __location_wifi_popup_disagree_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	LS_FUNC_ENTER
+	LS_RETURN_IF_FAILED(data);
+	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
+
+	if(ad->wifi_popup) {
+		evas_object_del(ad->wifi_popup);
+		ad->wifi_popup = NULL;
+	}
+}
+
+static void location_gps_popup(void *data)
+{
+	LS_FUNC_ENTER
+	LS_RETURN_IF_FAILED(data);
+	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
+	Evas_Object *popup = NULL;
+	Evas_Object *agree_btn = NULL;
+	Evas_Object *disagree_btn = NULL;
+
+	popup = elm_popup_add(ad->win_main);
+	ad->gps_popup = popup;
+
+	elm_popup_align_set(popup, ELM_NOTIFY_ALIGN_FILL, 1.0);
+	evas_object_event_callback_add(popup, EVAS_CALLBACK_MOUSE_UP, _mouseup_cb, NULL);
+	eext_object_event_callback_add(popup, EEXT_CALLBACK_BACK, __setting_location_ea_back_cb, ad);
+	evas_object_size_hint_weight_set(popup, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	elm_object_domain_translatable_part_text_set(popup, "title,text", LBS_SETTING_PKG, "IDS_ST_HEADER_CONSENT_TO_LOCATION_INFO_USAGE_ABB");
+	Evas_Object *layout = elm_layout_add(popup);
+	elm_layout_file_set(layout, LBS_SETTING_EDJ, "popup_gps_layout");
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+
+	Evas_Object *check = elm_check_add(popup);
+	elm_object_style_set(check, "popup");
+	elm_object_text_set(check, P_("IDS_ST_BODY_DO_NOT_SHOW_AGAIN"));
+	evas_object_size_hint_align_set(check, EVAS_HINT_FILL, EVAS_HINT_FILL);
+	evas_object_size_hint_weight_set(check, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	elm_object_part_content_set(layout, "elm.swallow.end", check);
+	ad->ask_check = check;
+
+	Evas_Object *scroller = elm_scroller_add(popup);
+	elm_scroller_bounce_set(scroller, EINA_FALSE, EINA_TRUE);
+	elm_scroller_policy_set(scroller, ELM_SCROLLER_POLICY_OFF, ELM_SCROLLER_POLICY_AUTO);
+	elm_object_style_set(scroller, "effect");
+	evas_object_show(scroller);
+
+	Evas_Object *label = elm_label_add(scroller);
+	elm_object_style_set(label, "popup/default");
+	elm_label_line_wrap_set(label, ELM_WRAP_MIXED);
+	elm_object_domain_translatable_text_set(label, LBS_SETTING_PKG, "IDS_ST_POP_YOUR_LOCATION_DATA_INCLUDING_GPS_DATA_WILL_BE_USED_BY_RELEVANT_APPLICATIONS");
+	evas_object_size_hint_weight_set(label, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(label, EVAS_HINT_FILL, EVAS_HINT_EXPAND);
+	elm_object_content_set(scroller, label);
+	elm_object_part_content_set(layout, "elm.swallow.content", scroller);
+	elm_object_content_set(popup, layout);
+
+	disagree_btn = elm_button_add(popup);
+	elm_object_style_set(disagree_btn, "popup");
+	elm_object_domain_translatable_text_set(disagree_btn, LBS_SETTING_PKG, "IDS_ST_BUTTON_DISAGREE");
+	elm_object_part_content_set(popup, "button1", disagree_btn);
+	evas_object_smart_callback_add(disagree_btn, "clicked", __location_gps_popup_disagree_cb, ad);
+
+	agree_btn = elm_button_add(popup);
+	elm_object_style_set(agree_btn, "popup");
+	elm_object_domain_translatable_text_set(agree_btn, LBS_SETTING_PKG, "IDS_ST_BUTTON_AGREE");
+	elm_object_part_content_set(popup, "button2", agree_btn);
+	evas_object_smart_callback_add(agree_btn, "clicked", __location_gps_popup_agree_cb, ad);
+	evas_object_show(popup);
+}
+
+void location_wifi_popup(void *data)
+{
+	LS_FUNC_ENTER
+	LS_RETURN_IF_FAILED(data);
+	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
+	Evas_Object *popup = NULL;
+	Evas_Object *disagree_btn = NULL;
+	Evas_Object *agree_btn = NULL;
+
+	popup = elm_popup_add(ad->win_main);
+	ad->wifi_popup = popup;
+
+	evas_object_event_callback_add(popup, EVAS_CALLBACK_MOUSE_UP, _mouseup_cb, NULL);
+	eext_object_event_callback_add(popup, EEXT_CALLBACK_BACK, __location_wifi_popup_disagree_cb, ad);
+	elm_object_domain_translatable_part_text_set(popup, "title,text", LBS_SETTING_PKG, "IDS_ST_HEADER_LOCATION_LEGAL_INFORMATION_ABB");
+
+	char *buf = NULL;
+	char text[4096] = {0};
+	char *str1 = P_("IDS_POSITIONING_CONSENT_BODY");
+	char *str2 = "</br><color=#006fd1ff underline=on underline_color=#006fd1ff><a href=http://here.com/terms/service-terms>http://here.com/terms/service-terms</a></color></br>";
+	char *str3 = "</br><color=#006fd1ff underline=on underline_color=#006fd1ff><a href=http://here.com/privacy/privacy-policy>http://here.com/privacy/privacy-policy</a></color></br>";
+	snprintf(text, 4096, str1, str2, str3);
+	buf = g_strdup_printf("<color=#%s>%s</color>","000000", text);
+
+	Evas_Object *layout = elm_layout_add(popup);
+	elm_layout_file_set(layout, LBS_SETTING_EDJ, "popup_checkview_layout");
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+
+	Evas_Object * help_scroller = elm_scroller_add(popup);
+	elm_scroller_bounce_set(help_scroller, EINA_FALSE, EINA_TRUE);
+	elm_scroller_policy_set(help_scroller, ELM_SCROLLER_POLICY_OFF, ELM_SCROLLER_POLICY_AUTO);
+	elm_object_style_set(help_scroller, "effect");
+	evas_object_show(help_scroller);
+
+	Evas_Object *label = elm_entry_add(help_scroller);
+	elm_object_style_set(label, "popup/default");
+	elm_label_line_wrap_set(label, ELM_WRAP_MIXED);
+	elm_object_text_set(label, buf);
+	evas_object_size_hint_weight_set(label, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(label, EVAS_HINT_FILL, EVAS_HINT_EXPAND);
+	evas_object_smart_callback_add(label, "anchor,clicked", _anchor_clicked_cb, ad);
+	elm_entry_editable_set(label, EINA_FALSE);
+	elm_entry_input_panel_enabled_set(label, EINA_FALSE);
+	elm_entry_context_menu_disabled_set(label, EINA_TRUE);
+
+	elm_object_content_set(help_scroller, label);
+	elm_object_part_content_set(layout, "elm.swallow.content", help_scroller);
+	elm_object_content_set(popup, layout);
+
+	disagree_btn = elm_button_add(popup);
+	elm_object_style_set(disagree_btn, "popup");
+	elm_object_domain_translatable_text_set(disagree_btn, LBS_SETTING_PKG, "IDS_ST_BUTTON_DISAGREE");
+	elm_object_part_content_set(popup, "button1", disagree_btn);
+	evas_object_smart_callback_add(disagree_btn, "clicked", __location_wifi_popup_disagree_cb, ad);
+
+	agree_btn = elm_button_add(popup);
+	elm_object_style_set(agree_btn, "popup");
+	elm_object_domain_translatable_text_set(agree_btn, LBS_SETTING_PKG, "IDS_ST_BUTTON_AGREE");
+	elm_object_part_content_set(popup, "button2", agree_btn);
+	evas_object_smart_callback_add(agree_btn, "clicked", __location_wifi_popup_agree_cb, ad);
+
+	evas_object_show(popup);
+
+	LS_FUNC_EXIT
+}
+
+static char *__setting_location_title_text_get(void *data, Evas_Object *obj, const char *part)
+{
+	if (!g_strcmp0(part, "elm.text.main")) {
+		return strdup(P_("IDS_ST_BODY_LOCATION_SOURCES_ABB"));
+	}
+	return NULL;
+}
+
+static char *__setting_location_loc_text_get(void *data, Evas_Object *obj, const char *part)
+{
+	if (!g_strcmp0(part, "elm.text.main.left")) {
+		return strdup(P_("IDS_ST_MBODY_USE_CURRENT_LOCATION"));
+	}
+	return NULL;
+}
+
+static char *__setting_location_gps_text_get(void *data, Evas_Object *obj, const char *part)
+{
+	if (!g_strcmp0(part, "elm.text.main.left")) {
+		return strdup(P_("IDS_ST_BODY_GPS"));
+	}
+	return NULL;
+}
+
+static char *__setting_location_wifi_text_get(void *data, Evas_Object *obj, const char *part)
+{
+	if (!g_strcmp0(part, "elm.text.main.left")) {
+		return strdup(P_("IDS_ST_BODY_WIRELESS_NETWORKS_ABB"));
+	}
+	return NULL;
+}
+
+static void __setting_location_loc_check_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	LS_RETURN_IF_FAILED(data);
+	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
+
+	if (ad->is_myloc) {
+		ad->is_gps = false;
+		__setting_location_gps_set_key(ad);
+#ifdef TIZEN_FEATURE_WPS
+		ad->is_wifi = false;
+		__setting_location_wifi_set_key(ad);
+#endif
+	} else {
+		int isShow = KEY_DISABLED;
+		int ret = vconf_get_int(VCONFKEY_LBS_SETTING_IS_SHOW_GPS_POPUP, &isShow);
+		if (ret != 0) {
+			LOGE("vconf_get_bool error:%d", ret);
+		}
+
+		elm_check_state_set(ad->gi_loc_check, EINA_FALSE);
+		elm_genlist_item_update(ad->gi_loc);
+
+		if (isShow) {
+			location_gps_popup(ad);
+		} else {
+			ad->is_gps = true;
+			__setting_location_gps_set_key(ad);
+#ifdef TIZEN_FEATURE_WPS
+			location_wifi_popup(ad);
+#endif
+		}
+	}
+}
+
+static void __setting_location_gps_check_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	LS_RETURN_IF_FAILED(data);
+	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
+	ad->quick_panel_setting = true;
+
+	if (ad->is_gps) {
+		ad->is_gps = false;
+		__setting_location_gps_set_key(ad);
+
+	} else {
+		int isShow = 0;
+		int ret = vconf_get_int(VCONFKEY_LBS_SETTING_IS_SHOW_GPS_POPUP, &isShow);
+		if (ret != 0) {
+			LOGE("vconf_get_bool error:%d", ret);
+		}
+
+		elm_check_state_set(ad->gi_gps_check, EINA_FALSE);
+		elm_genlist_item_update(ad->gi_gps);
+
+		if (isShow) {
+			location_gps_popup(ad);
+		} else {
+			ad->is_gps = true;
+			__setting_location_gps_set_key(ad);
+		}
+	}
+}
+
+static void __setting_location_wifi_check_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	LS_RETURN_IF_FAILED(data);
+	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
+	ad->quick_panel_setting = true;
+
+	if (ad->is_wifi) {
+		ad->is_wifi = false;
+		__setting_location_wifi_set_key(ad);
+
+	} else {
+		elm_check_state_set(ad->gi_wifi_check, EINA_FALSE);
+		elm_genlist_item_update(ad->gi_wifi);
+		location_wifi_popup(ad);
+	}
+}
+
+static Evas_Object *__setting_location_loc_check_get(void *data, Evas_Object *obj, const char *part)
+{
+	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
+	Evas_Object *ly = NULL;
+
+	if (!strcmp(part, "elm.icon.2")) {
+		ly = elm_layout_add(obj);
+		elm_layout_theme_set(ly, "layout", "list/C/type.3", "default");
+		ad->gi_loc_check = elm_check_add(ly);
+
+		int value = -1;
+		int ret = vconf_get_int(VCONFKEY_LOCATION_USE_MY_LOCATION, &value);
+		if (ret != 0) {
+			LOGE("fail to get vconf key!");
+		}
+
+		if (value) {
+			elm_check_state_set(ad->gi_loc_check, EINA_TRUE);
+		} else {
+			elm_check_state_set(ad->gi_loc_check, EINA_FALSE);
+		}
+		elm_object_style_set(ad->gi_loc_check, "on&off");
+		evas_object_propagate_events_set(ad->gi_loc_check, EINA_FALSE);
+		evas_object_smart_callback_add(ad->gi_loc_check, "changed", __setting_location_loc_check_cb, ad);
+		evas_object_show(ad->gi_loc_check);
+		elm_layout_content_set(ly, "elm.swallow.content", ad->gi_loc_check);
+	}
+
+	return ly;
+}
+
+static Evas_Object *__setting_location_gps_check_get(void *data, Evas_Object *obj, const char *part)
+{
+	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
+	Evas_Object *ly = NULL;
+	Evas_Object *tg = NULL;
+
+	if (!strcmp(part, "elm.icon.2")) {
+		ly = elm_layout_add(obj);
+		elm_layout_theme_set(ly, "layout", "list/C/type.3", "default");
+		tg = elm_check_add(ly);
+
+		int value = -1;
+		int ret = vconf_get_int(VCONFKEY_LOCATION_ENABLED, &value);
+		if (ret != 0) {
+			LOGE("fail to get vconf key!");
+		}
+
+		if (value) {
+			elm_check_state_set(tg, EINA_TRUE);
+		} else {
+			elm_check_state_set(tg, EINA_FALSE);
+		}
+
+		elm_object_style_set(tg, "on&off");
+		evas_object_propagate_events_set(tg, EINA_FALSE);
+		evas_object_smart_callback_add(tg, "changed", __setting_location_gps_check_cb, ad);
+		evas_object_show(tg);
+		elm_layout_content_set(ly, "elm.swallow.content", tg);
+		ad->gi_gps_check = tg;
+	}
+	elm_genlist_item_update(ad->gi_gps);
+
+	return ly;
+}
+
+static Evas_Object *__setting_location_wifi_check_get(void *data, Evas_Object *obj, const char *part)
+{
+	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
+	Evas_Object *tg = NULL;
+	Evas_Object *ly = NULL;
+
+	if (!strcmp(part, "elm.icon.2")) {
+		ly = elm_layout_add(obj);
+		elm_layout_theme_set(ly, "layout", "list/C/type.3", "default");
+		tg = elm_check_add(ly);
+
+		int value = -1;
+		int ret = vconf_get_int(VCONFKEY_LOCATION_NETWORK_ENABLED, &value);
+		if (ret != 0) {
+			LOGE("fail to get vconf key!");
+		}
+
+		if (value) {
+			elm_check_state_set(tg, EINA_TRUE);
+		} else {
+			elm_check_state_set(tg, EINA_FALSE);
+		}
+
+		elm_object_style_set(tg, "on&off");
+		evas_object_propagate_events_set(tg, EINA_FALSE);
+		evas_object_smart_callback_add(tg, "changed", __setting_location_wifi_check_cb, ad);
+		evas_object_show(tg);
+		elm_layout_content_set(ly, "elm.swallow.content", tg);
+		ad->gi_wifi_check = tg;
+	}
+	return ly;
+}
+
+static void __setting_location_loc_sel(void *data, Evas_Object *obj, void *event_info)
+{
+	LS_RETURN_IF_FAILED(data);
+	LS_RETURN_IF_FAILED(event_info);
+	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
+
+	if (ad->is_myloc) {
+		ad->is_gps = false;
+		__setting_location_gps_set_key(ad);
+#ifdef TIZEN_FEATURE_WPS
+		ad->is_wifi = false;
+		__setting_location_wifi_set_key(ad);
+#endif
+	} else {
+		int isShow = KEY_DISABLED;
+		int ret = vconf_get_int(VCONFKEY_LBS_SETTING_IS_SHOW_GPS_POPUP, &isShow);
+		if (ret != 0) {
+			LOGE("vconf_get_bool error:%d", ret);
+		}
+
+		if (isShow) {
+			location_gps_popup(ad);
+		} else {
+			ad->is_gps = true;
+			__setting_location_gps_set_key(ad);
+#ifdef TIZEN_FEATURE_WPS
+			location_wifi_popup(ad);
+#endif
+		}
+	}
+	elm_genlist_item_selected_set((Elm_Object_Item *)event_info, EINA_FALSE);
+}
+
+static void __setting_location_gps_sel(void *data, Evas_Object *obj, void *event_info)
+{
+	LS_RETURN_IF_FAILED(data);
+	LS_RETURN_IF_FAILED(event_info);
+	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
+	ad->quick_panel_setting = true;
+
+	if (ad->is_gps) {
+		ad->is_gps = false;
+		__setting_location_gps_set_key(ad);
+
+	} else {
+		int isShow = 0;
+		int ret = vconf_get_int(VCONFKEY_LBS_SETTING_IS_SHOW_GPS_POPUP, &isShow);
+		if (ret != 0) {
+			LOGE("vconf_get_bool error:%d", ret);
+		}
+
+		if (isShow) {
+			location_gps_popup(ad);
+		} else {
+			ad->is_gps = true;
+			__setting_location_gps_set_key(ad);
+		}
+	}
+
+	elm_genlist_item_selected_set((Elm_Object_Item *)event_info, EINA_FALSE);
+}
+
+static void __setting_location_wifi_sel(void *data, Evas_Object *obj, void *event_info)
+{
+	LS_RETURN_IF_FAILED(data);
+	LS_RETURN_IF_FAILED(event_info);
+	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
+	ad->quick_panel_setting = true;
+
+	if (ad->is_wifi) {
+		ad->is_wifi = false;
+		__setting_location_wifi_set_key(ad);
+
+	} else {
+		location_wifi_popup(ad);
+	}
+
+	elm_genlist_item_selected_set((Elm_Object_Item *)event_info, EINA_FALSE);
+}
+
+static Evas_Object *__setting_location_create_navibar(Evas_Object *parent)
+{
+	Evas_Object *naviframe = NULL;
+
+	naviframe = elm_naviframe_add(parent);
+	elm_object_part_content_set(parent, "elm.swallow.content", naviframe);
+	evas_object_show(naviframe);
+
+	return naviframe;
+}
+
+static char *__setting_myplace_group_text_get(void *data, Evas_Object *obj, const char *part)
+{
+	if (!g_strcmp0(part, "elm.text.main")) {
+		return strdup(P_("IDS_MAPS_BODY_MY_PLACES"));
+	}
+	return NULL;
+}
+
+static char *__setting_myplace_text_get(void *data, Evas_Object *obj, const char *part)
+{
+	if (!g_strcmp0(part, "elm.text.main.left")) {
+		return strdup(P_("IDS_MAPS_BODY_MY_PLACES"));
+	}
+	return NULL;
+}
+
+static void __setting_myplace_sel(void *data, Evas_Object *obj, void *event_info)
+{
+	LS_RETURN_IF_FAILED(data);
+	LS_RETURN_IF_FAILED(event_info);
+	app_control_h app_control = NULL;
+	app_control_create(&app_control);
+
+	app_control_set_app_id(app_control, "org.tizen.myplace");
+	app_control_add_extra_data(app_control, "caller", "lbs-setting");
+	app_control_add_extra_data(app_control, "geofence", data);
+	app_control_send_launch_request(app_control, NULL, NULL);
+
+	app_control_destroy(app_control);
+	elm_genlist_item_selected_set(event_info, EINA_FALSE);
+}
+
+static Evas_Object *__setting_location_create_gl(Evas_Object *parent, void *data)
+{
+	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
+	Evas_Object *genlist = NULL;
+	genlist = elm_genlist_add(parent);
+	elm_genlist_mode_set(genlist, ELM_LIST_COMPRESS);
+
+	const char *geofence_feature = "http://tizen.org/feature/location.geofence";
+	bool is_geofence_supported = false;
+
+	/* Use my location */
+	ad->itc_loc = elm_genlist_item_class_new();
+	if (ad->itc_loc == NULL) {
+		LS_LOGE("critical error : LS_RETURN_VAL_IS_FAILED");
+		return NULL;
+	}
+	ad->itc_loc->item_style = "1line";
+	ad->itc_loc->func.text_get = __setting_location_loc_text_get;
+	ad->itc_loc->func.content_get = __setting_location_loc_check_get;
+	ad->gi_loc = elm_genlist_item_append(genlist, ad->itc_loc, (void *)ad, NULL, ELM_GENLIST_ITEM_NONE, __setting_location_loc_sel, ad);
+
+	/* Group title */
+	ad->itc_title = elm_genlist_item_class_new();
+	if (ad->itc_title == NULL) {
+		g_free(ad->itc_loc);
+		LS_LOGE("critical error : LS_RETURN_VAL_IS_FAILED");
+		return NULL;
+	}
+	ad->itc_title->item_style = "groupindex";
+	ad->itc_title->func.text_get = __setting_location_title_text_get;
+	ad->gi_group_title = elm_genlist_item_append(genlist, ad->itc_title, NULL, NULL, ELM_GENLIST_ITEM_NONE, NULL, NULL);
+	elm_genlist_item_select_mode_set(ad->gi_group_title, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+
+	/* GPS satellite */
+	ad->itc_gps = elm_genlist_item_class_new();
+	if (ad->itc_gps == NULL) {
+		g_free(ad->itc_loc);
+		g_free(ad->itc_title);
+		LS_LOGE("critical error : LS_RETURN_VAL_IS_FAILED");
+		return NULL;
+	}
+	ad->itc_gps->item_style = "1line";
+	ad->itc_gps->func.text_get = __setting_location_gps_text_get;
+	ad->itc_gps->func.content_get = __setting_location_gps_check_get;
+	ad->gi_gps = elm_genlist_item_append(genlist, ad->itc_gps, (void *)ad, NULL, ELM_GENLIST_ITEM_NONE, __setting_location_gps_sel, ad);
+
+	/* Wi-fi & mobile network */
+	ad->itc_wifi = elm_genlist_item_class_new();
+	if (ad->itc_wifi == NULL) {
+		g_free(ad->itc_loc);
+		g_free(ad->itc_title);
+		g_free(ad->itc_gps);
+		LS_LOGE("critical error : LS_RETURN_VAL_IS_FAILED");
+		return NULL;
+	}
+
+	ad->itc_wifi->item_style = "1line";
+	ad->itc_wifi->func.text_get = __setting_location_wifi_text_get;
+	ad->itc_wifi->func.content_get = __setting_location_wifi_check_get;
+	ad->gi_wifi = elm_genlist_item_append(genlist, ad->itc_wifi, ad, NULL, ELM_GENLIST_ITEM_NONE, __setting_location_wifi_sel, ad);
+
+#ifndef TIZEN_FEATURE_WPS
+	elm_object_item_disabled_set(ad->gi_wifi, EINA_TRUE);
+#endif
+
+	__setting_location_item_disabled_update(ad);
+
+	/* Myplace */
+	system_info_get_platform_bool(geofence_feature, &is_geofence_supported);
+	if (is_geofence_supported) {
+		ad->itc_myplace_title = elm_genlist_item_class_new();
+		if (ad->itc_myplace_title == NULL) {
+			g_free(ad->itc_loc);
+			g_free(ad->itc_title);
+			g_free(ad->itc_gps);
+			g_free(ad->itc_wifi);
+			LS_LOGE("critical error : LS_RETURN_VAL_IS_FAILED");
+			return NULL;
+		}
+		ad->itc_myplace_title->item_style = "groupindex";
+		ad->itc_myplace_title->func.text_get = __setting_myplace_group_text_get;
+		ad->gi_myplace_title = elm_genlist_item_append(genlist, ad->itc_myplace_title, NULL, NULL, ELM_GENLIST_ITEM_NONE, NULL, NULL);
+		elm_genlist_item_select_mode_set(ad->gi_myplace_title, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+
+		ad->itc_myplace = elm_genlist_item_class_new();
+		if (ad->itc_myplace == NULL) {
+			g_free(ad->itc_loc);
+			g_free(ad->itc_title);
+			g_free(ad->itc_gps);
+			g_free(ad->itc_wifi);
+			g_free(ad->itc_myplace_title);
+			LS_LOGE("critical error : LS_RETURN_VAL_IS_FAILED");
+			return NULL;
+		}
+		ad->itc_myplace->item_style = "1line";
+		ad->itc_myplace->func.text_get = __setting_myplace_text_get;
+		ad->gi_myplace = elm_genlist_item_append(genlist, ad->itc_myplace, (void *)ad, NULL, ELM_GENLIST_ITEM_NONE, __setting_myplace_sel, ad);
+	}
+
+	return genlist;
+}
+
+static void _ctx_popup_dismissed_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	LS_RETURN_IF_FAILED(data);
+	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
+
+	if (!ad->ctx_popup) {
+		LS_LOGE("Invalid parameters");
+		return;
+	}
+
+	evas_object_del(ad->ctx_popup);
+	ad->ctx_popup = NULL;
+}
+
+static void _move_more_ctxpopup(void *data)
+{
+	LS_FUNC_ENTER
+	LS_RETURN_IF_FAILED(data);
+
+	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
+
+	Evas_Coord w, h;
+	int pos = -1;
+
+	elm_win_screen_size_get(ad->win_main, NULL, NULL, &w, &h);
+	pos = elm_win_rotation_get(ad->win_main);
+
+	switch (pos) {
+		case 0:
+		case 180:
+			evas_object_move(ad->ctx_popup, w / 2, h);
+			break;
+		case 90:
+			evas_object_move(ad->ctx_popup, h / 2, w);
+			break;
+		case 270:
+			evas_object_move(ad->ctx_popup, h / 2, w);
+			break;
+	}
+}
+
+static void _rotate_more_ctxpopup_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	LS_FUNC_ENTER
+	LS_RETURN_IF_FAILED(data);
+	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
+	_move_more_ctxpopup(ad);
+}
+
+static void _resize_more_ctxpopup_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+	LS_FUNC_ENTER
+	LS_RETURN_IF_FAILED(data);
+	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
+	_move_more_ctxpopup(ad);
+}
+
+static void __setting_location_create_more_button(void *data, Evas_Object *obj, void *event_info)
+{
+	LS_RETURN_IF_FAILED(data);
+	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
+
+	if (!ad || !ad->nf) {
+		LS_LOGE("NULL parameters.\n");
+		return;
+	}
+
+	if (ad->ctx_popup) {
+		evas_object_del(ad->ctx_popup);
+		ad->ctx_popup = NULL;
+	}
+
+	ad->ctx_popup = elm_ctxpopup_add(ad->win_main);
+	elm_object_style_set(ad->ctx_popup, "more/default");
+	eext_object_event_callback_add(ad->ctx_popup, EEXT_CALLBACK_BACK, eext_popup_back_cb, NULL);
+	eext_object_event_callback_add(ad->ctx_popup, EEXT_CALLBACK_MORE, eext_popup_back_cb, NULL);
+	evas_object_smart_callback_add(ad->ctx_popup, "dismissed", _ctx_popup_dismissed_cb, ad);
+	elm_ctxpopup_auto_hide_disabled_set(ad->ctx_popup, EINA_TRUE);
+
+	evas_object_event_callback_add(ad->nf, EVAS_CALLBACK_RESIZE, _resize_more_ctxpopup_cb, ad);
+	evas_object_smart_callback_add(elm_object_top_widget_get(ad->ctx_popup), "rotation,changed",
+									_rotate_more_ctxpopup_cb, ad);
+
+	elm_ctxpopup_item_append(ad->ctx_popup, P_("IDS_ST_HEADER_HELP"), NULL, __setting_location_help_cb, ad);
+
+	elm_ctxpopup_direction_priority_set(ad->ctx_popup, ELM_CTXPOPUP_DIRECTION_UP,
+										ELM_CTXPOPUP_DIRECTION_LEFT,
+										ELM_CTXPOPUP_DIRECTION_RIGHT,
+										ELM_CTXPOPUP_DIRECTION_DOWN);
+
+	_move_more_ctxpopup(ad);
+	evas_object_show(ad->ctx_popup);
+}
+
+static void __event_handler(const char *event_name, bundle *data, void *self)
+{
+	const char *value = NULL;
+
+	if (g_strcmp0(event_name, SYS_EVENT_LOCATION_ENABLE_STATE) == 0) {
+		value = bundle_get_val(data, EVT_KEY_LOCATION_ENABLE_STATE);
+	} else if (g_strcmp0(event_name, SYS_EVENT_GPS_ENABLE_STATE) == 0) {
+		value = bundle_get_val(data, EVT_KEY_GPS_ENABLE_STATE);
+	} else if (g_strcmp0(event_name, SYS_EVENT_NPS_ENABLE_STATE) == 0) {
+		value = bundle_get_val(data, EVT_KEY_NPS_ENABLE_STATE);
+	}
+	LS_LOGD("get event state [%s]", value);
+}
+
+void __setting_location_create_view(lbs_setting_app_data *ad)
+{
+	LS_LOGD("__setting_location_create_view.");
+	LS_RETURN_IF_FAILED(ad);
+	Elm_Object_Item *navi_it = NULL;
+	Evas_Object *more_button = NULL;
+
+	ad->view_id = LOCATION_MAIN_VIEW;
+	ad->nf = __setting_location_create_navibar(ad->layout_main);
+	elm_naviframe_prev_btn_auto_pushed_set(ad->nf, EINA_FALSE);
+	eext_object_event_callback_add(ad->nf, EEXT_CALLBACK_BACK, eext_naviframe_back_cb, NULL);
+	eext_object_event_callback_add(ad->nf, EEXT_CALLBACK_MORE, eext_naviframe_more_cb, NULL);
+
+	ad->genlist = __setting_location_create_gl(ad->nf, ad);
+	LS_RETURN_IF_FAILED(ad->genlist);
+
+	evas_object_show(ad->genlist);
+
+	Evas_Object *back_btn = elm_button_add(ad->nf);
+	elm_object_style_set(back_btn, "naviframe/back_btn/default");
+	evas_object_smart_callback_add(back_btn, "clicked", __setting_location_back_cb, ad);
+	navi_it = elm_naviframe_item_push(ad->nf, P_("IDS_ST_BUTTON2_LOCATION"), back_btn, NULL, ad->genlist, NULL);
+
+	elm_naviframe_item_pop_cb_set(navi_it, __setting_location_pop_cb, ad);
+
+	more_button = elm_button_add(ad->nf);
+	elm_object_style_set(more_button, "naviframe/more/default");
+	evas_object_smart_callback_add(more_button, "clicked", __setting_location_create_more_button, ad);
+	elm_object_item_part_content_set(navi_it, "toolbar_more_btn", more_button);
+}
+
+void _location_key_changed_cb(keynode_t *key, void *data)
+{
+	LS_RETURN_IF_FAILED(data);
+	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
+	int enabled = 0;
+	vconf_get_int(VCONFKEY_LOCATION_USE_MY_LOCATION, &enabled);
+	if (ad->quick_panel_setting == false) {
+		if (enabled == KEY_DISABLED) {
+			ad->is_gps = false;
+			__setting_location_gps_set_key(ad);
+#ifdef TIZEN_FEATURE_WPS
+			ad->is_wifi = false;
+			__setting_location_wifi_set_key(ad);
+#endif
+		}
+	}
+	ad->quick_panel_setting = false;
+}
+
+void _gps_key_changed_cb(keynode_t *key, void *data)
+{
+	LS_RETURN_IF_FAILED(data);
+	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
+
+	int enabled = 0;
+	int ret = vconf_get_int(VCONFKEY_LOCATION_ENABLED, &enabled);
+	if (ret != 0) {
+		LOGE("fail to get vconf key!");
+	}
+
+	if (enabled) {
+		ad->is_gps = true;
+	} else {
+		ad->is_gps = false;
+	}
+
+	if (ad->quick_panel_setting == false) {
+		__setting_location_gps_set_key(ad);
+	} else {
+		LS_LOGD("Notice: Current operation in Genlist callback function.");
+	}
+
+	ad->quick_panel_setting = false;
+}
+
+void _wifi_key_changed_cb(keynode_t *key, void *data)
+{
+	LS_RETURN_IF_FAILED(data);
+	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
+
+	int enabled = 0;
+	int ret = vconf_get_int(VCONFKEY_LOCATION_NETWORK_ENABLED, &enabled);
+	if (ret != 0) {
+		LOGE("fail to get vconf key!");
+	}
+
+	if (enabled) {
+		ad->is_wifi = true;
+	} else {
+		ad->is_wifi = false;
+	}
+
+	if (ad->quick_panel_setting == false) {
+		__setting_location_wifi_set_key(ad);
+	} else {
+		LS_LOGD("Notice: Current operation in Genlist callback function.");
+	}
+
+	ad->quick_panel_setting = false;
+}
+
+int __setting_location_init(lbs_setting_app_data *ad)
+{
+	LS_RETURN_VAL_IF_FAILED(ad, -1);
+	int ret = 0;
+	int enabled = 0;
+	ad->quick_panel_setting = false;
+
+	ret &= vconf_get_int(VCONFKEY_LOCATION_USE_MY_LOCATION, &enabled);
+	if (enabled) ad->is_myloc = true;
+	else ad->is_myloc = false;
+	ret &= vconf_get_int(VCONFKEY_LOCATION_ENABLED, &enabled);
+	if (enabled) ad->is_gps = true;
+	else ad->is_gps = false;
+	ret &= vconf_notify_key_changed(VCONFKEY_LOCATION_USE_MY_LOCATION, _location_key_changed_cb, (void *)ad);
+	ret &= vconf_notify_key_changed(VCONFKEY_LOCATION_ENABLED, _gps_key_changed_cb, (void *)ad);
+#ifdef TIZEN_FEATURE_WPS
+	ret &= vconf_get_int(VCONFKEY_LOCATION_NETWORK_ENABLED, &enabled);
+	if (enabled) ad->is_wifi = true;
+	else ad->is_wifi = false;
+	ret &= vconf_notify_key_changed(VCONFKEY_LOCATION_NETWORK_ENABLED, _wifi_key_changed_cb, (void *)ad);
+#endif
+
+	/* if myloc is off , and gps or wifi is on, we should set myloc on and its vconf value */
+#ifdef TIZEN_FEATURE_WPS
+	if (!ad->is_myloc && (ad->is_gps || ad->is_wifi)) {
+#else
+	if (!ad->is_myloc && ad->is_gps) {
+#endif
+		ad->is_myloc = true;
+		__setting_location_set_int(VCONFKEY_LOCATION_USE_MY_LOCATION, KEY_ENABLED);
+	}
+	/*if gps and wifi both off, should set use my location off too. */
+#ifdef TIZEN_FEATURE_WPS
+	if (ad->is_myloc && (!ad->is_gps) && (!ad->is_wifi)) {
+#else
+	if (ad->is_myloc && (!ad->is_gps)) {
+#endif
+		ad->is_myloc = false;
+		__setting_location_set_int(VCONFKEY_LOCATION_USE_MY_LOCATION, KEY_DISABLED);
+	}
+
+	if (eventsystem_register_event(SYS_EVENT_LOCATION_ENABLE_STATE, &ad->location_event_req_id,
+									(eventsystem_handler) __event_handler, NULL) != ES_R_OK) {
+		LS_LOGE("eventsystem_register_event failed[SYS_EVENT_LOCATION_ENABLE_STATE]");
+	}
+
+	if (eventsystem_register_event(SYS_EVENT_GPS_ENABLE_STATE, &ad->gps_event_req_id,
+									(eventsystem_handler) __event_handler, NULL) != ES_R_OK) {
+		LS_LOGE("eventsystem_register_event failed[SYS_EVENT_GPS_ENABLE_STATE]");
+	}
+
+	return ret;
+}
+
+int _setting_location_deinit(lbs_setting_app_data *ad)
+{
+	int ret = 0;
+
+	ret = vconf_ignore_key_changed(VCONFKEY_LOCATION_USE_MY_LOCATION, _location_key_changed_cb);
+	ret = vconf_ignore_key_changed(VCONFKEY_LOCATION_ENABLED, _gps_key_changed_cb);
+#ifdef TIZEN_FEATURE_WPS
+	ret = vconf_ignore_key_changed(VCONFKEY_LOCATION_NETWORK_ENABLED, _wifi_key_changed_cb);
+#endif
+
+	if (eventsystem_unregister_event(ad->location_event_req_id) != ES_R_OK) {
+		LS_LOGE("eventsystem_unregister_event failed[SYS_EVENT_LOCATION_ENABLE_STATE]");
+	}
+
+	if (eventsystem_unregister_event(ad->gps_event_req_id) != ES_R_OK) {
+		LS_LOGE("eventsystem_unregister_event failed[SYS_EVENT_GPS_ENABLE_STATE]");
+	}
+
+	return ret;
+}
+
+
+static void _app_control_reply_cb(app_control_h request, app_control_h reply, app_control_result_e result, void *user_data)
+{
+	LS_FUNC_ENTER
+	if (result != APP_CONTROL_RESULT_SUCCEEDED) {
+		LS_LOGE("[Error:%d]Launch request fail", result);
+		return;
+	}
+
+	LS_LOGI("Success to launch request");
+}
+
+static void _anchor_clicked_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	LS_FUNC_ENTER
+	LS_RETURN_IF_FAILED(event_info);
+
+	Elm_Entry_Anchor_Info *anchor_info = (Elm_Entry_Anchor_Info *)event_info;
+	LS_LOGD("Anchor is clicked.... name [%s]", (anchor_info->name) ? (anchor_info->name) : "NULL");
+
+	app_control_h app_control = NULL;
+	int ret = APP_CONTROL_ERROR_NONE;
+	do {
+		ret = app_control_create(&app_control);
+		if (ret != APP_CONTROL_ERROR_NONE) {
+			LS_LOGE("[Error:%d]Fail to create handler", ret);
+			break;
+		}
+
+		ret = app_control_set_operation(app_control, APP_CONTROL_OPERATION_DEFAULT);
+		if (ret != APP_CONTROL_ERROR_NONE) {
+			LS_LOGE("[Error:%d]Fail to set operation", ret);
+			break;
+		}
+
+		ret = app_control_set_app_id(app_control, "org.tizen.browser");
+		if (ret != APP_CONTROL_ERROR_NONE) {
+			LS_LOGE("[Error:%d]Fail to set app id", ret);
+			break;
+		}
+
+		ret = app_control_set_uri(app_control, anchor_info->name);
+		if (ret != APP_CONTROL_ERROR_NONE) {
+			LS_LOGE("[Error:%d]Fail to set url [%s]", ret, anchor_info->name);
+			break;
+		}
+
+		ret = app_control_send_launch_request(app_control, _app_control_reply_cb, NULL);
+		if (ret != APP_CONTROL_ERROR_NONE) {
+			LS_LOGE("[Error:%d]Fail to send launch request", ret);
+			break;
+		}
+	} while (FALSE);
+
+	if (app_control) {
+		app_control_destroy(app_control);
+		app_control = NULL;
+	}
+
+	LS_FUNC_EXIT
 }
 
 static void __setting_reply_gps_wifi_status(void *data)
 {
 	LS_FUNC_ENTER
+	LS_RETURN_IF_FAILED(data);
 
 	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
 
@@ -350,1072 +1383,61 @@ static void __setting_reply_gps_wifi_status(void *data)
 	}
 }
 
-static void __setting_location_back_cb(void *data, Evas_Object *obj, void *event_info)
+static char *__convert_event_from_path(const char *path)
 {
-	LS_FUNC_ENTER
-	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
-	elm_naviframe_item_pop(ad->nf);
+	char *event = NULL;
+	if (g_strcmp0(path, VCONFKEY_LOCATION_USE_MY_LOCATION) == 0) {
+		event = g_strdup(SYS_EVENT_LOCATION_ENABLE_STATE);
+	} else if (g_strcmp0(path, VCONFKEY_LOCATION_ENABLED) == 0) {
+		event = g_strdup(SYS_EVENT_GPS_ENABLE_STATE);
+	} else if (g_strcmp0(path, VCONFKEY_LOCATION_NETWORK_ENABLED) == 0) {
+		event = g_strdup(SYS_EVENT_NPS_ENABLE_STATE);
+	}
+
+	return event;
 }
 
-static Eina_Bool __setting_location_pop_cb(void *data, Elm_Object_Item *item)
+static char *__convert_key_from_event(const char *event)
 {
-	LS_FUNC_ENTER
-	__setting_reply_gps_wifi_status(data);
-	elm_exit();
-	return EINA_FALSE;
+	char *key = NULL;
+	if (g_strcmp0(event, SYS_EVENT_LOCATION_ENABLE_STATE) == 0) {
+		key = g_strdup(EVT_KEY_LOCATION_ENABLE_STATE);
+	} else if (g_strcmp0(event, SYS_EVENT_GPS_ENABLE_STATE) == 0) {
+		key = g_strdup(EVT_KEY_GPS_ENABLE_STATE);
+	} else if (g_strcmp0(event, SYS_EVENT_NPS_ENABLE_STATE) == 0) {
+		key = g_strdup(EVT_KEY_NPS_ENABLE_STATE);
+	}
+	return key;
 }
 
-static void __setting_location_help_cb(void *data, Evas_Object *obj, void *event_info)
+static char *__convert_event_value(int val)
 {
-	LS_RETURN_IF_FAILED(data);
-	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
-
-	evas_object_del(ad->ctx_popup);
-	ad->ctx_popup = NULL;
-
-	_setting_location_help_view(data);
-}
-
-/* Callback function for the mouse up event */
-void _mouseup_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
-{
-	LS_RETURN_IF_FAILED(event_info);
-	LS_RETURN_IF_FAILED(obj);
-	Evas_Event_Mouse_Up *ev = event_info;
-	if (ev->button == 3) {/* if mouse right button is up */
-		evas_object_del(obj);
-	}
-}
-
-static void __setting_location_gps_set_key(void *data)
-{
-	LS_RETURN_IF_FAILED(data);
-	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
-
-	int vconf_val_is_myloc, vconf_val_is_gps;
-	vconf_get_int(VCONFKEY_LOCATION_USE_MY_LOCATION, &vconf_val_is_myloc);
-	vconf_get_int(VCONFKEY_LOCATION_ENABLED, &vconf_val_is_gps);
-
-	ad->quick_gps_setting = KEY_ENABLED;
-	if (vconf_val_is_myloc != ad->is_myloc) {
-		__setting_location_set_int(VCONFKEY_LOCATION_USE_MY_LOCATION, ad->is_myloc);
-	}
-	if (vconf_val_is_gps != ad->is_gps) {
-		__setting_location_set_int(VCONFKEY_LOCATION_ENABLED, ad->is_gps);
-	}
-	elm_check_state_set(ad->gi_loc_check, ad->is_myloc);
-	elm_check_state_set(ad->gi_gps_check, ad->is_gps);
-	elm_genlist_item_update(ad->gi_gps);
-	elm_genlist_item_update(ad->gi_loc);
-
-	__setting_location_check_di(ad);
-}
-
-static void __setting_location_popup_agree_cb(void *data, Evas_Object *obj, void *event_info)
-{
-	LS_RETURN_IF_FAILED(data);
-	LS_RETURN_IF_FAILED(obj);
-	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
-
-	Eina_Bool ischoose = false;
-	if (ad->ask_check) {
-		ischoose = elm_check_state_get(ad->ask_check);
-		if (ischoose) {
-			int ret = vconf_set_int(VCONFKEY_LBS_SETTING_IS_SHOW_GPS_POPUP, KEY_DISABLED);
-			LS_LOGE("ret:%d", ret);
-		}
-	}
-
-	if (ad->gps_popup != NULL && obj == ad->agree_btn[LOCATION_POPUP_GPS]) {
-		if (ad->gi_gps) {
-			ad->is_gps = KEY_ENABLED;
-			ad->is_myloc = KEY_ENABLED;
-			__setting_location_gps_set_key(ad);
-		}
-		evas_object_del(ad->gps_popup);
-		ad->gps_popup = NULL;
-	}
-
-	if (ad->use_my_location_popup != NULL && obj == ad->agree_btn[LOCATION_POPUP_USEMYLOCATION]) {
-		if (ad->gi_gps) {
-			ad->is_gps = KEY_ENABLED;
-			ad->is_myloc = KEY_ENABLED;
-			__setting_location_gps_set_key(ad);
-		}
-		evas_object_del(ad->use_my_location_popup);
-		ad->use_my_location_popup = NULL;
-	}
-	elm_genlist_item_update(ad->gi_gps);
-	elm_genlist_item_update(ad->gi_loc);
-}
-
-static void __setting_location_popup_disagree_cb(void *data, Evas_Object *obj, void *event_info)
-{
-	LS_RETURN_IF_FAILED(data);
-	LS_RETURN_IF_FAILED(obj);
-	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
-	if (ad->gps_popup != NULL && (obj == ad->disagree_btn[LOCATION_POPUP_GPS] || obj == ad->gps_popup)) {
-		if (ad->gi_gps) {
-			ad->is_gps = KEY_DISABLED;
-			ad->is_myloc = KEY_DISABLED;
-			__setting_location_gps_set_key(ad);
-		}
-		evas_object_del(ad->gps_popup);
-		ad->gps_popup = NULL;
-	}
-	if (ad->use_my_location_popup != NULL && (obj == ad->disagree_btn[LOCATION_POPUP_USEMYLOCATION] || obj == ad->use_my_location_popup)) {
-		if (ad->gi_gps) {
-			ad->is_gps = KEY_DISABLED;
-			ad->is_myloc = KEY_DISABLED;
-			__setting_location_gps_set_key(ad);
-		}
-		evas_object_del(ad->use_my_location_popup);
-		ad->use_my_location_popup = NULL;
-	}
-	elm_genlist_item_update(ad->gi_gps);
-	elm_genlist_item_update(ad->gi_loc);
-
-}
-
-static void __setting_location_ea_cb(void *data, Evas_Object *obj, void *event_info)
-{
-	LS_RETURN_IF_FAILED(data);
-	LS_RETURN_IF_FAILED(obj);
-	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
-	if (ad->gps_popup != NULL && (obj == ad->disagree_btn[LOCATION_POPUP_GPS] || obj == ad->gps_popup)) {
-		if (ad->gi_gps) {
-			ad->is_gps = KEY_DISABLED;
-			ad->is_myloc = KEY_DISABLED;
-			__setting_location_gps_set_key(ad);
-		}
-		evas_object_del(ad->gps_popup);
-		ad->gps_popup = NULL;
-	}
-
-	if (ad->use_my_location_popup != NULL && (obj == ad->disagree_btn[LOCATION_POPUP_USEMYLOCATION] || obj == ad->use_my_location_popup)) {
-		if (ad->gi_gps) {
-			ad->is_gps = KEY_DISABLED;
-			ad->is_myloc = KEY_DISABLED;
-			__setting_location_gps_set_key(ad);
-		}
-		evas_object_del(ad->use_my_location_popup);
-		ad->use_my_location_popup = NULL;
-	}
-	elm_genlist_item_update(ad->gi_gps);
-	elm_genlist_item_update(ad->gi_loc);
-}
-
-
-static void _app_control_reply_cb(app_control_h request, app_control_h reply, app_control_result_e result, void *user_data)
-{
-	LS_FUNC_ENTER
-	if (result != APP_CONTROL_RESULT_SUCCEEDED) {
-		LS_LOGE("[Error:%d]Launch request fail", result);
-		return;
-	}
-
-	LS_LOGI("Success to launch request");
-}
-
-static void _anchor_clicked_cb(void *data, Evas_Object *obj, void *event_info)
-{
-	LS_FUNC_ENTER
-	LS_RETURN_IF_FAILED(data);
-	LS_RETURN_IF_FAILED(event_info);
-
-#ifndef WAYLAND
-	Elm_Label_Anchor_Info *anchor_info = (Elm_Label_Anchor_Info *)event_info;
-
-	LS_LOGD("Anchor is clicked.... name [%s]", (anchor_info->name) ? (anchor_info->name) : "NULL");
-#endif
-	app_control_h app_control = NULL;
-	int ret = APP_CONTROL_ERROR_NONE;
-	do {
-		ret = app_control_create(&app_control);
-		if (ret != APP_CONTROL_ERROR_NONE) {
-			LS_LOGE("[Error:%d]Fail to create handler", ret);
-			break;
-		}
-
-		ret = app_control_set_operation(app_control, APP_CONTROL_OPERATION_DEFAULT);
-		if (ret != APP_CONTROL_ERROR_NONE) {
-			LS_LOGE("[Error:%d]Fail to set operation", ret);
-			break;
-		}
-
-		ret = app_control_set_app_id(app_control, "org.tizen.browser");
-		if (ret != APP_CONTROL_ERROR_NONE) {
-			LS_LOGE("[Error:%d]Fail to set app id", ret);
-			break;
-		}
-
-#ifndef WAYLAND
-		ret = app_control_set_uri(app_control, anchor_info->name);
-		if (ret != APP_CONTROL_ERROR_NONE) {
-			LS_LOGE("[Error:%d]Fail to set url [%s]", ret, anchor_info->name);
-			break;
-		}
-#endif
-
-		ret = app_control_send_launch_request(app_control, _app_control_reply_cb, NULL);
-		if (ret != APP_CONTROL_ERROR_NONE) {
-			LS_LOGE("[Error:%d]Fail to send launch request", ret);
-			break;
-		}
-	} while (FALSE);
-
-	if (app_control) {
-		app_control_destroy(app_control);
-		app_control = NULL;
-	}
-
-	LS_FUNC_EXIT
-}
-
-static void enable_gps(void *data)
-{
-	LS_RETURN_IF_FAILED(data);
-	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
-
-	if (ad->gi_gps) {
-		ad->is_gps = KEY_ENABLED;
-		ad->is_myloc = KEY_ENABLED;
-		__setting_location_gps_set_key(ad);
-	}
-	elm_genlist_item_update(ad->gi_gps);
-	elm_genlist_item_update(ad->gi_loc);
-}
-
-static void __setting_location_create_popup(void *data, int pop_type)
-{
-	LS_RETURN_IF_FAILED(data);
-	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
-	Evas_Object *popup = NULL;
-
-	popup = elm_popup_add(ad->win_main);
-	elm_popup_align_set(popup, ELM_NOTIFY_ALIGN_FILL, 1.0);
-	/* Register the callback function for the mouse up event */
-	evas_object_event_callback_add(popup, EVAS_CALLBACK_MOUSE_UP, _mouseup_cb, NULL);
-	/* Delete the Popup if the Popup has a BACK event. */
-	eext_object_event_callback_add(popup, EEXT_CALLBACK_BACK, __setting_location_ea_cb, ad);
-
-	evas_object_size_hint_weight_set(popup, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-
-	if ((pop_type == LOCATION_POPUP_GPS) || (pop_type == LOCATION_POPUP_USEMYLOCATION)) {
-		elm_object_domain_translatable_part_text_set(popup, "title,text", LBS_SETTING_PKG, "IDS_ST_HEADER_CONSENT_TO_LOCATION_INFO_USAGE_ABB");
-
-		/* layout */
-		Evas_Object *layout = elm_layout_add(popup);
-		elm_layout_file_set(layout, LBS_SETTING_EDJ, "popup_gps_layout");
-		evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-
-		/* check */
-		Evas_Object *check = elm_check_add(popup);
-		elm_object_style_set(check, "popup");
-		elm_object_text_set(check, P_("IDS_ST_BODY_DO_NOT_SHOW_AGAIN"));
-		evas_object_size_hint_align_set(check, EVAS_HINT_FILL, EVAS_HINT_FILL);
-		evas_object_size_hint_weight_set(check, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-		elm_object_part_content_set(layout, "elm.swallow.end", check);
-		ad->ask_check = check;
-
-		Evas_Object *scroller = elm_scroller_add(popup);
-		elm_scroller_bounce_set(scroller, EINA_FALSE, EINA_TRUE);
-		elm_scroller_policy_set(scroller, ELM_SCROLLER_POLICY_OFF, ELM_SCROLLER_POLICY_AUTO);
-		elm_object_style_set(scroller, "effect");
-		evas_object_show(scroller);
-
-		Evas_Object *label = elm_label_add(scroller);
-		elm_object_style_set(label, "popup/default");
-		elm_label_line_wrap_set(label, ELM_WRAP_MIXED);
-		elm_object_domain_translatable_text_set(label, LBS_SETTING_PKG, "IDS_ST_POP_YOUR_LOCATION_DATA_INCLUDING_GPS_DATA_WILL_BE_USED_BY_RELEVANT_APPLICATIONS");
-		evas_object_size_hint_weight_set(label, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-		evas_object_size_hint_align_set(label, EVAS_HINT_FILL, EVAS_HINT_EXPAND);
-
-		elm_object_content_set(scroller, label);
-		elm_object_part_content_set(layout, "elm.swallow.content", scroller);
-
-		elm_object_content_set(popup, layout);
-		if (pop_type == LOCATION_POPUP_GPS) {
-			ad->gps_popup = popup;
-		} else if (pop_type == LOCATION_POPUP_USEMYLOCATION) {
-			ad->use_my_location_popup = popup;
-		}
-	}
-
-	ad->disagree_btn[pop_type] = elm_button_add(popup);
-	elm_object_style_set(ad->disagree_btn[pop_type], "popup");
-	elm_object_domain_translatable_text_set(ad->disagree_btn[pop_type], LBS_SETTING_PKG, "IDS_ST_BUTTON_DISAGREE");
-	elm_object_part_content_set(popup, "button1", ad->disagree_btn[pop_type]);
-	evas_object_smart_callback_add(ad->disagree_btn[pop_type], "clicked", __setting_location_popup_disagree_cb, ad);
-	ad->agree_btn[pop_type] = elm_button_add(popup);
-	elm_object_style_set(ad->agree_btn[pop_type], "popup");
-	elm_object_domain_translatable_text_set(ad->agree_btn[pop_type], LBS_SETTING_PKG, "IDS_ST_BUTTON_AGREE");
-	elm_object_part_content_set(popup, "button2", ad->agree_btn[pop_type]);
-	evas_object_smart_callback_add(ad->agree_btn[pop_type], "clicked", __setting_location_popup_agree_cb, ad);
-	evas_object_show(popup);
-}
-
-
-static void __setting_location_myloc_set_key(void *data)
-{
-	LS_RETURN_IF_FAILED(data);
-	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
-
-	ad->quick_gps_setting = KEY_ENABLED;
-
-	if (ad->is_myloc) { /* myloc on, show gps popup at the same time */
-		elm_check_state_set(ad->gi_loc_check, EINA_TRUE);
-
-		int isShow = KEY_DISABLED;
-		int ret = vconf_get_int(VCONFKEY_LBS_SETTING_IS_SHOW_GPS_POPUP, &isShow);
-		if (ret != 0) {
-			LOGE("vconf_get_bool error:%d", ret);
-			isShow = KEY_DISABLED;
-		}
-
-		if (isShow == KEY_ENABLED) {
-			__setting_location_create_popup(ad, LOCATION_POPUP_USEMYLOCATION);
-		} else {
-			if (ad->gi_gps) {
-				ad->is_gps = KEY_ENABLED;
-				ad->is_myloc = KEY_ENABLED;
-				__setting_location_gps_set_key(ad);
-			}
-		}
-	} else {/* myloc off */
-		ad->is_gps = ad->is_myloc;
-		elm_check_state_set(ad->gi_loc_check, EINA_FALSE);
-		elm_check_state_set(ad->gi_gps_check, EINA_FALSE);
-		__setting_location_set_int(VCONFKEY_LOCATION_USE_MY_LOCATION, ad->is_myloc);
-		__setting_location_set_int(VCONFKEY_LOCATION_ENABLED, ad->is_gps);
-	}
-	elm_genlist_item_update(ad->gi_gps);
-	elm_genlist_item_update(ad->gi_loc);
-	__setting_location_check_di(ad);
-}
-
-static char *__setting_location_gps_text_get(void *data, Evas_Object *obj, const char *part)
-{
-	if (!g_strcmp0(part, "elm.text.main.left")) {
-		return strdup(P_("IDS_ST_BODY_GPS"));
-	}
-	return NULL;
-}
-
-static void __setting_location_gps_cb(void *data, Evas_Object *obj, void *event_info)
-{
-	LS_RETURN_IF_FAILED(data);
-	LS_RETURN_IF_FAILED(obj);
-	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
-	Eina_Bool state = elm_check_state_get(obj);
-
-	/* screen reader */
-	/*	_loc_sr_set_check_obj_info(ad->gi_gps, ad->is_gps); */
-
-	if (ad->is_myloc == KEY_DISABLED) {
-		elm_check_state_set(obj, !state);
-		return;
-	}
-
-	if (state == EINA_FALSE) {
-		ad->is_gps = KEY_DISABLED;
-		ad->is_myloc = KEY_DISABLED;
-		__setting_location_gps_set_key(ad);
+	char *value = NULL;
+	if (val == KEY_DISABLED) {
+		value = g_strdup(EVT_VAL_GPS_DISABLED);
 	} else {
-		elm_check_state_set(ad->gi_gps_check, KEY_DISABLED);
-
-		int isShow = 0;
-		int ret = vconf_get_int(VCONFKEY_LBS_SETTING_IS_SHOW_GPS_POPUP, &isShow);
-		if (ret != 0) {
-			LOGE("fail to get vconf key!");
-			isShow = 0;
-		}
-		if (isShow) {
-			__setting_location_create_popup(ad, LOCATION_POPUP_GPS);
-		}
-		enable_gps(ad);
+		value = g_strdup(EVT_VAL_GPS_ENABLED);
 	}
+	return value;
 }
 
-static Evas_Object *__setting_location_gps_check_get(void *data, Evas_Object *obj, const char *part)
+static int __eventsystem_set_value(const char *path, int val)
 {
-	LS_RETURN_VAL_IF_FAILED(data, NULL);
-	loc_item_data_s *item_data = (loc_item_data_s *)data;
-	lbs_setting_app_data *ad = (lbs_setting_app_data *)item_data->ad;
-	Evas_Object *ly = NULL;
-	Evas_Object *tg = NULL;
-
-	if (!strcmp(part, "elm.icon.2")) {
-		ly = elm_layout_add(obj);
-		elm_layout_theme_set(ly, "layout", "list/C/type.3", "default");
-		tg = elm_check_add(ly);
-
-		int value = -1;
-		int ret = vconf_get_int(VCONFKEY_LOCATION_ENABLED, &value);
-		if (ret != 0) {
-			LOGE("fail to get vconf key!");
-		}
-		if (value == KEY_DISABLED) {
-			elm_check_state_set(tg, EINA_FALSE);
-		} else {
-			elm_check_state_set(tg, EINA_TRUE);
-		}
-
-		elm_object_style_set(tg, "on&off");
-		evas_object_propagate_events_set(tg, EINA_FALSE);
-		evas_object_smart_callback_add(tg, "changed", __setting_location_gps_cb, ad);
-
-		evas_object_show(tg);
-
-		elm_layout_content_set(ly, "elm.swallow.content", tg);
-		ad->gi_gps_check = tg;
-	}
-
-	return ly;
-}
-
-static void __setting_location_check_cb(void *data, Evas_Object *obj, void *event_info)
-{
-	LS_RETURN_IF_FAILED(data);
-	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
-	LS_RETURN_IF_FAILED(ad->gi_loc_check);
-
-	/* screen reader */
-	/* _loc_sr_set_check_obj_info(ad->gi_loc, ad->is_myloc); */
-
-	Evas_Object *check = ad->gi_loc_check;
-
-	if (check) {
-		Eina_Bool state = elm_check_state_get(check);
-		if (state == EINA_FALSE) {
-			ad->is_myloc = KEY_DISABLED;
-		} else {
-			ad->is_myloc = KEY_ENABLED;
-		}
-		__setting_location_myloc_set_key(ad);
-	}
-}
-
-static Evas_Object *__setting_location_check_get(void *data, Evas_Object *obj, const char *part)
-{
-	LS_RETURN_VAL_IF_FAILED(data, NULL);
-	loc_item_data_s *item_data = (loc_item_data_s *)data;
-	lbs_setting_app_data *ad = (lbs_setting_app_data *)item_data->ad;
-	Evas_Object *ly = NULL;
-
-	if (!strcmp(part, "elm.icon.2")) {
-		ly = elm_layout_add(obj);
-		elm_layout_theme_set(ly, "layout", "list/C/type.3", "default");
-
-		ad->gi_loc_check = elm_check_add(ly);
-
-		int value = -1;
-		int ret = vconf_get_int(VCONFKEY_LOCATION_USE_MY_LOCATION, &value);
-
-		if (ret != 0) {
-			LOGE("fail to get vconf key!");
-		}
-		if (value == KEY_DISABLED) {
-			elm_check_state_set(ad->gi_loc_check, EINA_FALSE);
-		} else {
-			elm_check_state_set(ad->gi_loc_check, EINA_TRUE);
-		}
-		elm_object_style_set(ad->gi_loc_check, "on&off");
-		evas_object_propagate_events_set(ad->gi_loc_check, EINA_FALSE);
-		evas_object_smart_callback_add(ad->gi_loc_check, "changed", __setting_location_check_cb, ad);
-		evas_object_show(ad->gi_loc_check);
-
-		elm_layout_content_set(ly, "elm.swallow.content", ad->gi_loc_check);
-	}
-
-	return ly;
-}
-
-static char *__setting_location_wifi_text_get(void *data, Evas_Object *obj, const char *part)
-{
-	if (!g_strcmp0(part, "elm.text.main.left")) {
-		return strdup(P_("IDS_ST_BODY_WIRELESS_NETWORKS_ABB"));
-	}
-	return NULL;
-}
-
-static Evas_Object *__setting_location_wifi_check_get(void *data, Evas_Object *obj, const char *part)
-{
-	LS_RETURN_VAL_IF_FAILED(data, NULL);
-	loc_item_data_s *item_data = (loc_item_data_s *)data;
-	lbs_setting_app_data *ad = (lbs_setting_app_data *)item_data->ad;
-	Evas_Object *tg = NULL;
-	Evas_Object *ly = NULL;
-
-	if (!strcmp(part, "elm.icon.2")) {
-		ly = elm_layout_add(obj);
-		elm_layout_theme_set(ly, "layout", "list/C/type.3", "default");
-
-		tg = elm_check_add(ly);
-
-		int value = -1;
-		int ret = vconf_get_int(VCONFKEY_LOCATION_NETWORK_ENABLED, &value);
-
-		if (ret != 0) {
-			LOGE("fail to get vconf key!");
-		}
-
-		if (value == KEY_DISABLED) {
-			elm_check_state_set(tg, EINA_FALSE);
-		} else {
-			elm_check_state_set(tg, EINA_TRUE);
-		}
-
-		elm_object_style_set(tg, "on&off");
-		evas_object_propagate_events_set(tg, EINA_FALSE);
-		/*evas_object_smart_callback_add(tg, "changed", __setting_location_wifi_cb, ad); */
-
-		evas_object_show(tg);
-		elm_layout_content_set(ly, "elm.swallow.content", tg);
-		ad->gi_wifi_check = tg;
-	}
-	return ly;
-}
-
-static char *__setting_location_gl_text_get_title(void *data, Evas_Object *obj, const char *part)
-{
-	if (!g_strcmp0(part, "elm.text.main")) {
-		return strdup(P_("IDS_ST_BODY_LOCATION_SOURCES_ABB"));
-	}
-	return NULL;
-}
-
-static Evas_Object *__setting_location_create_navibar(Evas_Object *parent)
-{
-	LS_RETURN_VAL_IF_FAILED(parent, NULL);
-	Evas_Object *naviframe = NULL;
-
-	naviframe = elm_naviframe_add(parent);
-	elm_object_part_content_set(parent, "elm.swallow.content", naviframe);
-	evas_object_show(naviframe);
-
-	return naviframe;
-}
-
-static void __setting_location_gps_sel(void *data, Evas_Object *obj, void *event_info)
-{
-	LS_RETURN_IF_FAILED(data);
-	LS_RETURN_IF_FAILED(event_info);
-	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
-
-	if (ad->gi_gps_check) {
-		Eina_Bool state = elm_check_state_get(ad->gi_gps_check);
-		if (ad->is_myloc == KEY_DISABLED) {
-			elm_check_state_set(obj, !state);
-			elm_genlist_item_selected_set((Elm_Object_Item *)event_info, EINA_FALSE);
-			return;
-		}
-		state = !state;
-		elm_check_state_set(ad->gi_gps_check, state);
-		elm_check_state_set(ad->gi_loc_check, state);
-		if (state == EINA_FALSE) {
-			ad->is_gps = KEY_DISABLED;
-			ad->is_myloc = KEY_DISABLED;
-			__setting_location_gps_set_key(ad);
-		} else {
-			int isShow = KEY_DISABLED;
-			int ret = vconf_get_int(VCONFKEY_LBS_SETTING_IS_SHOW_GPS_POPUP, &isShow);
-			if (ret != 0) {
-				LOGE("vconf_get_bool ret:%d", ret);
-				isShow = KEY_DISABLED;
-			}
-			if (isShow == KEY_ENABLED) {
-				__setting_location_create_popup(ad, LOCATION_POPUP_GPS);
-			}
-			enable_gps(ad);
-		}
-		elm_genlist_item_update(ad->gi_gps);
-		elm_genlist_item_update(ad->gi_loc);
-
-	}
-	elm_genlist_item_selected_set((Elm_Object_Item *)event_info, EINA_FALSE);
-}
-
-static char *__setting_location_myplace_group_text_get(void *data, Evas_Object *obj, const char *part)
-{
-	if (!g_strcmp0(part, "elm.text.main")) {
-		return strdup(P_("IDS_MAPS_BODY_MY_PLACES"));
-	}
-	return NULL;
-}
-
-static char *__setting_location_myplace_text_get(void *data, Evas_Object *obj, const char *part)
-{
-	if (!g_strcmp0(part, "elm.text.main.left")) {
-		return strdup(P_("IDS_MAPS_BODY_MY_PLACES"));
-	}
-	return NULL;
-}
-
-static void myplace_cb(void *data, Evas_Object *obj, void *event_info)
-{
-	app_control_h app_control = NULL;
-	app_control_create(&app_control);
-
-	app_control_set_app_id(app_control, "org.tizen.myplace");
-	app_control_add_extra_data(app_control, "caller", "lbs-setting");
-	app_control_add_extra_data(app_control, "geofence", data);
-	app_control_send_launch_request(app_control, NULL, NULL);
-
-	app_control_destroy(app_control);
-
-	elm_genlist_item_selected_set(event_info, EINA_FALSE);
-}
-
-static void __setting_location_sel(void *data, Evas_Object *obj, void *event_info)
-{
-	LS_RETURN_IF_FAILED(data);
-	LS_RETURN_IF_FAILED(event_info);
-	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
-
-	if (ad->gi_loc_check) {
-		Eina_Bool state = elm_check_state_get(ad->gi_loc_check);
-		state = !state;
-		elm_check_state_set(ad->gi_loc_check, state);
-		if (state == EINA_FALSE) {
-			ad->is_myloc = KEY_DISABLED;
-		} else {
-			ad->is_myloc = KEY_ENABLED;
-		}
-		__setting_location_myloc_set_key(ad);
-	}
-	elm_genlist_item_selected_set((Elm_Object_Item *)event_info, EINA_FALSE);
-}
-
-static char *__setting_location_text_get(void *data, Evas_Object *obj, const char *part)
-{
-	if (!g_strcmp0(part, "elm.text.main.left")) {
-		return strdup(P_("IDS_ST_MBODY_USE_CURRENT_LOCATION"));
-	}
-	return NULL;
-}
-
-
-loc_item_data_s *_setting_location_create_item_data(void *data, loc_genlist_index_e genlist_idx)
-{
-	LS_RETURN_VAL_IF_FAILED(data, NULL);
-	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
-	loc_item_data_s *item_data = NULL;
-
-	item_data = calloc(sizeof(loc_item_data_s), 1);
-	LS_RETURN_VAL_IF_FAILED(item_data, NULL);
-	item_data->sep_index = genlist_idx;
-	item_data->ad = ad;
-	return item_data;
-}
-
-static Evas_Object *__setting_location_create_gl(Evas_Object *parent, void *data)
-{
-	LS_RETURN_VAL_IF_FAILED(data, NULL);
-	LS_RETURN_VAL_IF_FAILED(parent, NULL);
-	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
-	Evas_Object *genlist = NULL;
-	genlist = elm_genlist_add(parent);
-	elm_genlist_mode_set(genlist, ELM_LIST_COMPRESS);
-
-	const char *myplace_id = "org.tizen.myplace";
-	bool preload = false;
-
-	loc_item_data_s *item_itc_loc_data = _setting_location_create_item_data(data, GENLIST_INDEX_TOP);
-	LS_RETURN_VAL_IF_FAILED(item_itc_loc_data, NULL);
-	/* Use my location */
-	ad->itc_loc = elm_genlist_item_class_new();
-	if (ad->itc_loc == NULL) {
-		g_free(item_itc_loc_data);
-		LS_LOGE("critical error : LS_RETURN_VAL_IS_FAILED");
-		return NULL;
-	}
-	ad->itc_loc->item_style = "1line";
-	ad->itc_loc->func.text_get = __setting_location_text_get;
-	ad->itc_loc->func.content_get = __setting_location_check_get;
-	ad->itc_loc->func.state_get = NULL;
-	ad->itc_loc->func.del = NULL;
-	ad->gi_loc = elm_genlist_item_append(genlist, ad->itc_loc, (void *)item_itc_loc_data, NULL, ELM_GENLIST_ITEM_NONE, __setting_location_sel, ad);
-
-	ad->itc_group_title = elm_genlist_item_class_new();
-	if (ad->itc_group_title == NULL) {
-		g_free(item_itc_loc_data);
-		g_free(ad->itc_loc);
-		LS_LOGE("critical error : LS_RETURN_VAL_IS_FAILED");
-		return NULL;
-	}
-	ad->itc_group_title->item_style = "groupindex";
-	ad->itc_group_title->func.text_get = __setting_location_gl_text_get_title;
-	ad->itc_group_title->func.content_get = NULL;
-	ad->itc_group_title->func.state_get = NULL;
-	ad->itc_group_title->func.del = NULL;
-	ad->gi_group_title = elm_genlist_item_append(genlist, ad->itc_group_title, NULL, NULL, ELM_GENLIST_ITEM_NONE, NULL, NULL);
-	elm_genlist_item_select_mode_set(ad->gi_group_title, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
-
-	loc_item_data_s *item_itc_gps_data = _setting_location_create_item_data(data, GENLIST_INDEX_CENTER);
-	if (item_itc_gps_data == NULL) {
-		g_free(item_itc_loc_data);
-		g_free(ad->itc_loc);
-		g_free(ad->itc_group_title);
-		LS_LOGE("critical error : LS_RETURN_VAL_IS_FAILED");
-		return NULL;
-	}
-	/* GPS satellite */
-	ad->itc_gps = elm_genlist_item_class_new();
-	if (ad->itc_gps == NULL) {
-		g_free(item_itc_loc_data);
-		g_free(ad->itc_loc);
-		g_free(ad->itc_group_title);
-		g_free(item_itc_gps_data);
-		LS_LOGE("critical error : LS_RETURN_VAL_IS_FAILED");
-		return NULL;
-	}
-	ad->itc_gps->item_style = "1line";
-	ad->itc_gps->func.text_get = __setting_location_gps_text_get;
-	ad->itc_gps->func.content_get = __setting_location_gps_check_get;
-	ad->itc_gps->func.state_get = NULL;
-	ad->itc_gps->func.del = NULL;
-	ad->gi_gps = elm_genlist_item_append(genlist, ad->itc_gps, (void *)item_itc_gps_data, NULL, ELM_GENLIST_ITEM_NONE, __setting_location_gps_sel, ad);
-
-	loc_item_data_s *item_itc_wifi = _setting_location_create_item_data(data, GENLIST_INDEX_BOTTOM);
-	if (item_itc_wifi == NULL) {
-		g_free(item_itc_loc_data);
-		g_free(ad->itc_loc);
-		g_free(ad->itc_group_title);
-		g_free(item_itc_gps_data);
-		g_free(ad->itc_gps);
-		LS_LOGE("critical error : LS_RETURN_VAL_IS_FAILED");
-		return NULL;
-	}
-	/* Wi-fi & mobile network */
-	ad->itc_wifi = elm_genlist_item_class_new();
-	if (ad->itc_wifi == NULL) {
-		g_free(item_itc_loc_data);
-		g_free(ad->itc_loc);
-		g_free(ad->itc_group_title);
-		g_free(item_itc_gps_data);
-		g_free(ad->itc_gps);
-		g_free(item_itc_wifi);
-		LS_LOGE("critical error : LS_RETURN_VAL_IS_FAILED");
-		return NULL;
-	}
-
-	ad->itc_wifi->item_style = "1line";
-	ad->itc_wifi->func.text_get = __setting_location_wifi_text_get;
-	ad->itc_wifi->func.content_get = __setting_location_wifi_check_get;
-	ad->itc_wifi->func.state_get = NULL;
-	ad->itc_wifi->func.del = NULL;
-
-	ad->gi_wifi = elm_genlist_item_append(genlist, ad->itc_wifi, (void *)item_itc_wifi, NULL, ELM_GENLIST_ITEM_NONE, NULL, ad);
-	elm_object_item_disabled_set(ad->gi_wifi, EINA_TRUE);
-
-	package_manager_is_preload_package_by_app_id(myplace_id, &preload);
-	if (preload == true) {
-		/* My places Group*/
-		ad->itc_group_myplace_title = elm_genlist_item_class_new();
-		if (ad->itc_group_myplace_title == NULL) {
-			g_free(item_itc_loc_data);
-			g_free(ad->itc_loc);
-			g_free(ad->itc_group_title);
-			g_free(item_itc_gps_data);
-			g_free(ad->itc_gps);
-			g_free(item_itc_wifi);
-			g_free(ad->itc_wifi);
-			LS_LOGE("critical error : LS_RETURN_VAL_IS_FAILED");
-			return NULL;
-		}
-
-		ad->itc_group_myplace_title->item_style = "groupindex";
-		ad->itc_group_myplace_title->func.text_get = __setting_location_myplace_group_text_get;
-		ad->itc_group_myplace_title->func.content_get = NULL;
-		ad->itc_group_myplace_title->func.state_get = NULL;
-		ad->itc_group_myplace_title->func.del = NULL;
-		ad->gi_group_myplace_title = elm_genlist_item_append(genlist, ad->itc_group_myplace_title, NULL, NULL, ELM_GENLIST_ITEM_NONE, NULL, NULL);
-		elm_genlist_item_select_mode_set(ad->gi_group_myplace_title, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
-
-		loc_item_data_s *item_itc_myplace_data = _setting_location_create_item_data(data, GENLIST_INDEX_BOTTOM);
-		if (item_itc_myplace_data == NULL) {
-			g_free(item_itc_loc_data);
-			g_free(ad->itc_loc);
-			g_free(ad->itc_group_title);
-			g_free(item_itc_gps_data);
-			g_free(ad->itc_gps);
-			g_free(item_itc_wifi);
-			g_free(ad->itc_wifi);
-			g_free(ad->itc_group_myplace_title);
-			LS_LOGE("critical error : LS_RETURN_VAL_IS_FAILED");
-			return NULL;
-		}
-
-		/* My places */
-		ad->itc_myplace = elm_genlist_item_class_new();
-		if (ad->itc_myplace == NULL) {
-			g_free(item_itc_loc_data);
-			g_free(ad->itc_loc);
-			g_free(ad->itc_group_title);
-			g_free(item_itc_gps_data);
-			g_free(ad->itc_gps);
-			g_free(item_itc_wifi);
-			g_free(ad->itc_wifi);
-			g_free(ad->itc_group_myplace_title);
-			g_free(item_itc_myplace_data);
-			LS_LOGE("critical error : LS_RETURN_VAL_IS_FAILED");
-			return NULL;
-		}
-		ad->itc_myplace->item_style = "1line";
-		ad->itc_myplace->func.text_get = __setting_location_myplace_text_get;
-		ad->itc_myplace->func.content_get = NULL;
-		ad->itc_myplace->func.state_get = NULL;
-		ad->itc_myplace->func.del = NULL;
-		ad->gi_myplace = elm_genlist_item_append(genlist, ad->itc_myplace, (void *)item_itc_myplace_data, NULL, ELM_GENLIST_ITEM_NONE, myplace_cb, ad);
-	}
-
-	return genlist;
-}
-
-static void _ctx_popup_dismissed_cb(void *data, Evas_Object *obj, void *event_info)
-{
-	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
-
-	if (!ad->ctx_popup) {
-		LS_LOGE("Invalid parameters");
-		return;
-	}
-
-	evas_object_del(ad->ctx_popup);
-	ad->ctx_popup = NULL;
-}
-
-static void _move_more_ctxpopup(void *data)
-{
-	LS_FUNC_ENTER
-
-	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
-
-	Evas_Coord w, h;
-	int pos = -1;
-
-	elm_win_screen_size_get(ad->win_main, NULL, NULL, &w, &h);
-	pos = elm_win_rotation_get(ad->win_main);
-
-	switch (pos) {
-		case 0:
-		case 180:
-			evas_object_move(ad->ctx_popup, w / 2, h);
-			break;
-		case 90:
-			evas_object_move(ad->ctx_popup, h / 2, w);
-			break;
-		case 270:
-			evas_object_move(ad->ctx_popup, h / 2, w);
-			break;
-	}
-}
-
-static void _rotate_more_ctxpopup_cb(void *data, Evas_Object *obj, void *event_info)
-{
-	LS_FUNC_ENTER
-	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
-	_move_more_ctxpopup(ad);
-}
-
-static void _resize_more_ctxpopup_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
-{
-	LS_FUNC_ENTER
-	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
-	_move_more_ctxpopup(ad);
-}
-
-static void __setting_location_create_more_button(void *data, Evas_Object *obj, void *event_info)
-{
-	LS_RETURN_IF_FAILED(data);
-	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
-
-	if (!ad || !ad->nf) {
-		LS_LOGE("NULL parameters.\n");
-		return;
-	}
-
-	if (ad->ctx_popup) {
-		evas_object_del(ad->ctx_popup);
-		ad->ctx_popup = NULL;
-	}
-
-	ad->ctx_popup = elm_ctxpopup_add(ad->win_main);
-	elm_object_style_set(ad->ctx_popup, "more/default");
-	eext_object_event_callback_add(ad->ctx_popup, EEXT_CALLBACK_BACK, eext_popup_back_cb, NULL);
-	eext_object_event_callback_add(ad->ctx_popup, EEXT_CALLBACK_MORE, eext_popup_back_cb, NULL);
-	evas_object_smart_callback_add(ad->ctx_popup, "dismissed", _ctx_popup_dismissed_cb, ad);
-	elm_ctxpopup_auto_hide_disabled_set(ad->ctx_popup, EINA_TRUE);
-
-	evas_object_event_callback_add(ad->nf, EVAS_CALLBACK_RESIZE, _resize_more_ctxpopup_cb, ad);
-	evas_object_smart_callback_add(elm_object_top_widget_get(ad->ctx_popup), "rotation,changed",
-									_rotate_more_ctxpopup_cb, ad);
-
-	elm_ctxpopup_item_append(ad->ctx_popup, P_("IDS_ST_HEADER_HELP"), NULL, __setting_location_help_cb, ad);
-
-	elm_ctxpopup_direction_priority_set(ad->ctx_popup, ELM_CTXPOPUP_DIRECTION_UP,
-										ELM_CTXPOPUP_DIRECTION_LEFT,
-										ELM_CTXPOPUP_DIRECTION_RIGHT,
-										ELM_CTXPOPUP_DIRECTION_DOWN);
-
-	_move_more_ctxpopup(ad);
-	evas_object_show(ad->ctx_popup);
-}
-
-static void __event_handler(const char *event_name, bundle *data, void *self)
-{
+	int ret;
+	const char *event = NULL;
+	const char *key = NULL;
 	const char *value = NULL;
+	bundle *b = NULL;
+	event = __convert_event_from_path(path);
+	key = __convert_key_from_event(event);
+	value = __convert_event_value(val);
 
-	if (g_strcmp0(event_name, SYS_EVENT_LOCATION_ENABLE_STATE) == 0) {
-		value = bundle_get_val(data, EVT_KEY_LOCATION_ENABLE_STATE);
-	} else if (g_strcmp0(event_name, SYS_EVENT_GPS_ENABLE_STATE) == 0) {
-		value = bundle_get_val(data, EVT_KEY_GPS_ENABLE_STATE);
-	} else if (g_strcmp0(event_name, SYS_EVENT_NPS_ENABLE_STATE) == 0) {
-		value = bundle_get_val(data, EVT_KEY_NPS_ENABLE_STATE);
-	}
-
-	LS_LOGD("get event state [%s]", value);
-}
-
-void __setting_location_create_view(lbs_setting_app_data *ad)
-{
-	LS_LOGD("__setting_location_create_view.");
-	LS_RETURN_IF_FAILED(ad);
-	Elm_Object_Item *navi_it = NULL;
-	Evas_Object *more_button = NULL;
-
-	ad->view_id = LOCATION_MAIN_VIEW;
-	ad->nf = __setting_location_create_navibar(ad->layout_main);
-	elm_naviframe_prev_btn_auto_pushed_set(ad->nf, EINA_FALSE);
-	eext_object_event_callback_add(ad->nf, EEXT_CALLBACK_BACK, eext_naviframe_back_cb, NULL);
-	eext_object_event_callback_add(ad->nf, EEXT_CALLBACK_MORE, eext_naviframe_more_cb, NULL);
-
-	ad->genlist = __setting_location_create_gl(ad->nf, ad);
-	LS_RETURN_IF_FAILED(ad->genlist);
-
-	evas_object_show(ad->genlist);
-
-	Evas_Object *back_btn = elm_button_add(ad->nf);
-	elm_object_style_set(back_btn, "naviframe/back_btn/default");
-	evas_object_smart_callback_add(back_btn, "clicked", __setting_location_back_cb, ad);
-
-	navi_it = elm_naviframe_item_push(ad->nf, P_("IDS_ST_BUTTON2_LOCATION"), back_btn, NULL, ad->genlist, NULL);
-
-	elm_naviframe_item_pop_cb_set(navi_it, __setting_location_pop_cb, ad);
-	/*elm_object_item_domain_part_text_translatable_set(navi_it, NULL, LBS_SETTING_PKG, EINA_TRUE); */
-
-	more_button = elm_button_add(ad->nf);
-	elm_object_style_set(more_button, "naviframe/more/default");
-	evas_object_smart_callback_add(more_button, "clicked", __setting_location_create_more_button, ad);
-	elm_object_item_part_content_set(navi_it, "toolbar_more_btn", more_button);
-
-	__setting_location_check_di(ad);
-}
-
-void _location_enabled_cb(keynode_t *key, void *data)
-{
-	LS_RETURN_IF_FAILED(data);
-	int enabled = 0;
-	vconf_get_int(VCONFKEY_LOCATION_USE_MY_LOCATION, &enabled);
-	if (enabled == KEY_DISABLED) {
-		__setting_location_set_int(VCONFKEY_LOCATION_ENABLED, KEY_DISABLED);
-	}
-}
-
-void _gps_enabled_cb(keynode_t *key, void *data)
-{
-	LS_RETURN_IF_FAILED(data);
-	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
-
-	int ret = vconf_get_int(VCONFKEY_LOCATION_ENABLED, &ad->is_gps);
-
-	if (ret != 0) {
-		LOGE("fail to get vconf key!");
-	}
-
-	if (ad->quick_gps_setting == KEY_DISABLED) {
-		if (ad->is_gps) {/* gps is on*/
-			if (!ad->is_myloc) {/* if myloc is off, should set myloc on */
-				ad->is_myloc = KEY_ENABLED;
-				elm_check_state_set(ad->gi_loc_check, EINA_TRUE);
-				__setting_location_set_int(VCONFKEY_LOCATION_USE_MY_LOCATION, ad->is_myloc);
-			}
-		} else { /* gps is off */
-			if (ad->is_myloc) {/* if myloc is on, should set myloc off.*/
-				ad->is_myloc = KEY_DISABLED;
-				elm_check_state_set(ad->gi_loc_check, EINA_FALSE);
-				__setting_location_set_int(VCONFKEY_LOCATION_USE_MY_LOCATION, ad->is_myloc);
-				elm_object_item_disabled_set(ad->gi_gps, EINA_TRUE);
-			}
-		}
-
-		elm_check_state_set(ad->gi_gps_check, ad->is_gps);
-
-		if (ad->is_gps && elm_object_item_disabled_get(ad->gi_gps) == EINA_TRUE) {
-			elm_object_item_disabled_set(ad->gi_gps, EINA_FALSE);
-		}
-		elm_genlist_item_update(ad->gi_gps);
-		elm_genlist_item_update(ad->gi_loc);
-	} else {
-		LS_LOGE("Notice: Current operation in Genlist callback function.");
-	}
-
-	ad->quick_gps_setting = KEY_DISABLED;
-}
-
-int __setting_location_init(lbs_setting_app_data *ad)
-{
-	LS_RETURN_VAL_IF_FAILED(ad, -1);
-	int ret = 0;
-
-	ret &= vconf_get_int(VCONFKEY_LOCATION_USE_MY_LOCATION, &ad->is_myloc);
-	ret &= vconf_get_int(VCONFKEY_LOCATION_ENABLED, &ad->is_gps);
-	ret &= vconf_notify_key_changed(VCONFKEY_LOCATION_USE_MY_LOCATION, _location_enabled_cb, (void *)ad);
-	ret &= vconf_notify_key_changed(VCONFKEY_LOCATION_ENABLED, _gps_enabled_cb, (void *)ad);
-
-	/* if myloc is off , and gps is on, we should set myloc on and its vconf value */
-	if (!ad->is_myloc && ad->is_gps) {
-		ad->is_myloc = KEY_ENABLED;
-		__setting_location_set_int(VCONFKEY_LOCATION_USE_MY_LOCATION, ad->is_myloc);
-	}
-	/*if gps off, should set use my location off too. */
-	if (ad->is_myloc && (!ad->is_gps)) {
-		ad->is_myloc = KEY_DISABLED;
-		__setting_location_set_int(VCONFKEY_LOCATION_USE_MY_LOCATION, ad->is_myloc);
-	}
-
-	if (eventsystem_register_event(SYS_EVENT_LOCATION_ENABLE_STATE, &ad->location_event_req_id,
-									(eventsystem_handler) __event_handler, NULL) != ES_R_OK) {
-		LS_LOGE("eventsystem_register_event failed[SYS_EVENT_LOCATION_ENABLE_STATE]");
-	}
-
-	if (eventsystem_register_event(SYS_EVENT_GPS_ENABLE_STATE, &ad->gps_event_req_id,
-									(eventsystem_handler) __event_handler, NULL) != ES_R_OK) {
-		LS_LOGE("eventsystem_register_event failed[SYS_EVENT_GPS_ENABLE_STATE]");
-	}
-
+	b = bundle_create();
+	bundle_add_str(b, key, value);
+	ret = eventsystem_request_sending_system_event(event, b);
+	bundle_free(b);
 	return ret;
 }
-
-int _setting_location_deinit(lbs_setting_app_data *ad)
-{
-	int ret = 0;
-
-	ret = vconf_ignore_key_changed(VCONFKEY_LOCATION_USE_MY_LOCATION, _location_enabled_cb);
-	ret = vconf_ignore_key_changed(VCONFKEY_LOCATION_ENABLED, _gps_enabled_cb);
-
-	if (eventsystem_unregister_event(ad->location_event_req_id) != ES_R_OK) {
-		LS_LOGE("eventsystem_unregister_event failed[SYS_EVENT_LOCATION_ENABLE_STATE]");
-	}
-
-	if (eventsystem_unregister_event(ad->gps_event_req_id) != ES_R_OK) {
-		LS_LOGE("eventsystem_unregister_event failed[SYS_EVENT_GPS_ENABLE_STATE]");
-	}
-
-	return ret;
-}
-
 
 /**
  ************************************************************************
@@ -1441,6 +1463,7 @@ static void _change_indicator_style(lbs_setting_app_data *ad, Eina_Bool isHeader
 	LS_FUNC_EXIT
 }
 
+#if 0
 static void _launch_layout_ug_cb(ui_gadget_h ug, enum ug_mode mode, void *priv)
 {
 	Evas_Object *base;
@@ -1471,6 +1494,7 @@ static void _launch_destroy_ug_cb(ui_gadget_h ug, void *priv)
 		ug_destroy(ug);
 	}
 }
+#endif
 
 static void _lbutton_click_cb(void *data, Evas_Object *obj, void *event_info)
 {
@@ -1518,15 +1542,14 @@ static void _rbutton_click_cb(void *data, Evas_Object *obj, void *event_info)
 	elm_exit();
 }
 
-static void _ea_setup_wizard_back_cb(void *data, Evas_Object *obj,
-									 void *event_info)
+static void _ea_setup_wizard_back_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	LS_FUNC_ENTER
-	/*	LS_RETURN_IF_FAILED(data); */
-	/*	if ((int)evas_object_data_get(obj, CURRENT_SCREEN_TYPE_ID) != LOCATION_WIZARD_VIEW) { */
-	/*		eext_naviframe_back_cb(data, obj, event_info); */
-	/*		return; */
-	/*	} */
+	LS_RETURN_IF_FAILED(data);
+	if ((int)evas_object_data_get(obj, CURRENT_SCREEN_TYPE_ID) != LOCATION_WIZARD_VIEW) {
+		eext_naviframe_back_cb(data, obj, event_info);
+		return;
+	}
 	_lbutton_click_cb(data, obj, event_info);
 	LS_FUNC_EXIT
 }
@@ -1534,6 +1557,7 @@ static void _ea_setup_wizard_back_cb(void *data, Evas_Object *obj,
 static void __setting_location_wizard_location_privicy_ug(void *data, Evas_Object *obj, void *event_info)
 {
 	LS_FUNC_ENTER
+#if 0
 	LS_RETURN_IF_FAILED(data);
 	app_control_h service;
 	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
@@ -1563,10 +1587,10 @@ static void __setting_location_wizard_location_privicy_ug(void *data, Evas_Objec
 	app_control_destroy(service);
 	free(cbs);
 	LS_FUNC_EXIT
+#endif
 }
 
-#ifndef WAYLAND
-/*
+#if 0
 void __set_window_top(lbs_setting_app_data *ad)
 {
 	LS_FUNC_ENTER
@@ -1575,15 +1599,14 @@ void __set_window_top(lbs_setting_app_data *ad)
 	utilx_set_system_notification_level(ecore_x_display_get(), w, UTILX_NOTIFICATION_LEVEL_LOW);
 	LS_FUNC_EXIT
 }
-*/
 #endif
 
-static void _check_cb(void *data, Evas_Object *obj, void *event_info)
+static void _setting_wizard_check_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	LS_RETURN_IF_FAILED(data);
 	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
-	LS_RETURN_IF_FAILED(ad->loc_check);
 
+	LS_RETURN_IF_FAILED(ad->loc_check);
 	Evas_Object *check = ad->loc_check;
 
 	if (check) {
@@ -1607,7 +1630,7 @@ static void _check_cb(void *data, Evas_Object *obj, void *event_info)
 	}
 }
 
-static char *_itc1_text_get(void *data, Evas_Object *obj, const char *part)
+static char *_setting_wizard_text_get(void *data, Evas_Object *obj, const char *part)
 {
 	LS_FUNC_ENTER
 
@@ -1617,12 +1640,9 @@ static char *_itc1_text_get(void *data, Evas_Object *obj, const char *part)
 	return NULL;
 }
 
-static Evas_Object *_itc1_check_get(void *data, Evas_Object *obj, const char *part)
+static Evas_Object *_setting_wizard_check_get(void *data, Evas_Object *obj, const char *part)
 {
-	LS_FUNC_ENTER
-
-	loc_item_data_s *item_data = (loc_item_data_s *)data;
-	lbs_setting_app_data *ad = (lbs_setting_app_data *)item_data->ad;
+	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
 	Evas_Object *ly = NULL;
 
 	LS_LOGD("part:%s", part);
@@ -1639,17 +1659,15 @@ static Evas_Object *_itc1_check_get(void *data, Evas_Object *obj, const char *pa
 		if (ret != 0) {
 			LOGE("fail to get vconf key!");
 		}
-		if (value == KEY_DISABLED) {
-			elm_check_state_set(ad->loc_check, EINA_FALSE);
-		} else {
+		if (value) {
 			elm_check_state_set(ad->loc_check, EINA_TRUE);
+		} else {
+			elm_check_state_set(ad->loc_check, EINA_FALSE);
 		}
 		elm_object_style_set(ad->loc_check, "on&off");
 		evas_object_propagate_events_set(ad->loc_check, EINA_FALSE);
-		evas_object_smart_callback_add(ad->loc_check, "changed", _check_cb, ad);
-
+		evas_object_smart_callback_add(ad->loc_check, "changed", _setting_wizard_check_cb, ad);
 		evas_object_show(ad->loc_check);
-
 		elm_layout_content_set(ly, "elm.swallow.content", ad->loc_check);
 	}
 
@@ -1701,29 +1719,16 @@ Evas_Object *__setting_location_wizard_view(lbs_setting_app_data *ad)
 
 	Evas_Object *genlist = elm_genlist_add(ad->nf);
 	elm_genlist_mode_set(genlist, ELM_LIST_COMPRESS);
-#ifndef WAYLAND
-	elm_genlist_realization_mode_set(genlist, EINA_TRUE);
-#endif
 	elm_object_part_content_set(layout, "wizard.genlist", genlist);
 	evas_object_show(genlist);
 
-	Elm_Genlist_Item_Class *itc1;
+	Elm_Genlist_Item_Class *itc_wizard;
 
-	loc_item_data_s *item_itc_loc_data = _setting_location_create_item_data(ad, 1);
-	LS_RETURN_VAL_IF_FAILED(item_itc_loc_data, NULL);
-	itc1 = elm_genlist_item_class_new();
-	if (itc1 == NULL) {
-		g_free(item_itc_loc_data);
-		LS_LOGE("critical error : LS_RETURN_VAL_IS_FAILED");
-		return NULL;
-	}
-
-	itc1->item_style = "1line";
-	itc1->func.text_get = _itc1_text_get;
-	itc1->func.content_get = _itc1_check_get;
-	itc1->func.state_get = NULL;
-	itc1->func.del = NULL;
-	ad->itc_1 = elm_genlist_item_append(genlist, itc1, (void *)(item_itc_loc_data), NULL, ELM_GENLIST_ITEM_NONE, NULL, ad);
+	itc_wizard = elm_genlist_item_class_new();
+	itc_wizard->item_style = "1line";
+	itc_wizard->func.text_get = _setting_wizard_text_get;
+	itc_wizard->func.content_get = _setting_wizard_check_get;
+	ad->itc_1 = elm_genlist_item_append(genlist, itc_wizard, (void *)ad, NULL, ELM_GENLIST_ITEM_NONE, NULL, ad);
 	elm_genlist_item_select_mode_set(ad->itc_1, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
 
@@ -1757,7 +1762,6 @@ Evas_Object *__setting_location_wizard_view(lbs_setting_app_data *ad)
 	ad->allow_scroller = allow_scroller;
 	elm_scroller_bounce_set(allow_scroller, EINA_FALSE, EINA_TRUE);
 	elm_scroller_policy_set(allow_scroller, ELM_SCROLLER_POLICY_OFF, ELM_SCROLLER_POLICY_AUTO);
-	/*	elm_object_style_set(allow_scroller, "list_effect"); */
 	evas_object_show(allow_scroller);
 
 	Evas_Object *allow_label = elm_label_add(allow_scroller);

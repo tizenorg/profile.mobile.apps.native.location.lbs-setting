@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns="http://tizen.org/ns/packages" package="org.tizen.setting-location" version="1.0.21" install-location="internal-only">
+<manifest xmlns="http://tizen.org/ns/packages" package="org.tizen.setting-location" version="1.0.25" install-location="internal-only">
 	<label>Location</label>
 	<author email="youngae.kang@samsung.com" href="www.samsung.com">Youngae kang</author>
-	<author email="sena06.kim@samsung.com" href="www.samsung.com">Minjune Kim</author>
-	<author email="ykernel.jeon@samsung.com" href="www.samsung.com">Youngho Jeon</author>
+	<author email="kj7.sung@samsung.com" href="www.samsung.com">Kyoungjun Sung</author>
 	<author email="minseo.park@samsung.com" href="www.samsung.com">Minseo Park</author>
 	<description>Location setting application</description>
 	<privileges>
 		<privilege>http://tizen.org/privilege/application.launch</privilege>
 		<privilege>http://tizen.org/privilege/location.enable</privilege>
 		<privilege>http://tizen.org/privilege/haptic</privilege>
-		<privilege>http://tizen.org/privilege/packagemanager.info</privilege>
 	</privileges>
-	<ui-application appid="org.tizen.setting-location" exec="/usr/apps/org.tizen.setting-location/bin/setting-location" nodisplay="true" multiple="false" type="capp" taskmanage="false">
+	<ui-application appid="org.tizen.setting-location" exec="/usr/apps/org.tizen.setting-location/bin/setting-location" nodisplay="true" multiple="false" type="capp" taskmanage="false" launch_mode="caller">
 		<label>Location setting</label>
 		<application-service>
 			<operation name="http://tizen.org/appcontrol/operation/configure/location"/>
+			<operation name="http://tizen.org/appcontrol/operation/setting/location"/>
 		</application-service>
 	</ui-application>
 </manifest>

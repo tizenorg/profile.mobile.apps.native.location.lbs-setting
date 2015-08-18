@@ -29,13 +29,17 @@ IF("${CMAKE_BUILD_TYPE}" STREQUAL "")
 ENDIF("${CMAKE_BUILD_TYPE}" STREQUAL "")
 MESSAGE("Build type: ${CMAKE_BUILD_TYPE}")
 
+IF (ENABLE_WPS)
+ADD_DEFINITIONS("-DTIZEN_FEATURE_WPS")
+ENDIF (ENABLE_WPS)
+
 INCLUDE(FindPkgConfig)
 
 # Check external libraries
 INCLUDE(FindPkgConfig)
 MACRO(PKG_CONFIG E_NAME A_PKG)
 	SET(${E_NAME} ${A_PKG})
-	pkg_check_modules(${E_NAME} "REQUIRED" ${A_PKG} efl-assist ui-gadget-1 sensor edbus bundle eventsystem)
+	pkg_check_modules(${E_NAME} "REQUIRED" ${A_PKG} efl-assist ui-gadget-1 sensor edbus bundle eventsystem capi-system-info)
 ENDMACRO(PKG_CONFIG)
 
 PKG_CONFIG(E_APPFW				"capi-appfw-application")
@@ -50,10 +54,8 @@ PKG_CONFIG(E_DLOG				"dlog")
 PKG_CONFIG(E_VCONF				"vconf")
 PKG_CONFIG(E_APPCORE_EFL		"appcore-efl")
 PKG_CONFIG(E_ECORE				"ecore")
-PKG_CONFIG(E_ECORE_WAYLAND		"ecore-wayland")
 PKG_CONFIG(E_SYSPOPUP			"syspopup")
 PKG_CONFIG(E_FEEDBACK			"feedback")
-PKG_CONFIG(E_PKGMGR				"capi-appfw-package-manager")
 
 
 SET(EXTRA_CFLAGS "")
@@ -75,8 +77,6 @@ ENDIF(WAYLAND_SUPPORT)
 INSTALL(DIRECTORY DESTINATION ${DATADIR})
 
 # install smack rule file
-INSTALL(FILES ${CMAKE_SOURCE_DIR}/org.tizen.setting-location.efl DESTINATION /etc/smack/accesses.d)
-
 INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/resources/data/xml/ DESTINATION /usr/apps/org.tizen.setting-location/res FILES_MATCHING PATTERN "*.xml")
 
 ADD_SUBDIRECTORY(src)

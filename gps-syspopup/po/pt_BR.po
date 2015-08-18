@@ -10,6 +10,9 @@ msgstr "Serviços de localização"
 msgid "IDS_ST_SK_PREVIOUS"
 msgstr "Anterior"
 
+msgid "IDS_MAPS_BODY_MY_PLACES"
+msgstr "Meus locais"
+
 msgid "IDS_ST_BUTTON_OK"
 msgstr "OK"
 
@@ -82,3 +85,5 @@ msgstr "Perm. p/ uso info. localização"
 msgid "IDS_ST_POP_YOUR_LOCATION_DATA_INCLUDING_GPS_DATA_WILL_BE_USED_BY_RELEVANT_APPLICATIONS"
 msgstr "Seus dados de localização, incluindo os dados do GPS, serão usados pelos aplicativos pertinentes."
 
+msgid "IDS_POSITIONING_CONSENT_BODY"
+msgstr "Seu dispositivo utiliza tecnologias de posicionamento fornecidas pelo HERE. Para oferecer os serviços de posicionamento e melhorar sua qualidade o HERE coleta informações sobre torres de celular e hotspots (Wi-Fi) próximos ao local atual, sempre que a sua posição é identificada. As informações coletadas são usadas para analisar e melhorar a utilização do serviço, nunca para identificá-lo pessoalmente. Ao continuar você concorda com os Termos de serviço da plataforma HERE: %se com a Política de privacidade: %s"

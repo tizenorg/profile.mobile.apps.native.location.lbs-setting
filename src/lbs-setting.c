@@ -22,7 +22,6 @@
 #include <app.h>
 #include <glib.h>
 #include <vconf.h>
-//#include <Ecore_X.h>
 #include <Elementary.h>
 #include <lbs-setting-common.h>
 #include <Elementary.h>
@@ -54,7 +53,7 @@ void lbs_setting_common_destroy_app_data(void)
 	return;
 }
 
-#ifndef WAYLAND
+#if 0
 static Eina_Bool _lbs_window_transient_cb(void *data, int type, void *eventinfo)
 {
 	LS_FUNC_ENTER
@@ -185,7 +184,7 @@ static void _app_control_cb(app_control_h app_control, void *user_data)
 	int orientation = _get_orientation();
 	elm_win_rotation_with_resize_set(ad->win_main, orientation);
 
-#ifndef WAYLAND
+#if 0
 	unsigned int parent_xwin_id = 0;
 	app_control_get_window(app_control, &parent_xwin_id);
 	if (parent_xwin_id) {

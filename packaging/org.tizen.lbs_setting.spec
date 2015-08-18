@@ -4,7 +4,7 @@
 
 Name:       org.tizen.setting-location
 Summary:    location setting
-Version:    1.0.21
+Version:    1.0.25
 Release:    1
 Group:      Applications/Location
 License:    Apache-2.0
@@ -21,14 +21,13 @@ BuildRequires: pkgconfig(vconf)
 BuildRequires: pkgconfig(appcore-efl)
 BuildRequires: pkgconfig(ecore)
 BuildRequires: pkgconfig(edbus)
-BuildRequires: pkgconfig(ecore-wayland)
 BuildRequires: pkgconfig(syspopup)
 BuildRequires: pkgconfig(syspopup-caller)
 BuildRequires: pkgconfig(feedback)
 BuildRequires: pkgconfig(sensor)
 BuildRequires: pkgconfig(bundle)
 BuildRequires: pkgconfig(eventsystem)
-BuildRequires: pkgconfig(capi-appfw-package-manager)
+BuildRequires: pkgconfig(capi-system-info)
 BuildRequires: edje-bin
 BuildRequires: cmake
 BuildRequires: gettext-tools
@@ -58,12 +57,15 @@ export CFLAGS="$CFLAGS -DTIZEN_DEBUG_ENABLE"
 export CXXFLAGS="$CXXFLAGS -DTIZEN_DEBUG_ENABLE"
 export FFLAGS="$FFLAGS -DTIZEN_DEBUG_ENABLE"
 
-%if %{with wayland}
+#%if %{with wayland}
 export WAYLAND_SUPPORT=On
-%else
-export WAYLAND_SUPPORT=Off
-%endif
+#%else
+#export WAYLAND_SUPPORT=Off
+#%endif
 
+%if 0%{?model_build_feature_location_position_wps}
+	-DENABLE_WPS=YES
+%endif
 
 cmake . -DCMAKE_INSTALL_PREFIX=%{PREFIX} -DCMAKE_INSTALL_RW_PREFIX=%{RW_PREFIX} -DWAYLAND_SUPPORT=${WAYLAND_SUPPORT} \
 
@@ -83,15 +85,15 @@ mkdir -p /usr/ug/res/locale/
 ln -sf /usr/bin/ug-client /usr/ug/bin/setting-location-efl
 
 %if 0%{?model_build_feature_location_position_wps}
-	vconftool2 set -t int "db/location/setting/NetworkEnabled" "1" -s "tizen::vconf::location::enable" -i -g 6514 -f
+	vconftool set -t int "db/location/setting/NetworkEnabled" "1" -s "tizen::vconf::location::enable" -i -g 6514 -f
 %else
-	vconftool2 set -t int "db/location/setting/NetworkEnabled" "0" -s "tizen::vconf::location::enable" -i -g 6514 -f
+	vconftool set -t int "db/location/setting/NetworkEnabled" "0" -s "tizen::vconf::location::enable" -i -g 6514 -f
 %endif
 
 %if "%{profile}" == "wearable"
-	vconftool2 set -t int "db/location/setting/GpsPopup" "0" -s "tizen::vconf::location::enable" -i -g 6514 -f
+	vconftool set -t int "db/location/setting/GpsPopup" "0" -s "tizen::vconf::location::enable" -i -g 6514 -f
 %else
-	vconftool2 set -t int "db/location/setting/GpsPopup" "1" -s "tizen::vconf::location::enable" -i -g 6514 -f
+	vconftool set -t int "db/location/setting/GpsPopup" "1" -s "tizen::vconf::location::enable" -i -g 6514 -f
 %endif
 
 %postun -p /sbin/ldconfig
@@ -101,7 +103,6 @@ ln -sf /usr/bin/ug-client /usr/ug/bin/setting-location-efl
 %manifest org.tizen.setting-location.manifest
 %defattr(-,root,root,-)
 /usr/apps/org.tizen.setting-location/*
-/etc/smack/accesses.d/org.tizen.setting-location.efl
 %defattr(-,root,root,757)
 %{appdir}/data/
 %{appdir}/res/locale/*/*/*
@@ -118,4 +119,3 @@ ln -sf /usr/bin/ug-client /usr/ug/bin/setting-location-efl
 /usr/apps/org.tizen.gps-syspopup/res/locale
 /usr/apps/org.tizen.gps-syspopup/res/edje
 /usr/share/packages/org.tizen.gps-syspopup.xml
-/etc/smack/accesses.d/org.tizen.gps-syspopup.efl

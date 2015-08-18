@@ -138,11 +138,6 @@ typedef enum {
 }
 loc_genlist_index_e;
 
-typedef struct _loc_item_data_s {
-	void *ad;
-	loc_genlist_index_e	sep_index;/** used for genlist item index */
-} loc_item_data_s;
-
 
 typedef struct appdata {
 	Evas_Object *ug;
@@ -158,7 +153,6 @@ typedef struct appdata {
 
 	Evas_Object *win_main;
 	Evas_Object *conformant;
-	unsigned int xid;
 	Evas_Object *bg;
 	Evas_Object *layout_main;
 	Evas_Object *nf;
@@ -170,7 +164,7 @@ typedef struct appdata {
 	Evas_Object *base;
 	Evas_Object *genlist;
 	Evas_Object *gps_popup;
-	Evas_Object *use_my_location_popup;
+	Evas_Object *wifi_popup;
 	Evas_Object *ctx_popup;
 	Evas_Object *disagree_btn[3];
 	Evas_Object *agree_btn[3];
@@ -180,23 +174,11 @@ typedef struct appdata {
 	Evas_Object *gi_wifi_check;
 	Evas_Object *wizard_check;
 
-	Elm_Object_Item *gi_loc, *gi_gps, *gi_wifi, *gi_group_title, *gi_group_myplace_title, *gi_myplace;
-	Elm_Object_Item *gi_help, *gi_msg, *gi_gps_sep;
-	Elm_Object_Item *gi_top_sep, *gi_mid_sep, *gi_bot_sep, *gi_end_sep;
-	Elm_Object_Item *gi_lat, *gi_long, *gi_alt, *gi_speed;
-	Elm_Genlist_Item_Class *itc_loc, *itc_gps, *itc_wifi, *itc_help, *itc_group_title, *itc_group_myplace_title, *itc_myplace;
-	Elm_Genlist_Item_Class *itc_help_msg;
-	Elm_Genlist_Item_Class *itc_top_sep, *itc_mid_sep, *itc_bot_sep, *itc_gps_sep, *itc_end_sep;
-	Elm_Genlist_Item_Class *itc_lat, *itc_long, *itc_alt, *itc_speed;
-	int is_myloc, is_gps;
-	location_manager_h loc;
-	double latitude;
-	double longitude;
-	double altitude;
-	double speed;
+	Elm_Object_Item *gi_loc, *gi_gps, *gi_wifi, *gi_group_title, *gi_myplace_title, *gi_myplace;
+	Elm_Genlist_Item_Class *itc_loc, *itc_gps, *itc_wifi,  *itc_title, *itc_myplace_title, *itc_myplace;
+	bool is_myloc, is_gps, is_wifi;
+	bool quick_panel_setting;
 	int view_id;
-	int quick_gps_setting;
-	int theme;
 	unsigned int location_event_req_id, gps_event_req_id;;
 
 	Evas_Object *elm_conform;
