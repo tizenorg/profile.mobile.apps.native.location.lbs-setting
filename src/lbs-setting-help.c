@@ -109,7 +109,7 @@ void __setting_location_help_create_seperator(Evas_Object *genlist, Elm_Gen_Item
 	LS_RETURN_IF_FAILED(itc_separator);
 	Elm_Object_Item *item = NULL;
 
-	itc_separator->item_style = HELP_SEPERATOR_STYLE;
+	itc_separator->item_style = "multiline";
 	itc_separator->func.text_get = NULL;
 	itc_separator->func.content_get = NULL;
 	itc_separator->func.state_get = NULL;
@@ -121,7 +121,7 @@ void __setting_location_help_create_seperator(Evas_Object *genlist, Elm_Gen_Item
 
 static char *_gps_help_text_get(void *data, Evas_Object *obj, const char *part)
 {
-	if (!g_strcmp0(part, "elm.text.main")) {
+	if (!g_strcmp0(part, "elm.text")) {
 		return strdup(P_(help_info[0]));
 	} else if (!g_strcmp0(part, "elm.text.multiline")) {
 		return strdup(P_(help_info[1]));
@@ -131,7 +131,7 @@ static char *_gps_help_text_get(void *data, Evas_Object *obj, const char *part)
 
 static char *_wps_help_text_get(void *data, Evas_Object *obj, const char *part)
 {
-	if (!g_strcmp0(part, "elm.text.main")) {
+	if (!g_strcmp0(part, "elm.text")) {
 		return strdup(P_(help_info[2]));
 	} else if (!g_strcmp0(part, "elm.text.multiline")) {
 		return strdup(P_(help_info[3]));
@@ -161,7 +161,7 @@ void _setting_location_help_view(void *data)
 		return;
 	}
 
-	itc_help_gps->item_style = "multiline_sub.main";
+	itc_help_gps->item_style = "multiline";
 	itc_help_gps->func.text_get = _gps_help_text_get;
 	itc_help_gps->func.content_get = NULL;
 	itc_help_gps->func.state_get = NULL;
@@ -177,7 +177,7 @@ void _setting_location_help_view(void *data)
 		return;
 	}
 
-	itc_help_wps->item_style = "multiline_sub.main";
+	itc_help_wps->item_style = "multiline";
 	itc_help_wps->func.text_get = _wps_help_text_get;
 	itc_help_wps->func.content_get = NULL;
 	itc_help_wps->func.state_get = NULL;
