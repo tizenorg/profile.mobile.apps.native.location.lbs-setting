@@ -42,9 +42,9 @@ char *_gl_label_get(void *data, Evas_Object *obj, const char *part)
 
 	LS_RETURN_VAL_IF_FAILED(part, "NULL");
 
-	if (!strcmp(part, "elm.text.1") || !strcmp(part, "elm.text")) {
+	if (!strcmp(part, "elm.text")) {
 		label = STR_LOCATION;
-	} else if (!strcmp(part, "elm.text.2")) {
+	} else if (!strcmp(part, "elm.text.sub")) {
 		gboolean is_location_on = FALSE;
 
 		vconf_get_int(VCONFKEY_LOCATION_ENABLED, &is_location_on);
@@ -67,7 +67,7 @@ Evas_Object *_gl_check_get(void *data, Evas_Object *obj, const char *part)
 	Evas_Object *check = NULL;
 	gboolean is_location_on = FALSE;
 
-	if (!strcmp(part, "elm.icon")) {
+	if (!strcmp(part, "elm.swallow.icon.1")) {
 		check = elm_check_add(obj);
 		elm_object_style_set(check, "list");
 		evas_object_size_hint_weight_set(check, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
@@ -153,7 +153,7 @@ gboolean view_location_update(void)
 	Elm_Genlist_Item_Class *itc = elm_genlist_item_class_new();
 	LS_RETURN_VAL_IF_FAILED(itc, FALSE);
 
-	itc->item_style = "2text.1icon.1";
+	itc->item_style = "multiline";
 	itc->func.text_get = _gl_label_get;
 	itc->func.content_get = _gl_check_get;
 	itc->func.del = _gl_del;

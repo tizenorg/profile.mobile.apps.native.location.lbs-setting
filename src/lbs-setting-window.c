@@ -23,8 +23,6 @@
 #include <ui-gadget.h>
 #include <glib.h>
 #include <vconf.h>
-//#include <Ecore_X.h>
-//#include <utilX.h>
 #include <Elementary.h>
 #include <lbs-setting-common.h>
 #include <libintl.h>
@@ -526,7 +524,7 @@ void location_wifi_popup(void *data)
 
 static char *__setting_location_title_text_get(void *data, Evas_Object *obj, const char *part)
 {
-	if (!g_strcmp0(part, "elm.text.main")) {
+	if (!g_strcmp0(part, "elm.text")) {
 		return strdup(P_("IDS_ST_BODY_LOCATION_SOURCES_ABB"));
 	}
 	return NULL;
@@ -534,7 +532,7 @@ static char *__setting_location_title_text_get(void *data, Evas_Object *obj, con
 
 static char *__setting_location_loc_text_get(void *data, Evas_Object *obj, const char *part)
 {
-	if (!g_strcmp0(part, "elm.text.main.left")) {
+	if (!g_strcmp0(part, "elm.text")) {
 		return strdup(P_("IDS_ST_MBODY_USE_CURRENT_LOCATION"));
 	}
 	return NULL;
@@ -542,7 +540,7 @@ static char *__setting_location_loc_text_get(void *data, Evas_Object *obj, const
 
 static char *__setting_location_gps_text_get(void *data, Evas_Object *obj, const char *part)
 {
-	if (!g_strcmp0(part, "elm.text.main.left")) {
+	if (!g_strcmp0(part, "elm.text")) {
 		return strdup(P_("IDS_ST_BODY_GPS"));
 	}
 	return NULL;
@@ -550,7 +548,7 @@ static char *__setting_location_gps_text_get(void *data, Evas_Object *obj, const
 
 static char *__setting_location_wifi_text_get(void *data, Evas_Object *obj, const char *part)
 {
-	if (!g_strcmp0(part, "elm.text.main.left")) {
+	if (!g_strcmp0(part, "elm.text")) {
 		return strdup(P_("IDS_ST_BODY_WIRELESS_NETWORKS_ABB"));
 	}
 	return NULL;
@@ -641,7 +639,7 @@ static Evas_Object *__setting_location_loc_check_get(void *data, Evas_Object *ob
 	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
 	Evas_Object *ly = NULL;
 
-	if (!strcmp(part, "elm.icon.2")) {
+	if (!strcmp(part, "elm.swallow.icon.1")) {
 		ly = elm_layout_add(obj);
 		elm_layout_theme_set(ly, "layout", "list/C/type.3", "default");
 		ad->gi_loc_check = elm_check_add(ly);
@@ -673,7 +671,7 @@ static Evas_Object *__setting_location_gps_check_get(void *data, Evas_Object *ob
 	Evas_Object *ly = NULL;
 	Evas_Object *tg = NULL;
 
-	if (!strcmp(part, "elm.icon.2")) {
+	if (!strcmp(part, "elm.swallow.icon.1")) {
 		ly = elm_layout_add(obj);
 		elm_layout_theme_set(ly, "layout", "list/C/type.3", "default");
 		tg = elm_check_add(ly);
@@ -708,7 +706,7 @@ static Evas_Object *__setting_location_wifi_check_get(void *data, Evas_Object *o
 	Evas_Object *tg = NULL;
 	Evas_Object *ly = NULL;
 
-	if (!strcmp(part, "elm.icon.2")) {
+	if (!strcmp(part, "elm.swallow.icon.1")) {
 		ly = elm_layout_add(obj);
 		elm_layout_theme_set(ly, "layout", "list/C/type.3", "default");
 		tg = elm_check_add(ly);
@@ -828,7 +826,7 @@ static Evas_Object *__setting_location_create_navibar(Evas_Object *parent)
 
 static char *__setting_myplace_group_text_get(void *data, Evas_Object *obj, const char *part)
 {
-	if (!g_strcmp0(part, "elm.text.main")) {
+	if (!g_strcmp0(part, "elm.text")) {
 		return strdup(P_("IDS_MAPS_BODY_MY_PLACES"));
 	}
 	return NULL;
@@ -836,7 +834,7 @@ static char *__setting_myplace_group_text_get(void *data, Evas_Object *obj, cons
 
 static char *__setting_myplace_text_get(void *data, Evas_Object *obj, const char *part)
 {
-	if (!g_strcmp0(part, "elm.text.main.left")) {
+	if (!g_strcmp0(part, "elm.text")) {
 		return strdup(P_("IDS_MAPS_BODY_MY_PLACES"));
 	}
 	return NULL;
@@ -874,7 +872,7 @@ static Evas_Object *__setting_location_create_gl(Evas_Object *parent, void *data
 		LS_LOGE("critical error : LS_RETURN_VAL_IS_FAILED");
 		return NULL;
 	}
-	ad->itc_loc->item_style = "1line";
+	ad->itc_loc->item_style = "type1";
 	ad->itc_loc->func.text_get = __setting_location_loc_text_get;
 	ad->itc_loc->func.content_get = __setting_location_loc_check_get;
 	ad->gi_loc = elm_genlist_item_append(genlist, ad->itc_loc, (void *)ad, NULL, ELM_GENLIST_ITEM_NONE, __setting_location_loc_sel, ad);
@@ -886,7 +884,7 @@ static Evas_Object *__setting_location_create_gl(Evas_Object *parent, void *data
 		LS_LOGE("critical error : LS_RETURN_VAL_IS_FAILED");
 		return NULL;
 	}
-	ad->itc_title->item_style = "groupindex";
+	ad->itc_title->item_style = "group_index";
 	ad->itc_title->func.text_get = __setting_location_title_text_get;
 	ad->gi_group_title = elm_genlist_item_append(genlist, ad->itc_title, NULL, NULL, ELM_GENLIST_ITEM_NONE, NULL, NULL);
 	elm_genlist_item_select_mode_set(ad->gi_group_title, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
@@ -899,7 +897,7 @@ static Evas_Object *__setting_location_create_gl(Evas_Object *parent, void *data
 		LS_LOGE("critical error : LS_RETURN_VAL_IS_FAILED");
 		return NULL;
 	}
-	ad->itc_gps->item_style = "1line";
+	ad->itc_gps->item_style = "type1";
 	ad->itc_gps->func.text_get = __setting_location_gps_text_get;
 	ad->itc_gps->func.content_get = __setting_location_gps_check_get;
 	ad->gi_gps = elm_genlist_item_append(genlist, ad->itc_gps, (void *)ad, NULL, ELM_GENLIST_ITEM_NONE, __setting_location_gps_sel, ad);
@@ -914,7 +912,7 @@ static Evas_Object *__setting_location_create_gl(Evas_Object *parent, void *data
 		return NULL;
 	}
 
-	ad->itc_wifi->item_style = "1line";
+	ad->itc_wifi->item_style = "type1";
 	ad->itc_wifi->func.text_get = __setting_location_wifi_text_get;
 	ad->itc_wifi->func.content_get = __setting_location_wifi_check_get;
 	ad->gi_wifi = elm_genlist_item_append(genlist, ad->itc_wifi, ad, NULL, ELM_GENLIST_ITEM_NONE, __setting_location_wifi_sel, ad);
@@ -937,7 +935,7 @@ static Evas_Object *__setting_location_create_gl(Evas_Object *parent, void *data
 			LS_LOGE("critical error : LS_RETURN_VAL_IS_FAILED");
 			return NULL;
 		}
-		ad->itc_myplace_title->item_style = "groupindex";
+		ad->itc_myplace_title->item_style = "group_index";
 		ad->itc_myplace_title->func.text_get = __setting_myplace_group_text_get;
 		ad->gi_myplace_title = elm_genlist_item_append(genlist, ad->itc_myplace_title, NULL, NULL, ELM_GENLIST_ITEM_NONE, NULL, NULL);
 		elm_genlist_item_select_mode_set(ad->gi_myplace_title, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
@@ -952,7 +950,7 @@ static Evas_Object *__setting_location_create_gl(Evas_Object *parent, void *data
 			LS_LOGE("critical error : LS_RETURN_VAL_IS_FAILED");
 			return NULL;
 		}
-		ad->itc_myplace->item_style = "1line";
+		ad->itc_myplace->item_style = "type1";
 		ad->itc_myplace->func.text_get = __setting_myplace_text_get;
 		ad->gi_myplace = elm_genlist_item_append(genlist, ad->itc_myplace, (void *)ad, NULL, ELM_GENLIST_ITEM_NONE, __setting_myplace_sel, ad);
 	}
@@ -1413,10 +1411,10 @@ static char *__convert_key_from_event(const char *event)
 static char *__convert_event_value(int val)
 {
 	char *value = NULL;
-	if (val == KEY_DISABLED) {
-		value = g_strdup(EVT_VAL_GPS_DISABLED);
-	} else {
+	if (val == KEY_ENABLED) {
 		value = g_strdup(EVT_VAL_GPS_ENABLED);
+	} else {
+		value = g_strdup(EVT_VAL_GPS_DISABLED);
 	}
 	return value;
 }
@@ -1634,7 +1632,7 @@ static char *_setting_wizard_text_get(void *data, Evas_Object *obj, const char *
 {
 	LS_FUNC_ENTER
 
-	if (!g_strcmp0(part, "elm.text.main.left")) {
+	if (!g_strcmp0(part, "elm.text")) {
 		return strdup(P_("IDS_ST_MBODY_USE_CURRENT_LOCATION"));
 	}
 	return NULL;
@@ -1647,7 +1645,7 @@ static Evas_Object *_setting_wizard_check_get(void *data, Evas_Object *obj, cons
 
 	LS_LOGD("part:%s", part);
 
-	if (!strcmp(part, "elm.icon.2")) {
+	if (!strcmp(part, "elm.swallow.icon.1")) {
 		ly = elm_layout_add(obj);
 		elm_layout_theme_set(ly, "layout", "list/C/type.3", "default");
 
@@ -1725,12 +1723,16 @@ Evas_Object *__setting_location_wizard_view(lbs_setting_app_data *ad)
 	Elm_Genlist_Item_Class *itc_wizard;
 
 	itc_wizard = elm_genlist_item_class_new();
-	itc_wizard->item_style = "1line";
+	if (itc_wizard == NULL) {
+		LS_LOGE("itc_wizard is NULL");
+		return layout;
+	}
+
+	itc_wizard->item_style = "type1";
 	itc_wizard->func.text_get = _setting_wizard_text_get;
 	itc_wizard->func.content_get = _setting_wizard_check_get;
 	ad->itc_1 = elm_genlist_item_append(genlist, itc_wizard, (void *)ad, NULL, ELM_GENLIST_ITEM_NONE, NULL, ad);
 	elm_genlist_item_select_mode_set(ad->itc_1, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
-
 
 	Evas_Object *help_scroller = elm_scroller_add(ad->nf);
 	ad->help_scroller = help_scroller;
@@ -1756,7 +1758,6 @@ Evas_Object *__setting_location_wizard_view(lbs_setting_app_data *ad)
 	evas_object_smart_callback_add(help_label, "anchor,clicked", _anchor_clicked_cb, ad);
 	elm_object_content_set(help_scroller, help_label);
 	elm_object_part_content_set(layout, "sw.help.text", help_scroller);
-
 
 	Evas_Object *allow_scroller = elm_scroller_add(layout);
 	ad->allow_scroller = allow_scroller;
@@ -1788,7 +1789,6 @@ Evas_Object *__setting_location_wizard_view(lbs_setting_app_data *ad)
 
 	evas_object_smart_callback_add(ad->allow_button, "clicked", __setting_location_wizard_location_privicy_ug, ad);
 	elm_object_part_content_set(layout, "allow.btn", ad->allow_button);
-
 
 	Evas_Object *prev_btn = elm_button_add(ad->nf);
 	elm_object_style_set(prev_btn, "bottom");

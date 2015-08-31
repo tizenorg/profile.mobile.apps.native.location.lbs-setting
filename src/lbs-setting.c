@@ -71,6 +71,7 @@ static Eina_Bool _lbs_window_transient_cb(void *data, int type, void *eventinfo)
 }
 #endif
 
+#if 0
 static int _get_orientation()
 {
 	sensor_t sensor;
@@ -116,6 +117,7 @@ static int _get_orientation()
 
 	return rotation;
 }
+#endif
 
 static bool _app_create_cb(void *user_data)
 {
@@ -181,8 +183,10 @@ static void _app_control_cb(app_control_h app_control, void *user_data)
 		__setting_location_create_view(ad);
 	}
 
-	int orientation = _get_orientation();
-	elm_win_rotation_with_resize_set(ad->win_main, orientation);
+	if (elm_win_wm_rotation_supported_get(ad->win_main)) {
+		int rots[4] = { 0, 90, 180, 270 };	/* rotation value that app may want */
+		elm_win_wm_rotation_available_rotations_set(ad->win_main, rots, 4);
+	}
 
 #if 0
 	unsigned int parent_xwin_id = 0;
@@ -196,7 +200,7 @@ static void _app_control_cb(app_control_h app_control, void *user_data)
 	/*LS_FUNC_EXIT */
 }
 
-
+#if 0
 static void _app_device_orientation_cb(app_event_info_h event_info, void *user_data)
 {
 	LS_FUNC_ENTER
@@ -206,8 +210,12 @@ static void _app_device_orientation_cb(app_event_info_h event_info, void *user_d
 	lbs_setting_app_data *ad = (lbs_setting_app_data *)user_data;
 	app_device_orientation_e orientation;
 	app_event_get_device_orientation(event_info, &orientation);
+	if (orientation == APP_DEVICE_ORIENTATION_180) {
+		orientation = APP_DEVICE_ORIENTATION_0;
+	}
 	elm_win_rotation_with_resize_set(ad->win_main, orientation);
 }
+#endif
 
 static void _app_language_changed_cb(app_event_info_h event_info, void *user_data)
 {
@@ -233,7 +241,8 @@ int main(int argc, char *argv[])
 	event_callback.app_control = _app_control_cb;
 	event_callback.pause = _app_pause_cb;
 	event_callback.resume = _app_resume_cb;
-	ui_app_add_event_handler(&handlers[APP_EVENT_DEVICE_ORIENTATION_CHANGED], APP_EVENT_DEVICE_ORIENTATION_CHANGED, _app_device_orientation_cb, &ad);
+
+	ui_app_add_event_handler(&handlers[APP_EVENT_DEVICE_ORIENTATION_CHANGED], APP_EVENT_DEVICE_ORIENTATION_CHANGED, NULL, NULL);
 	ui_app_add_event_handler(&handlers[APP_EVENT_LANGUAGE_CHANGED], APP_EVENT_LANGUAGE_CHANGED, _app_language_changed_cb, &ad);
 
 	ret = APP_ERROR_NONE;
