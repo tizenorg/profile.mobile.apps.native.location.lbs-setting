@@ -20,7 +20,7 @@ msgid "IDS_ST_BUTTON2_LOCATION"
 msgstr "Θέση"
 
 msgid "IDS_ST_BODY_DO_NOT_SHOW_AGAIN"
-msgstr "Να μην εμφανιστεί ξανά αυτό το μήνυμα"
+msgstr "Να μην εμφανιστεί ξανά"
 
 msgid "IDS_ST_BODY_GPS"
 msgstr "GPS"
@@ -53,10 +53,10 @@ msgid "IDS_STU_BUTTON_ALLOWED_APPLICATIONS_ABB"
 msgstr "Εφαρμογές που επιτρέπονται"
 
 msgid "IDS_TPLATFORM_BODY_OFF"
-msgstr "‘Οχι"
+msgstr "Ανενεργό"
 
 msgid "IDS_TPLATFORM_BODY_ON"
-msgstr "Ναι"
+msgstr "Ενεργό"
 
 msgid "IDS_ST_OPT_GPS"
 msgstr "GPS"
@@ -86,4 +86,4 @@ msgid "IDS_ST_POP_YOUR_LOCATION_DATA_INCLUDING_GPS_DATA_WILL_BE_USED_BY_RELEVANT
 msgstr "Τα δεδομένα τοποθεσίας, συμπεριλαμβανομένων των δεδομένων GPS, θα χρησιμοποιηθούν από τις σχετικές εφαρμογές."
 
 msgid "IDS_POSITIONING_CONSENT_BODY"
-msgstr "Your device uses positioning technologies provided by HERE. To provide you with positioning services and to improve their quality, HERE collects information about nearby cell towers and Wi-Fi hot spots around your current location whenever your position is being found. The information collected is used to analyze the service and improve the use of service, but not to identify you personally. By continuing, you agree to the HERE platform Service Terms: %sand Privacy Policy: %s"
+msgstr "Η συσκευή σας χρησιμοποιεί τεχνολογίες εντοπισμού θέσης οι οποίες παρέχονται από την πλατφόρμα HERE. Αν συνεχίσετε, αποδέχεστε τους Όρους παροχής υπηρεσιών της πλατφόρμας HERE:\n%s\nκαι την Πολιτική απορρήτου:\n%s"

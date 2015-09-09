@@ -29,8 +29,7 @@
 #include <locations.h>
 #include <dlog.h>
 #include <app_control.h>
-#include <sensor_internal.h>
-#include <efl_assist.h>		/* for H/W more,back Key */
+#include <app_control_internal.h>
 #include <efl_extension.h>
 #include "lbs-setting-window.h"
 #include "lbs-setting-help.h"

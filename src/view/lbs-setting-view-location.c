@@ -19,7 +19,6 @@
  *
  */
 
-#include <efl_assist.h>
 #include <vconf.h>
 #include "lbs-setting-string.h"
 #include "lbs-setting-view-location.h"

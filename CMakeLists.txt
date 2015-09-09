@@ -30,7 +30,8 @@ ENDIF("${CMAKE_BUILD_TYPE}" STREQUAL "")
 MESSAGE("Build type: ${CMAKE_BUILD_TYPE}")
 
 IF (ENABLE_WPS)
-	ADD_DEFINITIONS("-DTIZEN_FEATURE_WPS")
+ MESSAGE("<<< WPS is enabled >>>")
+ ADD_DEFINITIONS("-DTIZEN_FEATURE_WPS")
 ENDIF (ENABLE_WPS)
 
 INCLUDE(FindPkgConfig)
@@ -39,12 +40,11 @@ INCLUDE(FindPkgConfig)
 INCLUDE(FindPkgConfig)
 MACRO(PKG_CONFIG E_NAME A_PKG)
 	SET(${E_NAME} ${A_PKG})
-	pkg_check_modules(${E_NAME} "REQUIRED" ${A_PKG} efl-assist ui-gadget-1 sensor edbus bundle eventsystem capi-system-info)
+	pkg_check_modules(${E_NAME} "REQUIRED" ${A_PKG} ui-gadget-1 edbus bundle eventsystem capi-system-info)
 ENDMACRO(PKG_CONFIG)
 
 PKG_CONFIG(E_APPFW				"capi-appfw-application")
 PKG_CONFIG(E_EVAS				"evas")
-PKG_CONFIG(E_EA					"efl-assist")
 PKG_CONFIG(E_EA_EXTENSION		"efl-extension")
 
 PKG_CONFIG(E_ELEMENTARY			"elementary")

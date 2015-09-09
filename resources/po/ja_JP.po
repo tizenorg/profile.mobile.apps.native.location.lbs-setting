@@ -86,4 +86,4 @@ msgid "IDS_ST_POP_YOUR_LOCATION_DATA_INCLUDING_GPS_DATA_WILL_BE_USED_BY_RELEVANT
 msgstr "GPSデータを含む位置情報は、関連するアプリケーションで使用されます。"
 
 msgid "IDS_POSITIONING_CONSENT_BODY"
-msgstr "Your device uses positioning technologies provided by HERE. To provide you with positioning services and to improve their quality, HERE collects information about nearby cell towers and Wi-Fi hot spots around your current location whenever your position is being found. The information collected is used to analyze the service and improve the use of service, but not to identify you personally. By continuing, you agree to the HERE platform Service Terms: %sand Privacy Policy: %s"
+msgstr "あなたの携帯は HERE が提供する位置情報技術を使用しています。継続することで、HERE プラットフォーム利用規約\n%s\nおよびプライバシーポリシー%sに合意したものとみなされます。"

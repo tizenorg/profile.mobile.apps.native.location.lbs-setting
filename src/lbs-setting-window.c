@@ -28,7 +28,6 @@
 #include <libintl.h>
 #include <locations.h>
 #include <dlog.h>
-#include <efl_assist.h> /* for H/W more,back Key */
 #include <efl_extension.h>
 #include <bundle_internal.h>
 #include <eventsystem.h>
@@ -39,7 +38,7 @@
 
 static void _anchor_clicked_cb(void *data, Evas_Object *obj, void *event_info);
 static void __setting_reply_gps_wifi_status(void *data);
-static int __eventsystem_set_value(const char *path, int val);
+static int __eventsystem_set_value(const char *path, const int val);
 void location_wifi_popup(void *data);
 
 Evas_Object *create_indicator_bg(Evas_Object *parent)
@@ -1419,12 +1418,12 @@ static char *__convert_event_value(int val)
 	return value;
 }
 
-static int __eventsystem_set_value(const char *path, int val)
+static int __eventsystem_set_value(const char *path, const int val)
 {
 	int ret;
-	const char *event = NULL;
-	const char *key = NULL;
-	const char *value = NULL;
+	char *event = NULL;
+	char *key = NULL;
+	char *value = NULL;
 	bundle *b = NULL;
 	event = __convert_event_from_path(path);
 	key = __convert_key_from_event(event);
@@ -1434,6 +1433,9 @@ static int __eventsystem_set_value(const char *path, int val)
 	bundle_add_str(b, key, value);
 	ret = eventsystem_request_sending_system_event(event, b);
 	bundle_free(b);
+	g_free(event);
+	g_free(key);
+	g_free(value);
 	return ret;
 }
 
@@ -1544,7 +1546,8 @@ static void _ea_setup_wizard_back_cb(void *data, Evas_Object *obj, void *event_i
 {
 	LS_FUNC_ENTER
 	LS_RETURN_IF_FAILED(data);
-	if ((int)evas_object_data_get(obj, CURRENT_SCREEN_TYPE_ID) != LOCATION_WIZARD_VIEW) {
+	int *screen_type = evas_object_data_get(obj, CURRENT_SCREEN_TYPE_ID);
+	if (*screen_type != LOCATION_WIZARD_VIEW) {
 		eext_naviframe_back_cb(data, obj, event_info);
 		return;
 	}

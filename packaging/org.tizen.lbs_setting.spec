@@ -4,13 +4,12 @@
 
 Name:       org.tizen.setting-location
 Summary:    location setting
-Version:    1.0.28
+Version:    1.0.31
 Release:    1
 Group:      Applications/Location
 License:    Apache-2.0
 Source0:    %{name}-%{version}.tar.gz
 BuildRequires: pkgconfig(capi-appfw-application)
-BuildRequires: pkgconfig(efl-assist)
 BuildRequires: pkgconfig(efl-extension)
 BuildRequires: pkgconfig(ui-gadget-1)
 BuildRequires: pkgconfig(elementary)
@@ -24,7 +23,6 @@ BuildRequires: pkgconfig(edbus)
 BuildRequires: pkgconfig(syspopup)
 BuildRequires: pkgconfig(syspopup-caller)
 BuildRequires: pkgconfig(feedback)
-BuildRequires: pkgconfig(sensor)
 BuildRequires: pkgconfig(bundle)
 BuildRequires: pkgconfig(eventsystem)
 BuildRequires: pkgconfig(capi-system-info)

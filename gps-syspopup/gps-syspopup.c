@@ -23,7 +23,6 @@
 #include <app.h>
 #include <glib.h>
 #include <stdio.h>
-#include <efl_assist.h>	/* for H/W more,back Key */
 #include <efl_extension.h>
 #include <E_DBus.h>
 #include <appcore-efl.h>
@@ -100,7 +99,7 @@ static char *__convert_key_from_event(const char *event)
 	return key;
 }
 
-static char *__convert_event_value(int val)
+static char *__convert_event_value(const int val)
 {
 	char *value = NULL;
 	if (val == 1) {
@@ -111,12 +110,12 @@ static char *__convert_event_value(int val)
 	return value;
 }
 
-static int __eventsystem_set_value(const char *path, int val)
+static int __eventsystem_set_value(const char *path, const int val)
 {
 	int ret;
-	const char *event = NULL;
-	const char *key = NULL;
-	const char *value = NULL;
+	char *event = NULL;
+	char *key = NULL;
+	char *value = NULL;
 	bundle *b = NULL;
 	event = __convert_event_from_path(path);
 	key = __convert_key_from_event(event);
@@ -182,7 +181,7 @@ static void _anchor_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 			break;
 		}
 
-		ret = app_control_set_app_id(app_control, "com.samsung.browser");
+		ret = app_control_set_app_id(app_control, "org.tizen.browser");
 		if(ret != APP_CONTROL_ERROR_NONE) {
 			GPS_POPUP_LOG("[Error:%d]Fail to set app id", ret);
 			break;
@@ -233,8 +232,16 @@ static void location_consent_popup_agree_cb(void *data, Evas_Object *obj, void *
 	vconf_get_int(VCONFKEY_LOCATION_USE_MY_LOCATION, &enable);
 	if (enable == 0) {
 		vconf_set_int(VCONFKEY_LOCATION_USE_MY_LOCATION, 1);
+		if (__eventsystem_set_value(VCONFKEY_LOCATION_USE_MY_LOCATION, 1) != ES_R_OK) {
+			GPS_POPUP_LOG("Fail to set event value");
+		}
 	}
+
 	vconf_set_int(VCONFKEY_LOCATION_NETWORK_ENABLED, 1);
+	if (__eventsystem_set_value(VCONFKEY_LOCATION_NETWORK_ENABLED, 1) != ES_R_OK) {
+		GPS_POPUP_LOG("Fail to set event value");
+	}
+
 	__gps_popupsend_signal_to_quickpanel(ad, "ON");
 
 	evas_object_del(ad->wireless_popup_setting);
@@ -242,6 +249,7 @@ static void location_consent_popup_agree_cb(void *data, Evas_Object *obj, void *
 	elm_exit();
 }
 #endif
+
 
 /* Callback function for the mouse up event */
 static void __mouseup_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
@@ -497,10 +505,8 @@ Evas_Object *popup_type_create(void *data, int popup_type)
 	evas_object_size_hint_weight_set(popup, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	if ((popup_type == POPUP_GPS) || (popup_type == POPUP_GPS_QP)) {
 		elm_object_domain_translatable_part_text_set(popup, "title,text", PACKAGE_NAME, "IDS_ST_HEADER_CONSENT_TO_LOCATION_INFO_USAGE_ABB");
-		elm_object_domain_translatable_text_set(popup, PACKAGE_NAME, "IDS_ST_POP_YOUR_LOCATION_DATA_INCLUDING_GPS_DATA_WILL_BE_USED_BY_RELEVANT_APPLICATIONS");
+//		elm_object_domain_translatable_text_set(popup, PACKAGE_NAME, "IDS_ST_POP_YOUR_LOCATION_DATA_INCLUDING_GPS_DATA_WILL_BE_USED_BY_RELEVANT_APPLICATIONS");
 
-#if 0
-		/* layout in syspopup is not applied */
 		/* layout */
 		Evas_Object *layout = elm_layout_add(popup);
 		elm_layout_file_set(layout, GPS_EDJ, "popup_gps_layout");
@@ -530,7 +536,6 @@ Evas_Object *popup_type_create(void *data, int popup_type)
 		elm_object_content_set(scroller, label);
 		elm_object_part_content_set(layout, "elm.swallow.content", scroller);
 		elm_object_content_set(popup, layout);
-#endif
 
 #ifdef TIZEN_FEATURE_WPS
 	} else if(popup_type == POPUP_WIRELESS_QP){
@@ -541,10 +546,34 @@ Evas_Object *popup_type_create(void *data, int popup_type)
 		snprintf(text,4096, str1, str2, str3);
 
 		elm_object_domain_translatable_part_text_set(popup, "title,text", PACKAGE_NAME, "IDS_ST_HEADER_LOCATION_LEGAL_INFORMATION_ABB");
-		elm_object_domain_translatable_text_set(popup, PACKAGE_NAME, text);
+//		elm_object_domain_translatable_text_set(popup, PACKAGE_NAME, text);
+
+		Evas_Object *layout = elm_layout_add(popup);
+		elm_layout_file_set(layout, GPS_EDJ, "popup_checkview_layout");
+		evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+
+		Evas_Object * help_scroller = elm_scroller_add(popup);
+		elm_scroller_bounce_set(help_scroller, EINA_FALSE, EINA_TRUE);
+		elm_scroller_policy_set(help_scroller, ELM_SCROLLER_POLICY_OFF, ELM_SCROLLER_POLICY_AUTO);
+		elm_object_style_set(help_scroller, "effect");
+		evas_object_show(help_scroller);
+
+		Evas_Object *label = elm_entry_add(help_scroller);
+		elm_object_style_set(label, "popup/default");
+		elm_label_line_wrap_set(label, ELM_WRAP_MIXED);
+		elm_object_text_set(label, text);
+		evas_object_size_hint_weight_set(label, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+		evas_object_size_hint_align_set(label, EVAS_HINT_FILL, EVAS_HINT_EXPAND);
+		evas_object_smart_callback_add(label, "anchor,clicked", _anchor_clicked_cb, ad);
+		elm_entry_editable_set(label, EINA_FALSE);
+		elm_entry_input_panel_enabled_set(label, EINA_FALSE);
+		elm_entry_context_menu_disabled_set(label, EINA_TRUE);
+
+		elm_object_content_set(help_scroller, label);
+		elm_object_part_content_set(layout, "elm.swallow.content", help_scroller);
+		elm_object_content_set(popup, layout);
 #endif
 	}
-
 
 	disagree_btn = elm_button_add(popup);
 	elm_object_style_set(disagree_btn, "popup");

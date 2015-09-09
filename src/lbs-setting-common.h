@@ -34,7 +34,6 @@ extern "C" {
 #endif
 #include <stdio.h>
 #include <string.h>
-#include <efl_assist.h>
 #include <efl_extension.h>
 #include <locations.h>
 

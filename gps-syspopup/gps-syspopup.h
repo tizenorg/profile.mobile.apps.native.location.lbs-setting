@@ -28,7 +28,6 @@
 #include <syspopup.h>
 
 #define PACKAGE "gps-syspopup"
-#define GPS_EDJ "/usr/apps/com.samsung.gps-syspopup/res/edje/gps.edj"
 
 #ifndef PACKAGE_NAME
 #define PACKAGE_NAME "org.tizen.gps-syspopup"
@@ -38,6 +37,7 @@
 #define PREFIX "/usr/apps/"PACKAGE_NAME
 #endif
 
+#define GPS_EDJ					PREFIX"/res/edje/gps.edj"
 #define GPSPOPUP_COMMON_RES		PREFIX"/res/locale"
 #define GPS_POPUP_TAG			"GPS_SYSPOPUP"
 

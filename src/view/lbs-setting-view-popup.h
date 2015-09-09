@@ -22,7 +22,6 @@
 #ifndef LBS_SETTING_VIEW_POPUP_H_
 #define LBS_SETTING_VIEW_POPUP_H_
 
-#include <efl_assist.h>
 #include "lbs-setting-string.h"
 #include "lbs-setting-view-location.h"
 
