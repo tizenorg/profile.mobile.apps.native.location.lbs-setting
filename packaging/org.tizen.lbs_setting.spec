@@ -83,15 +83,15 @@ mkdir -p /usr/ug/res/locale/
 ln -sf /usr/bin/ug-client /usr/ug/bin/setting-location-efl
 
 %if 0%{?model_build_feature_location_position_wps}
-	vconftool set -t int "db/location/setting/NetworkEnabled" "1" -s "tizen::vconf::location::enable" -i -g 6514 -f
+	buxton2ctl -i -d set-int32 system db/location/setting/NetworkEnabled 1
 %else
-	vconftool set -t int "db/location/setting/NetworkEnabled" "0" -s "tizen::vconf::location::enable" -i -g 6514 -f
+	buxton2ctl -i -d set-int32 system db/location/setting/NetworkEnabled 0
 %endif
 
 %if "%{profile}" == "wearable"
-	vconftool set -t int "db/location/setting/GpsPopup" "0" -s "tizen::vconf::location::enable" -i -g 6514 -f
+	buxton2ctl -i -d set-int32 system db/location/setting/GpsPopup 0
 %else
-	vconftool set -t int "db/location/setting/GpsPopup" "1" -s "tizen::vconf::location::enable" -i -g 6514 -f
+	buxton2ctl -i -d set-int32 system db/location/setting/GpsPopup 1
 %endif
 
 %postun -p /sbin/ldconfig
