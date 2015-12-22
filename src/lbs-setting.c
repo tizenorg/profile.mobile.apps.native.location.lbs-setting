@@ -70,54 +70,6 @@ static Eina_Bool _lbs_window_transient_cb(void *data, int type, void *eventinfo)
 }
 #endif
 
-#if 0
-static int _get_orientation()
-{
-	sensor_t sensor;
-	sensor_data_t data;
-	sensor = sensord_get_sensor(AUTO_ROTATION_SENSOR);
-	int handle = sensord_connect(sensor);
-	int rotation = 0;
-
-	int ret = sensord_start(handle, 0);
-	if (ret < 0) {
-		sensord_disconnect(handle);
-		LS_LOGE("Fail to auto rotation sensor");
-	}
-
-	ret = sensord_get_data(handle, AUTO_ROTATION_BASE_DATA_SET, &data);
-	if (ret < 0) {
-		LS_LOGE("Fail to get sensor data");
-	}
-
-	if (data.value_count > 0) {
-		rotation = data.values[0];
-	} else {
-		LS_LOGE("Fail to auto rotation sensor");
-	}
-
-	switch (rotation) {
-		case AUTO_ROTATION_DEGREE_UNKNOWN:
-		case AUTO_ROTATION_DEGREE_0:
-		case AUTO_ROTATION_DEGREE_180:
-			rotation = 0;
-			break;
-		case AUTO_ROTATION_DEGREE_90:
-		case AUTO_ROTATION_DEGREE_270:
-			rotation = 270;
-			break;
-		default:
-			rotation = 0;
-			break;
-	}
-
-	sensord_stop(handle);
-	sensord_disconnect(handle);
-
-	return rotation;
-}
-#endif
-
 static bool _app_create_cb(void *user_data)
 {
 	LS_FUNC_ENTER

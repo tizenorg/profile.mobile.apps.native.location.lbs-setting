@@ -1,6 +1,6 @@
 <manifest>
 	<request>
-		<domain name="org.tizen.gps-syspopup" />
+		<domain name="_" />
 	</request>
 </manifest>
 
