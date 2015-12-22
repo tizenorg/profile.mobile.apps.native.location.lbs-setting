@@ -38,7 +38,6 @@
 
 static void _anchor_clicked_cb(void *data, Evas_Object *obj, void *event_info);
 static void __setting_reply_gps_wifi_status(void *data);
-static int __eventsystem_set_value(const char *path, const int val);
 void location_wifi_popup(void *data);
 
 Evas_Object *create_indicator_bg(Evas_Object *parent)
@@ -154,10 +153,6 @@ static int __setting_location_set_int(const char *path, int val)
 		}
 	}
 
-	if (__eventsystem_set_value(path, val) != ES_R_OK) {
-		LS_LOGD("Fail to set event value");
-		return -1;
-	}
 	return 0;
 }
 
@@ -1051,20 +1046,6 @@ static void __setting_location_create_more_button(void *data, Evas_Object *obj, 
 	evas_object_show(ad->ctx_popup);
 }
 
-static void __event_handler(const char *event_name, bundle *data, void *self)
-{
-	const char *value = NULL;
-
-	if (g_strcmp0(event_name, SYS_EVENT_LOCATION_ENABLE_STATE) == 0) {
-		value = bundle_get_val(data, EVT_KEY_LOCATION_ENABLE_STATE);
-	} else if (g_strcmp0(event_name, SYS_EVENT_GPS_ENABLE_STATE) == 0) {
-		value = bundle_get_val(data, EVT_KEY_GPS_ENABLE_STATE);
-	} else if (g_strcmp0(event_name, SYS_EVENT_NPS_ENABLE_STATE) == 0) {
-		value = bundle_get_val(data, EVT_KEY_NPS_ENABLE_STATE);
-	}
-	LS_LOGD("get event state [%s]", value);
-}
-
 void __setting_location_create_view(lbs_setting_app_data *ad)
 {
 	LS_LOGD("__setting_location_create_view.");
@@ -1208,16 +1189,6 @@ int __setting_location_init(lbs_setting_app_data *ad)
 		__setting_location_set_int(VCONFKEY_LOCATION_USE_MY_LOCATION, KEY_DISABLED);
 	}
 
-	if (eventsystem_register_event(SYS_EVENT_LOCATION_ENABLE_STATE, &ad->location_event_req_id,
-									(eventsystem_handler) __event_handler, NULL) != ES_R_OK) {
-		LS_LOGE("eventsystem_register_event failed[SYS_EVENT_LOCATION_ENABLE_STATE]");
-	}
-
-	if (eventsystem_register_event(SYS_EVENT_GPS_ENABLE_STATE, &ad->gps_event_req_id,
-									(eventsystem_handler) __event_handler, NULL) != ES_R_OK) {
-		LS_LOGE("eventsystem_register_event failed[SYS_EVENT_GPS_ENABLE_STATE]");
-	}
-
 	return ret;
 }
 
@@ -1230,14 +1201,6 @@ int _setting_location_deinit(lbs_setting_app_data *ad)
 #ifdef TIZEN_FEATURE_WPS
 	ret = vconf_ignore_key_changed(VCONFKEY_LOCATION_NETWORK_ENABLED, _wifi_key_changed_cb);
 #endif
-
-	if (eventsystem_unregister_event(ad->location_event_req_id) != ES_R_OK) {
-		LS_LOGE("eventsystem_unregister_event failed[SYS_EVENT_LOCATION_ENABLE_STATE]");
-	}
-
-	if (eventsystem_unregister_event(ad->gps_event_req_id) != ES_R_OK) {
-		LS_LOGE("eventsystem_unregister_event failed[SYS_EVENT_GPS_ENABLE_STATE]");
-	}
 
 	return ret;
 }
@@ -1378,65 +1341,6 @@ static void __setting_reply_gps_wifi_status(void *data)
 		app_control_destroy(ad->prev_handler);
 		ad->prev_handler = NULL;
 	}
-}
-
-static char *__convert_event_from_path(const char *path)
-{
-	char *event = NULL;
-	if (g_strcmp0(path, VCONFKEY_LOCATION_USE_MY_LOCATION) == 0) {
-		event = g_strdup(SYS_EVENT_LOCATION_ENABLE_STATE);
-	} else if (g_strcmp0(path, VCONFKEY_LOCATION_ENABLED) == 0) {
-		event = g_strdup(SYS_EVENT_GPS_ENABLE_STATE);
-	} else if (g_strcmp0(path, VCONFKEY_LOCATION_NETWORK_ENABLED) == 0) {
-		event = g_strdup(SYS_EVENT_NPS_ENABLE_STATE);
-	}
-
-	return event;
-}
-
-static char *__convert_key_from_event(const char *event)
-{
-	char *key = NULL;
-	if (g_strcmp0(event, SYS_EVENT_LOCATION_ENABLE_STATE) == 0) {
-		key = g_strdup(EVT_KEY_LOCATION_ENABLE_STATE);
-	} else if (g_strcmp0(event, SYS_EVENT_GPS_ENABLE_STATE) == 0) {
-		key = g_strdup(EVT_KEY_GPS_ENABLE_STATE);
-	} else if (g_strcmp0(event, SYS_EVENT_NPS_ENABLE_STATE) == 0) {
-		key = g_strdup(EVT_KEY_NPS_ENABLE_STATE);
-	}
-	return key;
-}
-
-static char *__convert_event_value(int val)
-{
-	char *value = NULL;
-	if (val == KEY_ENABLED) {
-		value = g_strdup(EVT_VAL_GPS_ENABLED);
-	} else {
-		value = g_strdup(EVT_VAL_GPS_DISABLED);
-	}
-	return value;
-}
-
-static int __eventsystem_set_value(const char *path, const int val)
-{
-	int ret;
-	char *event = NULL;
-	char *key = NULL;
-	char *value = NULL;
-	bundle *b = NULL;
-	event = __convert_event_from_path(path);
-	key = __convert_key_from_event(event);
-	value = __convert_event_value(val);
-
-	b = bundle_create();
-	bundle_add_str(b, key, value);
-	ret = eventsystem_request_sending_system_event(event, b);
-	bundle_free(b);
-	g_free(event);
-	g_free(key);
-	g_free(value);
-	return ret;
 }
 
 /**

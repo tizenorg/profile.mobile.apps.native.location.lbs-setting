@@ -72,62 +72,6 @@ enum {
 	POPUP_WIRELESS_QP
 };
 
-static char *__convert_event_from_path(const char *path)
-{
-	char *event = NULL;
-	if (g_strcmp0(path, VCONFKEY_LOCATION_USE_MY_LOCATION) == 0) {
-		event = g_strdup(SYS_EVENT_LOCATION_ENABLE_STATE);
-	} else if (g_strcmp0(path, VCONFKEY_LOCATION_ENABLED) == 0) {
-		event = g_strdup(SYS_EVENT_GPS_ENABLE_STATE);
-	} else if (g_strcmp0(path, VCONFKEY_LOCATION_NETWORK_ENABLED) == 0) {
-		event = g_strdup(SYS_EVENT_NPS_ENABLE_STATE);
-	}
-
-	return event;
-}
-
-static char *__convert_key_from_event(const char *event)
-{
-	char *key = NULL;
-	if (g_strcmp0(event, SYS_EVENT_LOCATION_ENABLE_STATE) == 0) {
-		key = g_strdup(EVT_KEY_LOCATION_ENABLE_STATE);
-	} else if (g_strcmp0(event, SYS_EVENT_GPS_ENABLE_STATE) == 0) {
-		key = g_strdup(EVT_KEY_GPS_ENABLE_STATE);
-	} else if (g_strcmp0(event, SYS_EVENT_NPS_ENABLE_STATE) == 0) {
-		key = g_strdup(EVT_KEY_NPS_ENABLE_STATE);
-	}
-	return key;
-}
-
-static char *__convert_event_value(const int val)
-{
-	char *value = NULL;
-	if (val == 1) {
-		value = g_strdup(EVT_VAL_GPS_ENABLED);
-	} else {
-		value = g_strdup(EVT_VAL_GPS_DISABLED);
-	}
-	return value;
-}
-
-static int __eventsystem_set_value(const char *path, const int val)
-{
-	int ret;
-	char *event = NULL;
-	char *key = NULL;
-	char *value = NULL;
-	bundle *b = NULL;
-	event = __convert_event_from_path(path);
-	key = __convert_key_from_event(event);
-	value = __convert_event_value(val);
-
-	b = bundle_create();
-	bundle_add_str(b, key, value);
-	ret = eventsystem_request_sending_system_event(event, b);
-	bundle_free(b);
-	return ret;
-}
-
 #ifdef TIZEN_FEATURE_WPS
 static void _app_control_reply_cb(app_control_h request, app_control_h reply, app_control_result_e result, void *user_data)
 {
@@ -232,15 +176,9 @@ static void location_consent_popup_agree_cb(void *data, Evas_Object *obj, void *
 	vconf_get_int(VCONFKEY_LOCATION_USE_MY_LOCATION, &enable);
 	if (enable == 0) {
 		vconf_set_int(VCONFKEY_LOCATION_USE_MY_LOCATION, 1);
-		if (__eventsystem_set_value(VCONFKEY_LOCATION_USE_MY_LOCATION, 1) != ES_R_OK) {
-			GPS_POPUP_LOG("Fail to set event value");
-		}
 	}
 
 	vconf_set_int(VCONFKEY_LOCATION_NETWORK_ENABLED, 1);
-	if (__eventsystem_set_value(VCONFKEY_LOCATION_NETWORK_ENABLED, 1) != ES_R_OK) {
-		GPS_POPUP_LOG("Fail to set event value");
-	}
 
 	__gps_popupsend_signal_to_quickpanel(ad, "ON");
 
@@ -393,16 +331,9 @@ static void __gps_popup_gps_agree_cb(void *data, Evas_Object *obj, void *event_i
 	vconf_get_int(VCONFKEY_LOCATION_USE_MY_LOCATION, &enabled);
 	if (enabled == 0) {
 		vconf_set_int(VCONFKEY_LOCATION_USE_MY_LOCATION, 1);
-		if (__eventsystem_set_value(VCONFKEY_LOCATION_USE_MY_LOCATION, 1) != ES_R_OK) {
-			GPS_POPUP_LOG("Fail to set event value");
-		}
 	}
 	vconf_set_int(VCONFKEY_LOCATION_ENABLED, 1);
 	__gps_popupsend_signal_to_quickpanel(ad, "ON");
-
-	if (__eventsystem_set_value(VCONFKEY_LOCATION_ENABLED, 1) != ES_R_OK) {
-		GPS_POPUP_LOG("Fail to set event value");
-	}
 
 	if (ad->gps_popup) {
 		evas_object_del(ad->gps_popup);
@@ -460,14 +391,8 @@ static void _popup_gps_agree_cb_for_setting_search(void *data, Evas_Object *obj,
 	vconf_get_int(VCONFKEY_LOCATION_USE_MY_LOCATION, &enabled);
 	if (enabled == 0) {
 		vconf_set_int(VCONFKEY_LOCATION_USE_MY_LOCATION, 1);
-		if (__eventsystem_set_value(VCONFKEY_LOCATION_USE_MY_LOCATION, 1) != ES_R_OK) {
-			GPS_POPUP_LOG("Fail to set event value");
-		}
 	}
 	vconf_set_int(VCONFKEY_LOCATION_ENABLED, 1);
-	if (__eventsystem_set_value(VCONFKEY_LOCATION_ENABLED, 1) != ES_R_OK) {
-		GPS_POPUP_LOG("Fail to set event value");
-	}
 }
 
 static void _popup_gps_disagree_cb_for_setting_search(void *data, Evas_Object *obj, void *event_info)
@@ -727,16 +652,10 @@ int __gps_popup_reset(bundle *b, void *data)
 					GPS_POPUP_LOG("## popup already shown ##");
 					if (gps_enable == 0) {
 						vconf_set_int(VCONFKEY_LOCATION_ENABLED, 1);
-						if (__eventsystem_set_value(VCONFKEY_LOCATION_ENABLED, 1) != ES_R_OK) {
-							GPS_POPUP_LOG("Fail to set event value");
-						}
 					}
 					vconf_get_int(VCONFKEY_LOCATION_USE_MY_LOCATION, &loc_enable);
 					if (loc_enable == 0) {
 						vconf_set_int(VCONFKEY_LOCATION_USE_MY_LOCATION, 1);
-						if (__eventsystem_set_value(VCONFKEY_LOCATION_USE_MY_LOCATION, 1) != ES_R_OK) {
-							GPS_POPUP_LOG("Fail to set event value");
-						}
 					}
 					__gps_popupsend_signal_to_quickpanel(ad, "ON");
 
