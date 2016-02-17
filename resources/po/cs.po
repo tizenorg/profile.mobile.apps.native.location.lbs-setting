@@ -87,3 +87,6 @@ msgstr "Údaje o poloze včetně dat GPS budou použity příslušnými aplikace
 
 msgid "IDS_POSITIONING_CONSENT_BODY"
 msgstr "Váš přístroj používá technologie pro zjišťování polohy, které poskytuje HERE. Pokračováním vyjadřujete souhlas s Podmínkami poskytování služeb platformy HERE:\n%s\na s Pravidly ochrany soukromí:\n%s"
+
+msgid "IDS_ST_HERE_USER_CONSENT"
+msgstr "HERE Souhlas uživatele"

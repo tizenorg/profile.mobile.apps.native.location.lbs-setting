@@ -87,3 +87,6 @@ msgstr "GPS məlumatı daxil olmaqla məkan məlumatınız müvafiq proqramlar t
 
 msgid "IDS_POSITIONING_CONSENT_BODY"
 msgstr "Cihazınız HERE tərəfindən təmin olunan mövqenin təyin olunması texnologiyalarından istifadə edir. Davam etməklə siz HERE platformasının Xidmət şərtləri:\n%s\nvə Məxfilik siyasəti ilə razılaşırsınız:\n%s"
+
+msgid "IDS_ST_HERE_USER_CONSENT"
+msgstr "HERE İstifadəçi razılığı"

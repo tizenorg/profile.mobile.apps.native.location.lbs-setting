@@ -87,3 +87,6 @@ msgstr "A megfelelő alkalmazások használni fogják a helyadatait, a GPS-adato
 
 msgid "IDS_POSITIONING_CONSENT_BODY"
 msgstr "Az eszköze a HERE által biztosított helymeghatározási technológiákat használja. A folytatáshoz el kell fogadnia a HERE platform szolgáltatási feltételeit:\n%s\nés adatvédelmi irányelvét:\n%s"
+
+msgid "IDS_ST_HERE_USER_CONSENT"
+msgstr "HERE Felhasználói beleegyezés"

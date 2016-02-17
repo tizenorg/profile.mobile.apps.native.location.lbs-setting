@@ -87,3 +87,6 @@ msgstr "Atbilstošajām programmām tiks izmantoti jūsu atrašanās vietas dati
 
 msgid "IDS_POSITIONING_CONSENT_BODY"
 msgstr "Jūsu ierīcē tiek izmantotas HERE nodrošinātās pozicionēšanas tehnoloģijas. Turpinot jūs piekrītat HERE platformas pakalpojumu sniegšanas noteikumiem:\n%s\nun konfidencialitātes politikai:\n%s"
+
+msgid "IDS_ST_HERE_USER_CONSENT"
+msgstr "HERE Lietotāja piekrišana"

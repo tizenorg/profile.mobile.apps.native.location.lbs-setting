@@ -87,3 +87,6 @@ msgstr "Jūsų vietos duomenis, įskaitant GPS duomenis, naudos susijusios progr
 
 msgid "IDS_POSITIONING_CONSENT_BODY"
 msgstr "Jūsų prietaise naudojamos HERE teikiamos padėties nustatymo technologijos. Tęsdami sutinkate su HERE platformos paslaugos sąlygomis:\n%s\nir privatumo taisyklėmis:\n%s"
+
+msgid "IDS_ST_HERE_USER_CONSENT"
+msgstr "HERE Naudotojo sutikimas"

@@ -87,3 +87,6 @@ msgstr "Aplikazioek kokapen datuak, GPS datuak barne, erabiliko dituzte."
 
 msgid "IDS_POSITIONING_CONSENT_BODY"
 msgstr "Zure gailuak HEREk emandako kokatze-teknologiak erabiltzen ditu. Jarraituz gero, HERE plataformaren Zerbitzu-baldintzak:\n%s\neta Pribatutasun-gidalerroa onartzen dituzu:\n%s"
+
+msgid "IDS_ST_HERE_USER_CONSENT"
+msgstr "HERE Erabiltzaile baimena"

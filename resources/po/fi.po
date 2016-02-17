@@ -87,3 +87,6 @@ msgstr "Asianmukaiset sovellukset käyttävät sijaintitietoja, myös GPS-tietoj
 
 msgid "IDS_POSITIONING_CONSENT_BODY"
 msgstr "Laitteesi käyttää HERE-palvelujen paikannustekniikkaa. Jatkamalla hyväksyt HERE-käyttöympäristön palveluehdot,\n%s\nja tietosuojakäytännön,\n%s"
+
+msgid "IDS_ST_HERE_USER_CONSENT"
+msgstr "HERE Käyttäjän suostumus"

@@ -87,3 +87,6 @@ msgstr "Podatke o lokaciji, uključujući GPS podatke, koristit će odgovarajuć
 
 msgid "IDS_POSITIONING_CONSENT_BODY"
 msgstr "Uređaj koristi tehnologije za pozicioniranje HERE. Ako nastavite, prihvaćate uvjete korištenja usluge za platformu HERE:\n%s\ni pravila zaštite privatnosti:\n%s"
+
+msgid "IDS_ST_HERE_USER_CONSENT"
+msgstr "HERE Pristanak korisnika"

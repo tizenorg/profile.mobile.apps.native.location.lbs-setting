@@ -56,6 +56,7 @@ PKG_CONFIG(E_APPCORE_EFL		"appcore-efl")
 PKG_CONFIG(E_ECORE				"ecore")
 PKG_CONFIG(E_SYSPOPUP			"syspopup")
 PKG_CONFIG(E_FEEDBACK			"feedback")
+PKG_CONFIG(E_PKGMGR			"capi-appfw-package-manager")
 
 
 SET(EXTRA_CFLAGS "")

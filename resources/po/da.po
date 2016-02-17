@@ -87,3 +87,6 @@ msgstr "Dine placeringsdata, herunder GPS-data, bliver brugt af de relevante app
 
 msgid "IDS_POSITIONING_CONSENT_BODY"
 msgstr "Din enhed benytter positionsteknologier leveret af HERE. Ved at fortsætte erklærer du, at du er enig i vilkårene for HERE-platformen:\n%s\nsamt Politik til beskyttelse af personlige oplysninger:\n%s"
+
+msgid "IDS_ST_HERE_USER_CONSENT"
+msgstr "HERE Brugersamtykke"
