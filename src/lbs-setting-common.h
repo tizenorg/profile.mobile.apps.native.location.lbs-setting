@@ -171,11 +171,12 @@ typedef struct appdata {
 	Evas_Object *gi_loc_check;
 	Evas_Object *gi_gps_check;
 	Evas_Object *gi_wifi_check;
+	Evas_Object *gi_hereuc_check;
 	Evas_Object *wizard_check;
 
-	Elm_Object_Item *gi_loc, *gi_gps, *gi_wifi, *gi_group_title, *gi_myplace_title, *gi_myplace;
-	Elm_Genlist_Item_Class *itc_loc, *itc_gps, *itc_wifi,  *itc_title, *itc_myplace_title, *itc_myplace;
-	bool is_myloc, is_gps, is_wifi;
+	Elm_Object_Item *gi_loc, *gi_gps, *gi_wifi, *gi_group_title, *gi_myplace_title, *gi_myplace, *gi_hereuc_title, *gi_hereuc;
+	Elm_Genlist_Item_Class *itc_loc, *itc_gps, *itc_wifi,  *itc_title, *itc_myplace_title, *itc_myplace, *itc_hereuc_title, *itc_hereuc;
+	bool is_myloc, is_gps, is_wifi, is_hereuc;
 	bool quick_panel_setting;
 	int view_id;
 	unsigned int location_event_req_id, gps_event_req_id;;

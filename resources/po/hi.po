@@ -87,3 +87,6 @@ msgstr "GPS डाटा सहित, आपका स्थान डाटा
 
 msgid "IDS_POSITIONING_CONSENT_BODY"
 msgstr "आपका डिवाइस HERE द्वारा प्रदान की गईं स्थापन तकनीकें इस्तेमाल करता है। जारी रखकर, आप HERE प्लेटफ़ॉर्म की सेवा शर्तों से सहमत हैं:\n%s\nऔर गोपनीयता नीति:\n%s"
+
+msgid "IDS_ST_HERE_USER_CONSENT"
+msgstr "HERE उपयोगकर्ता स्वीकृति"

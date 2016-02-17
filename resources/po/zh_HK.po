@@ -87,3 +87,6 @@ msgstr "您的位置數據，包括 GPS 數據將被相關應用程式使用。"
 
 msgid "IDS_POSITIONING_CONSENT_BODY"
 msgstr "您的裝置使用由 HERE 提供的定位技術。選擇繼續即表示您同意 HERE 平台的服務條款：\n%s\n及政策： \n%s"
+
+msgid "IDS_ST_HERE_USER_CONSENT"
+msgstr "HERE 用戶贊成"

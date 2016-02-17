@@ -87,3 +87,6 @@ msgstr "Datele despre locaţie, inclusiv cele GPS, vor fi utilizate de aplicaţi
 
 msgid "IDS_POSITIONING_CONSENT_BODY"
 msgstr "Dispozitivul folosește tehnologii de poziționare furnizate de HERE. Continuând, sunteți de acord cu Condițiile de utilizare ale platformei HERE:\n%s\nși cu Politica de confidențialitate:\n%s"
+
+msgid "IDS_ST_HERE_USER_CONSENT"
+msgstr "HERE Consimţământ utilizator"

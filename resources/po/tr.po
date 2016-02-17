@@ -87,3 +87,6 @@ msgstr "GPS verileri dahil olmak üzere konum verileriniz, ilgili uygulamalar ta
 
 msgid "IDS_POSITIONING_CONSENT_BODY"
 msgstr "Cihazınız HERE tarafından sağlanan konumlandırma teknolojilerini kullanıyor. Devam ederek HERE platformu Hizmet Şartları'nı:\n%s\nve Gizlilik İlkesi'ni:\n%s kabul etmiş olursunuz."
+
+msgid "IDS_ST_HERE_USER_CONSENT"
+msgstr "HERE Kullanıcı izni"

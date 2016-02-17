@@ -87,3 +87,6 @@ msgstr "Joylashuvingiz ma’lumotlari, jumladan, GPS ma’lumotlari, tegishli il
 
 msgid "IDS_POSITIONING_CONSENT_BODY"
 msgstr "Qurilmangiz HERE tomonidan taqdim qilingan joyni aniqlash texnologiyalaridan foydalanadi. Davom ettirish orqali HERE platformasi Xizmat ko'rsatish shartlari:\n%s\nva Maxfiylik siyosatiga rozi bo'lasiz:\n%s"
+
+msgid "IDS_ST_HERE_USER_CONSENT"
+msgstr "HERE Foydalanuvchi roziligi"

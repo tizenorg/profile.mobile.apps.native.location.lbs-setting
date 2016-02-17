@@ -87,3 +87,6 @@ msgstr "Viðeigandi forrit nota staðsetningargögnin þín, þar á meðal GPS-
 
 msgid "IDS_POSITIONING_CONSENT_BODY"
 msgstr "Tækið þitt notar staðsetningartækni í boði HERE. Með því að halda áfram samþykkirðu þjónustuskilmála HERE verkvangsins: \n%s\nog persónuverndarstefnu: \n%s"
+
+msgid "IDS_ST_HERE_USER_CONSENT"
+msgstr "HERE Samþykki notanda"

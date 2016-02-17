@@ -87,3 +87,6 @@ msgstr "Dane o lokalizacji, łącznie z danymi GPS, będą używane przez odpowi
 
 msgid "IDS_POSITIONING_CONSENT_BODY"
 msgstr "Twoje urządzenie korzysta z technologii pozycjonowania dostarczanych przez usługę HERE. Kontynuując, wyrażasz zgodę na Warunki korzystania z usługi platformy HERE:\n%s\ni Zasady ochrony prywatności:\n%s"
+
+msgid "IDS_ST_HERE_USER_CONSENT"
+msgstr "HERE Zgoda użytkownika"

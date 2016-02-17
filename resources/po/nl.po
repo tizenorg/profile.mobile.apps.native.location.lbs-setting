@@ -87,3 +87,6 @@ msgstr "Uw locatiegegevens, inclusief GPS-gegevens, worden gebruikt door relevan
 
 msgid "IDS_POSITIONING_CONSENT_BODY"
 msgstr "Uw apparaat maakt gebruik van technologieën voor locatiebepaling van HERE. Door verder te gaan, gaat u akkoord met de servicevoorwaarden:\n%s\nen het privacybeleid: %s van het HERE-platform."
+
+msgid "IDS_ST_HERE_USER_CONSENT"
+msgstr "HERE Toestemming gebruiker"
