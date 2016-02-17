@@ -87,3 +87,6 @@ msgstr "GPS 데이터를 포함한 위치정보를 관련 애플리케이션에�
 
 msgid "IDS_POSITIONING_CONSENT_BODY"
 msgstr "현재 기기는 HERE에서 제공하는 위치 지정 기술을 사용합니다. 계속하려면 HERE 플랫폼 서비스 약관:\n%s\n및 개인 정보 보호 정책에 동의해야 합니다:\n%s"
+
+msgid "IDS_ST_HERE_USER_CONSENT"
+msgstr "HERE 사용자 동의"

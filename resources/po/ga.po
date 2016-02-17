@@ -87,3 +87,6 @@ msgstr "Úsáidfear do shonraí suímh, sonraí GPS san áireamh, i bhfeidhmchl�
 
 msgid "IDS_POSITIONING_CONSENT_BODY"
 msgstr "Úsáideann do ghléas teicneolaíochtaí aimsithe suímh a gcuireann HERE ar fáil iad. Má leanann tú ag aghaidh, beidh tú ag aontú le Téamaí Seirbhíse ardán HERE: \n%s\nagus leis an mBeartas Príobháide: \n%s"
+
+msgid "IDS_ST_HERE_USER_CONSENT"
+msgstr "HERE Toiliú úsáideora"

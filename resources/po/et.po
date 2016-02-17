@@ -87,3 +87,6 @@ msgstr "Asjakohased rakendused kasutavad teie asukoha andmeid, sh GPS-i andmeid.
 
 msgid "IDS_POSITIONING_CONSENT_BODY"
 msgstr "Teie seade kasutab rakenduse HERE pakutud positsioneerimistehnoloogiat. Jätkamine tähendab, et nõustute rakenduse HERE platvormi kasutustingimuste:\n%s\nja privaatsusavaldusega:\n%s"
+
+msgid "IDS_ST_HERE_USER_CONSENT"
+msgstr "HERE Kasutaja nõusolek"

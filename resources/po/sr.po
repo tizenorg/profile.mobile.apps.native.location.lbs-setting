@@ -87,3 +87,6 @@ msgstr "Odgovarajuće aplikacije će koristiti podatke o tvojoj lokaciji, uklju�
 
 msgid "IDS_POSITIONING_CONSENT_BODY"
 msgstr "Uređaj koristi tehnologije pozicioniranja koje obezbeđuje HERE. Ako nastavite, pristajete na uslove korišćenja HERE platforme:\n%s\ni politiku privatnosti:\n%s"
+
+msgid "IDS_ST_HERE_USER_CONSENT"
+msgstr "HERE Saglasnost korisnika"

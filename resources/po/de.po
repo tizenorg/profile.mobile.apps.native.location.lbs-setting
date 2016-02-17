@@ -87,3 +87,6 @@ msgstr "Ihre Standortdaten einschließlich GPS-Daten werden von relevanten Anwen
 
 msgid "IDS_POSITIONING_CONSENT_BODY"
 msgstr "Auf Ihrem Gerät wird von HERE bereitgestellte Standorttechnik verwendet. Wenn Sie fortfahren, bestätigen Sie Ihre Zustimmung zu den HERE Plattform-Nutzungsbedingungen:\n%s\nund Datenschutzrichtlinien:\n%s"
+
+msgid "IDS_ST_HERE_USER_CONSENT"
+msgstr "HERE Benutzerzustimmung"

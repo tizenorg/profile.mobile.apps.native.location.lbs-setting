@@ -10,6 +10,7 @@
 		<privilege>http://tizen.org/privilege/location.enable</privilege>
 		<privilege>http://tizen.org/privilege/haptic</privilege>
 		<privilege>http://tizen.org/privilege/appmanager.launch</privilege>
+		<privilege>http://tizen.org/privilege/packagemanager.info</privilege>
 	</privileges>
 	<ui-application appid="org.tizen.setting-location" exec="/usr/apps/org.tizen.setting-location/bin/setting-location" nodisplay="true" multiple="false" type="capp" taskmanage="false" launch_mode="caller">
 		<label>Location setting</label>

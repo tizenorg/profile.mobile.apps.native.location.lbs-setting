@@ -32,6 +32,7 @@
 #include <bundle_internal.h>
 #include <eventsystem.h>
 #include <system_info.h>
+#include <package_manager.h>
 #include "lbs-setting-common.h"
 #include "lbs-setting-window.h"
 #include "lbs-setting-help.h"
@@ -834,6 +835,14 @@ static char *__setting_myplace_text_get(void *data, Evas_Object *obj, const char
 	return NULL;
 }
 
+static char *__setting_hereuc_text_get(void *data, Evas_Object *obj, const char *part)
+{
+	if (!g_strcmp0(part, "elm.text")) {
+		return strdup(P_("IDS_ST_HERE_USER_CONSENT"));
+	}
+	return NULL;
+}
+
 static void __setting_myplace_sel(void *data, Evas_Object *obj, void *event_info)
 {
 	LS_RETURN_IF_FAILED(data);
@@ -850,6 +859,110 @@ static void __setting_myplace_sel(void *data, Evas_Object *obj, void *event_info
 	elm_genlist_item_selected_set(event_info, EINA_FALSE);
 }
 
+static void hereuc_cb(app_control_h request, app_control_h reply, app_control_result_e result, void *user_data)
+{
+	LS_FUNC_ENTER
+	lbs_setting_app_data *ad = (lbs_setting_app_data *)user_data;
+	char *data = NULL;
+
+	app_control_get_extra_data(reply, "result", &data);
+	if (data != NULL) {
+		if (strcmp(data, "Yes") == 0) {
+			elm_check_state_set(ad->gi_hereuc_check, EINA_TRUE);
+			ad->is_hereuc = true;
+		} else {
+			elm_check_state_set(ad->gi_hereuc_check, EINA_FALSE);
+			ad->is_hereuc = false;
+		}
+	}
+}
+
+static void __setting_location_hereuc_get_data(lbs_setting_app_data *ad)
+{
+	LS_FUNC_ENTER
+	app_control_h app_control = NULL;
+
+	app_control_create(&app_control);
+	app_control_set_app_id(app_control, "org.tizen.heremaps-uc");
+
+	app_control_add_extra_data(app_control, "action", "Get");
+	app_control_send_launch_request(app_control, hereuc_cb, ad);
+
+	app_control_destroy(app_control);
+}
+
+static void __setting_hereuc_check_sel(void *data, Evas_Object *obj, void *event_info)
+{
+	LS_FUNC_ENTER
+	LS_RETURN_IF_FAILED(data);
+
+	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
+	app_control_h app_control = NULL;
+
+	app_control_create(&app_control);
+	app_control_set_app_id(app_control, "org.tizen.heremaps-uc");
+
+	if (ad->is_hereuc) {
+		elm_check_state_set(ad->gi_hereuc_check, EINA_TRUE);
+
+		app_control_add_extra_data(app_control, "action", "Set");
+		app_control_add_extra_data(app_control, "value", "No");
+	} else
+		elm_check_state_set(ad->gi_hereuc_check, EINA_FALSE);
+
+	app_control_send_launch_request(app_control, hereuc_cb, ad);
+	app_control_destroy(app_control);
+}
+
+static void __setting_hereuc_genlist_sel(void *data, Evas_Object *obj, void *event_info)
+{
+	LS_FUNC_ENTER
+	LS_RETURN_IF_FAILED(data);
+
+	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
+	app_control_h app_control = NULL;
+
+	app_control_create(&app_control);
+	app_control_set_app_id(app_control, "org.tizen.heremaps-uc");
+
+	if (ad->is_hereuc) {
+		app_control_add_extra_data(app_control, "action", "Set");
+		app_control_add_extra_data(app_control, "value", "No");
+
+		elm_check_state_set(ad->gi_hereuc_check, EINA_FALSE);
+		ad->is_hereuc = false;
+	}
+
+	app_control_send_launch_request(app_control, hereuc_cb, ad);
+	app_control_destroy(app_control);
+
+	if (event_info != NULL)
+		elm_genlist_item_selected_set((Elm_Object_Item *)event_info, EINA_FALSE);
+}
+
+static Evas_Object *__setting_location_hereuc_check_get(void *data, Evas_Object *obj, const char *part)
+{
+	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
+	Evas_Object *tg = NULL;
+	Evas_Object *ly = NULL;
+
+	if (!strcmp(part, "elm.swallow.icon.1")) {
+		ly = elm_layout_add(obj);
+		elm_layout_theme_set(ly, "layout", "list/C/type.3", "default");
+		tg = elm_check_add(ly);
+
+		__setting_location_hereuc_get_data(ad);
+
+		elm_object_style_set(tg, "on&off");
+		evas_object_propagate_events_set(tg, EINA_FALSE);
+		evas_object_smart_callback_add(tg, "changed", __setting_hereuc_check_sel, ad);
+		evas_object_show(tg);
+		elm_layout_content_set(ly, "elm.swallow.content", tg);
+		ad->gi_hereuc_check = tg;
+	}
+	return ly;
+}
+
 static Evas_Object *__setting_location_create_gl(Evas_Object *parent, void *data)
 {
 	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
@@ -859,6 +972,9 @@ static Evas_Object *__setting_location_create_gl(Evas_Object *parent, void *data
 
 	const char *geofence_feature = "http://tizen.org/feature/location.geofence";
 	bool is_geofence_supported = false;
+	const char *heremaps_uc = "org.tizen.heremaps-uc";
+	bool hereuc_preload = false;
+	char *hereuc_package = NULL;
 
 	/* Use my location */
 	ad->itc_loc = elm_genlist_item_class_new();
@@ -949,6 +1065,44 @@ static Evas_Object *__setting_location_create_gl(Evas_Object *parent, void *data
 		ad->gi_myplace = elm_genlist_item_append(genlist, ad->itc_myplace, (void *)ad, NULL, ELM_GENLIST_ITEM_NONE, __setting_myplace_sel, ad);
 	}
 
+	/* heremaps-uc */
+	package_manager_is_preload_package_by_app_id(heremaps_uc, &hereuc_preload);
+	package_manager_get_package_id_by_app_id(heremaps_uc, &hereuc_package);
+	if (hereuc_preload == true || hereuc_package != NULL) {
+		ad->itc_hereuc_title = elm_genlist_item_class_new();
+		if (ad->itc_hereuc_title == NULL) {
+			g_free(ad->itc_loc);
+			g_free(ad->itc_title);
+			g_free(ad->itc_gps);
+			g_free(ad->itc_wifi);
+			g_free(ad->itc_myplace_title);
+			g_free(ad->itc_myplace);
+			LS_LOGE("critical error : LS_RETURN_VAL_IS_FAILED");
+			return NULL;
+		}
+		ad->itc_hereuc_title->item_style = "group_index";
+		ad->itc_hereuc_title->func.text_get = __setting_hereuc_text_get;
+		ad->gi_hereuc_title = elm_genlist_item_append(genlist, ad->itc_hereuc_title, NULL, NULL, ELM_GENLIST_ITEM_NONE, NULL, NULL);
+		elm_genlist_item_select_mode_set(ad->gi_hereuc_title, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+
+		ad->itc_hereuc = elm_genlist_item_class_new();
+		if (ad->itc_hereuc == NULL) {
+			g_free(ad->itc_loc);
+			g_free(ad->itc_title);
+			g_free(ad->itc_gps);
+			g_free(ad->itc_wifi);
+			g_free(ad->itc_myplace_title);
+			g_free(ad->itc_myplace);
+			g_free(ad->itc_hereuc_title);
+			LS_LOGE("critical error : LS_RETURN_VAL_IS_FAILED");
+			return NULL;
+		}
+		ad->itc_hereuc->item_style = "type1";
+		ad->itc_hereuc->func.text_get = __setting_hereuc_text_get;
+		ad->itc_hereuc->func.content_get = __setting_location_hereuc_check_get;
+		ad->gi_hereuc = elm_genlist_item_append(genlist, ad->itc_hereuc, (void *)ad, NULL, ELM_GENLIST_ITEM_NONE, __setting_hereuc_genlist_sel, ad);
+	} else
+		LS_LOGE("heremaps_uc is not preloaded");
 	return genlist;
 }
 
