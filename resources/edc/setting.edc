@@ -502,7 +502,7 @@ group { name: "wizard";
 				}
 				text{
 					style: style_title_text;
-					min: 1 1;
+					min: 0 1;
 				}
 			}
 		}
