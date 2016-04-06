@@ -57,9 +57,9 @@ static Eina_Bool _lbs_window_transient_cb(void *data, int type, void *eventinfo)
 {
 	LS_FUNC_ENTER
 
-	if (eventinfo == NULL) {
+	if (eventinfo == NULL)
 		return ECORE_CALLBACK_RENEW;
-	}
+
 	Ecore_X_Event_Window_Hide *ev = eventinfo;
 	int parent_xwin_id = (int)data;
 	if (ev->win == parent_xwin_id) {
@@ -116,20 +116,17 @@ static void _app_control_cb(app_control_h app_control, void *user_data)
 	create_indicator_bg(ad->conformant);
 	ad->layout_main = create_layout(ad->conformant);
 	ret = app_control_clone(&ad->prev_handler, app_control);
-	if (FALSE == ret) {
+	if (FALSE == ret)
 		LS_LOGE("app_control_clone. err=%d", ret);
-	}
-
 
 	char *caller = NULL;
 	ret = app_control_get_extra_data(app_control, LOCATION_UG_CALLER, &caller);
-	if (FALSE == ret) {
+	if (FALSE == ret)
 		LS_LOGE("app_control_get_extra_data. err=%d", ret);
-	}
 
-	if (caller != NULL && strcmp(caller, "pwlock") == 0) {
+	if (caller != NULL && strcmp(caller, "pwlock") == 0)
 		__setting_location_wizard_view(ad);
-	} else {
+	else {
 		__setting_location_init(ad);
 		__setting_location_create_view(ad);
 	}
@@ -161,9 +158,9 @@ static void _app_device_orientation_cb(app_event_info_h event_info, void *user_d
 	lbs_setting_app_data *ad = (lbs_setting_app_data *)user_data;
 	app_device_orientation_e orientation;
 	app_event_get_device_orientation(event_info, &orientation);
-	if (orientation == APP_DEVICE_ORIENTATION_180) {
+	if (orientation == APP_DEVICE_ORIENTATION_180)
 		orientation = APP_DEVICE_ORIENTATION_0;
-	}
+
 	elm_win_rotation_with_resize_set(ad->win_main, orientation);
 }
 #endif
@@ -173,9 +170,8 @@ static void _app_language_changed_cb(app_event_info_h event_info, void *user_dat
 	LS_FUNC_ENTER
 
 	char *locale = vconf_get_str(VCONFKEY_LANGSET);
-	if (locale) {
+	if (locale)
 		elm_language_set(locale);
-	}
 }
 
 int main(int argc, char *argv[])
@@ -199,9 +195,8 @@ int main(int argc, char *argv[])
 	ret = APP_ERROR_NONE;
 	ret = ui_app_main(argc, argv, &event_callback, &ad);
 
-	if (ret != APP_ERROR_NONE) {
+	if (ret != APP_ERROR_NONE)
 		LS_LOGE("ui_app_main() is failed. err=%d", ret);
-	}
 
 	LS_FUNC_EXIT
 	return 0;

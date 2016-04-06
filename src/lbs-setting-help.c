@@ -33,9 +33,9 @@ typedef struct _help_item_info_s {
 } help_item_info;
 
 typedef struct _help_genlist_item_s {
-	Elm_Gen_Item_Class *itc_separator[HELP_ITEM_NUM];
-	Elm_Gen_Item_Class *itc_help_title[HELP_ITEM_NUM];
-	Elm_Gen_Item_Class *itc_help_text[HELP_ITEM_NUM];
+	Elm_Gen_Item_Class * itc_separator[HELP_ITEM_NUM];
+	Elm_Gen_Item_Class * itc_help_title[HELP_ITEM_NUM];
+	Elm_Gen_Item_Class * itc_help_text[HELP_ITEM_NUM];
 } help_genlist_item;
 
 enum {
@@ -87,15 +87,12 @@ static Eina_Bool _pop_cb(void *data, Elm_Object_Item *it)
 	if (data != NULL) {
 		help_genlist_item *genlist_item = (help_genlist_item *)data;
 		for (index = 0; index < HELP_ITEM_NUM; index++) {
-			if (genlist_item->itc_separator[index] != NULL) {
+			if (genlist_item->itc_separator[index] != NULL)
 				_setting_location_free_itc(genlist_item->itc_separator[index]);
-			}
-			if (genlist_item->itc_help_title[index] != NULL) {
+			if (genlist_item->itc_help_title[index] != NULL)
 				_setting_location_free_itc(genlist_item->itc_help_title[index]);
-			}
-			if (genlist_item->itc_help_text[index] != NULL) {
+			if (genlist_item->itc_help_text[index] != NULL)
 				_setting_location_free_itc(genlist_item->itc_help_text[index]);
-			}
 		}
 		free(genlist_item);
 		genlist_item = NULL;
@@ -121,21 +118,21 @@ void __setting_location_help_create_seperator(Evas_Object *genlist, Elm_Gen_Item
 
 static char *_gps_help_text_get(void *data, Evas_Object *obj, const char *part)
 {
-	if (!g_strcmp0(part, "elm.text")) {
+	if (!g_strcmp0(part, "elm.text"))
 		return strdup(P_(help_info[0]));
-	} else if (!g_strcmp0(part, "elm.text.multiline")) {
+	else if (!g_strcmp0(part, "elm.text.multiline"))
 		return strdup(P_(help_info[1]));
-	}
+
 	return NULL;
 }
 
 static char *_wps_help_text_get(void *data, Evas_Object *obj, const char *part)
 {
-	if (!g_strcmp0(part, "elm.text")) {
+	if (!g_strcmp0(part, "elm.text"))
 		return strdup(P_(help_info[2]));
-	} else if (!g_strcmp0(part, "elm.text.multiline")) {
+	else if (!g_strcmp0(part, "elm.text.multiline"))
 		return strdup(P_(help_info[3]));
-	}
+
 	return NULL;
 }
 

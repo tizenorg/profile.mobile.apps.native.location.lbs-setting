@@ -75,7 +75,7 @@ enum {
 #ifdef TIZEN_FEATURE_WPS
 static void _app_control_reply_cb(app_control_h request, app_control_h reply, app_control_result_e result, void *user_data)
 {
-	if(result != APP_CONTROL_RESULT_SUCCEEDED) {
+	if (result != APP_CONTROL_RESULT_SUCCEEDED) {
 		GPS_POPUP_LOG("[Error:%d]Launch request fail", result);
 		return;
 	}
@@ -91,11 +91,10 @@ static gboolean _destroy_wireless_popup(gpointer data)
 	int enabled = 0;
 
 	vconf_get_int(VCONFKEY_LOCATION_USE_MY_LOCATION, &enabled);
-	if (enabled == 0) {
+	if (enabled == 0)
 		__gps_popupsend_signal_to_quickpanel(ad, "OFF");
-	} else {
+	else
 		__gps_popupsend_signal_to_quickpanel(ad, "ON");
-	}
 
 	evas_object_del(ad->wireless_popup_setting);
 	ad->wireless_popup_setting = NULL;
@@ -114,37 +113,37 @@ static void _anchor_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 	int ret = APP_CONTROL_ERROR_NONE;
 	do {
 		ret = app_control_create(&app_control);
-		if(ret != APP_CONTROL_ERROR_NONE) {
+		if (ret != APP_CONTROL_ERROR_NONE) {
 			GPS_POPUP_LOG("[Error:%d]Fail to create handler", ret);
 			break;
 		}
 
 		ret = app_control_set_operation(app_control, APP_CONTROL_OPERATION_DEFAULT);
-		if(ret != APP_CONTROL_ERROR_NONE) {
+		if (ret != APP_CONTROL_ERROR_NONE) {
 			GPS_POPUP_LOG("[Error:%d]Fail to set operation", ret);
 			break;
 		}
 
 		ret = app_control_set_app_id(app_control, "org.tizen.browser");
-		if(ret != APP_CONTROL_ERROR_NONE) {
+		if (ret != APP_CONTROL_ERROR_NONE) {
 			GPS_POPUP_LOG("[Error:%d]Fail to set app id", ret);
 			break;
 		}
 
 		ret = app_control_set_uri(app_control, anchor_info->name);
-		if(ret != APP_CONTROL_ERROR_NONE) {
+		if (ret != APP_CONTROL_ERROR_NONE) {
 			GPS_POPUP_LOG("[Error:%d]Fail to set url [%s]", ret, anchor_info->name);
 			break;
 		}
 
 		ret = app_control_send_launch_request(app_control, _app_control_reply_cb, NULL);
-		if(ret != APP_CONTROL_ERROR_NONE) {
+		if (ret != APP_CONTROL_ERROR_NONE) {
 			GPS_POPUP_LOG("[Error:%d]Fail to send launch request", ret);
 			break;
 		}
-	} while(FALSE);
+	} while (FALSE);
 
-	if(app_control) {
+	if (app_control) {
 		app_control_destroy(app_control);
 		app_control = NULL;
 	}
@@ -157,11 +156,10 @@ static void location_consent_popup_disagree_cb(void *data, Evas_Object *obj, voi
 	int enabled = 0;
 
 	vconf_get_int(VCONFKEY_LOCATION_USE_MY_LOCATION, &enabled);
-	if (enabled == 0) {
+	if (enabled == 0)
 		__gps_popupsend_signal_to_quickpanel(ad, "OFF");
-	} else {
+	else
 		__gps_popupsend_signal_to_quickpanel(ad, "ON");
-	}
 
 	evas_object_del(ad->wireless_popup_setting);
 	ad->wireless_popup_setting = NULL;
@@ -174,9 +172,8 @@ static void location_consent_popup_agree_cb(void *data, Evas_Object *obj, void *
 	int enable = 0;
 
 	vconf_get_int(VCONFKEY_LOCATION_USE_MY_LOCATION, &enable);
-	if (enable == 0) {
+	if (enable == 0)
 		vconf_set_int(VCONFKEY_LOCATION_USE_MY_LOCATION, 1);
-	}
 
 	vconf_set_int(VCONFKEY_LOCATION_NETWORK_ENABLED, 1);
 
@@ -319,19 +316,17 @@ static void __gps_popup_gps_agree_cb(void *data, Evas_Object *obj, void *event_i
 	Eina_Bool ischoose = false;
 	if (ad->ask_check) {
 		ischoose = elm_check_state_get(ad->ask_check);
-		if (ischoose) {
+		if (ischoose)
 			vconf_set_int(VCONFKEY_LBS_SETTING_IS_SHOW_GPS_POPUP, 0);
-		}
 	}
 
-	if (ad->gps_popup) {
+	if (ad->gps_popup)
 		evas_object_del(ad->gps_popup);
-	}
 
 	vconf_get_int(VCONFKEY_LOCATION_USE_MY_LOCATION, &enabled);
-	if (enabled == 0) {
+	if (enabled == 0)
 		vconf_set_int(VCONFKEY_LOCATION_USE_MY_LOCATION, 1);
-	}
+
 	vconf_set_int(VCONFKEY_LOCATION_ENABLED, 1);
 	__gps_popupsend_signal_to_quickpanel(ad, "ON");
 
@@ -355,11 +350,10 @@ static void __gps_popup_gps_disagree_cb(void *data, Evas_Object *obj, void *even
 	int enabled = 0;
 
 	vconf_get_int(VCONFKEY_LOCATION_USE_MY_LOCATION, &enabled);
-	if (enabled == 0) {
+	if (enabled == 0)
 		__gps_popupsend_signal_to_quickpanel(ad, "OFF");
-	} else {
+	else
 		__gps_popupsend_signal_to_quickpanel(ad, "ON");
-	}
 
 	ad->wireless_popup_setting = popup_type_create(data, POPUP_WIRELESS_QP);
 
@@ -384,14 +378,13 @@ static void _popup_gps_agree_cb_for_setting_search(void *data, Evas_Object *obj,
 		ad->gps_popup_setting = NULL;
 	}
 
-	if (ad->wireless_popup_setting == NULL) {
+	if (ad->wireless_popup_setting == NULL)
 		elm_exit();
-	}
 
 	vconf_get_int(VCONFKEY_LOCATION_USE_MY_LOCATION, &enabled);
-	if (enabled == 0) {
+	if (enabled == 0)
 		vconf_set_int(VCONFKEY_LOCATION_USE_MY_LOCATION, 1);
-	}
+
 	vconf_set_int(VCONFKEY_LOCATION_ENABLED, 1);
 }
 
@@ -406,9 +399,8 @@ static void _popup_gps_disagree_cb_for_setting_search(void *data, Evas_Object *o
 		ad->gps_popup_setting = NULL;
 	}
 
-	if (ad->wireless_popup_setting == NULL) {
+	if (ad->wireless_popup_setting == NULL)
 		elm_exit();
-	}
 
 	vconf_set_int(VCONFKEY_LOCATION_USE_MY_LOCATION, 0);
 	vconf_set_int(VCONFKEY_LOCATION_ENABLED, 0);
@@ -430,7 +422,7 @@ Evas_Object *popup_type_create(void *data, int popup_type)
 	evas_object_size_hint_weight_set(popup, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	if ((popup_type == POPUP_GPS) || (popup_type == POPUP_GPS_QP)) {
 		elm_object_domain_translatable_part_text_set(popup, "title,text", PACKAGE_NAME, "IDS_ST_HEADER_CONSENT_TO_LOCATION_INFO_USAGE_ABB");
-//		elm_object_domain_translatable_text_set(popup, PACKAGE_NAME, "IDS_ST_POP_YOUR_LOCATION_DATA_INCLUDING_GPS_DATA_WILL_BE_USED_BY_RELEVANT_APPLICATIONS");
+		/* elm_object_domain_translatable_text_set(popup, PACKAGE_NAME, "IDS_ST_POP_YOUR_LOCATION_DATA_INCLUDING_GPS_DATA_WILL_BE_USED_BY_RELEVANT_APPLICATIONS"); */
 
 		/* layout */
 		Evas_Object *layout = elm_layout_add(popup);
@@ -463,21 +455,21 @@ Evas_Object *popup_type_create(void *data, int popup_type)
 		elm_object_content_set(popup, layout);
 
 #ifdef TIZEN_FEATURE_WPS
-	} else if(popup_type == POPUP_WIRELESS_QP){
+	} else if (popup_type == POPUP_WIRELESS_QP) {
 		char text[4096] = {0};
 		char *str1 = P_("IDS_POSITIONING_CONSENT_BODY");
 		char *str2 = "</br><color=#006fd1ff underline=on underline_color=#006fd1ff><a href=http://here.com/terms/service-terms>http://here.com/terms/service-terms</a></color></br>";
 		char *str3 = "</br><color=#006fd1ff underline=on underline_color=#006fd1ff><a href=http://here.com/privacy/privacy-policy>http://here.com/privacy/privacy-policy</a></color></br>";
-		snprintf(text,4096, str1, str2, str3);
+		snprintf(text, 4096, str1, str2, str3);
 
 		elm_object_domain_translatable_part_text_set(popup, "title,text", PACKAGE_NAME, "IDS_ST_HEADER_LOCATION_LEGAL_INFORMATION_ABB");
-//		elm_object_domain_translatable_text_set(popup, PACKAGE_NAME, text);
+		/* elm_object_domain_translatable_text_set(popup, PACKAGE_NAME, text); */
 
 		Evas_Object *layout = elm_layout_add(popup);
 		elm_layout_file_set(layout, GPS_EDJ, "popup_checkview_layout");
 		evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 
-		Evas_Object * help_scroller = elm_scroller_add(popup);
+		Evas_Object *help_scroller = elm_scroller_add(popup);
 		elm_scroller_bounce_set(help_scroller, EINA_FALSE, EINA_TRUE);
 		elm_scroller_policy_set(help_scroller, ELM_SCROLLER_POLICY_OFF, ELM_SCROLLER_POLICY_AUTO);
 		elm_object_style_set(help_scroller, "effect");
@@ -504,28 +496,26 @@ Evas_Object *popup_type_create(void *data, int popup_type)
 	elm_object_style_set(disagree_btn, "popup");
 	elm_object_domain_translatable_text_set(disagree_btn, PACKAGE_NAME, "IDS_ST_BUTTON_DISAGREE");
 	elm_object_part_content_set(popup, "button1", disagree_btn);
-	if (popup_type == POPUP_GPS) {
+	if (popup_type == POPUP_GPS)
 		evas_object_smart_callback_add(disagree_btn, "clicked", _popup_gps_disagree_cb_for_setting_search, ad);
-	} else if (popup_type == POPUP_GPS_QP) {
+	else if (popup_type == POPUP_GPS_QP)
 		evas_object_smart_callback_add(disagree_btn, "clicked", __gps_popup_gps_disagree_cb, ad);
 #ifdef TIZEN_FEATURE_WPS
-	} else if(popup_type == POPUP_WIRELESS_QP){
+	else if (popup_type == POPUP_WIRELESS_QP)
 		evas_object_smart_callback_add(disagree_btn, "clicked", location_consent_popup_disagree_cb, ad);
 #endif
-	}
 	agree_btn = elm_button_add(popup);
 	elm_object_style_set(agree_btn, "popup");
 	elm_object_domain_translatable_text_set(agree_btn, PACKAGE_NAME, "IDS_ST_BUTTON_AGREE");
 	elm_object_part_content_set(popup, "button2", agree_btn);
-	if (popup_type == POPUP_GPS) {
+	if (popup_type == POPUP_GPS)
 		evas_object_smart_callback_add(agree_btn, "clicked", _popup_gps_agree_cb_for_setting_search, ad);
-	} else if (popup_type == POPUP_GPS_QP) {
+	else if (popup_type == POPUP_GPS_QP)
 		evas_object_smart_callback_add(agree_btn, "clicked", __gps_popup_gps_agree_cb, ad);
 #ifdef TIZEN_FEATURE_WPS
-	} else if(popup_type == POPUP_WIRELESS_QP){
+	else if (popup_type == POPUP_WIRELESS_QP)
 		evas_object_smart_callback_add(agree_btn, "clicked", location_consent_popup_agree_cb, ad);
 #endif
-	}
 	evas_object_show(popup);
 	evas_object_show(ad->win_main);
 	elm_object_focus_next_object_set(agree_btn, disagree_btn, ELM_FOCUS_NEXT);
@@ -581,18 +571,16 @@ int __gps_popup_terminate(void *data)
 	struct gps_popup_appdata *ad = data;
 	int ret = -1;
 
-	if (ad->gps_popup) {
+	if (ad->gps_popup)
 		evas_object_del(ad->gps_popup);
-	}
 
-	if (ad->win_main) {
+	if (ad->win_main)
 		evas_object_del(ad->win_main);
-	}
 
 	ret = __gps_popup_close_edbus_event(ad);
-	if (ret < 0) {
+	if (ret < 0)
 		GPS_POPUP_LOG("ERROR: Fail to init edbus event !!!");
-	}
+
 	return 0;
 }
 
@@ -626,9 +614,8 @@ int __gps_popup_reset(bundle *b, void *data)
 		GPS_POPUP_LOG("event-type = %s", val);
 		if (!g_strcmp0("gps", val)) {
 			vconf_get_int(VCONFKEY_LOCATION_ENABLED, &enabled);
-			if (enabled == 0) {
+			if (enabled == 0)
 				ad->gps_popup_setting = popup_type_create(data, POPUP_GPS);
-			}
 		} else if (!g_strcmp0("both", val)) {
 			vconf_get_int(VCONFKEY_LOCATION_USE_MY_LOCATION, &enabled);
 			if (enabled == 0) {
@@ -650,17 +637,15 @@ int __gps_popup_reset(bundle *b, void *data)
 					ad->gps_popup = popup_type_create(data, POPUP_GPS_QP);
 				} else {
 					GPS_POPUP_LOG("## popup already shown ##");
-					if (gps_enable == 0) {
+					if (gps_enable == 0)
 						vconf_set_int(VCONFKEY_LOCATION_ENABLED, 1);
-					}
 					vconf_get_int(VCONFKEY_LOCATION_USE_MY_LOCATION, &loc_enable);
-					if (loc_enable == 0) {
+					if (loc_enable == 0)
 						vconf_set_int(VCONFKEY_LOCATION_USE_MY_LOCATION, 1);
-					}
 					__gps_popupsend_signal_to_quickpanel(ad, "ON");
 
 #ifdef TIZEN_FEATURE_WPS
-					ad->wireless_popup_setting = popup_type_create(data,POPUP_WIRELESS_QP);
+					ad->wireless_popup_setting = popup_type_create(data, POPUP_WIRELESS_QP);
 #else
 					elm_exit();
 #endif

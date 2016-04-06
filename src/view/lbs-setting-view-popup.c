@@ -45,9 +45,8 @@ gboolean lbs_setting_popup_title_2button(char *title, char *body, char *btn1, Ev
 	lbs_setting_app_data *appData = lbs_setting_common_get_app_data();
 	LS_RETURN_VAL_IF_FAILED(appData, FALSE);
 
-	if (appData->app_popup) {
+	if (appData->app_popup)
 		LS_LOGE("critical error : shold be fixed. previous created popup was not destroyed");
-	}
 
 	Evas_Object *btn = NULL;
 	appData->app_popup = elm_popup_add(appData->win_main);

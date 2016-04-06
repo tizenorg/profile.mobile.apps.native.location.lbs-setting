@@ -47,11 +47,10 @@ char *_gl_label_get(void *data, Evas_Object *obj, const char *part)
 		gboolean is_location_on = FALSE;
 
 		vconf_get_int(VCONFKEY_LOCATION_ENABLED, &is_location_on);
-		if (is_location_on) {
+		if (is_location_on)
 			label = STR_ON;
-		} else {
+		else
 			label = STR_OFF;
-		}
 	}
 
 	LS_LOGI("part [%s], label[%s]", part, label ? label : "NULL");
