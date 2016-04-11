@@ -102,6 +102,9 @@ static void _app_control_cb(app_control_h app_control, void *user_data)
 	lbs_setting_app_data *ad = (lbs_setting_app_data *) user_data;
 	LS_RETURN_IF_FAILED(ad);
 
+	elm_app_base_scale_set(2.6);
+	elm_config_accel_preference_set("3d");
+
 	if (ad->win_main) {
 		evas_object_del(ad->win_main);
 		ad->win_main = NULL;
@@ -147,7 +150,6 @@ static void _app_control_cb(app_control_h app_control, void *user_data)
 #endif
 	/*LS_FUNC_EXIT */
 }
-
 #if 0
 static void _app_device_orientation_cb(app_event_info_h event_info, void *user_data)
 {
@@ -164,7 +166,6 @@ static void _app_device_orientation_cb(app_event_info_h event_info, void *user_d
 	elm_win_rotation_with_resize_set(ad->win_main, orientation);
 }
 #endif
-
 static void _app_language_changed_cb(app_event_info_h event_info, void *user_data)
 {
 	LS_FUNC_ENTER
