@@ -30,7 +30,6 @@
 #include <dlog.h>
 #include <efl_extension.h>
 #include <bundle_internal.h>
-#include <eventsystem.h>
 #include <system_info.h>
 #include "lbs-setting-common.h"
 #include "lbs-setting-window.h"

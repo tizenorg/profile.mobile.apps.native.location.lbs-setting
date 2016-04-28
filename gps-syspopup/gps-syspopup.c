@@ -28,7 +28,6 @@
 #include <appcore-efl.h>
 #include <vconf.h>
 #include <vconf-internal-location-keys.h>
-#include <eventsystem.h>
 
 
 #include "gps-syspopup.h"
