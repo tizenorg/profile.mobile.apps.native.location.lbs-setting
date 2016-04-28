@@ -138,14 +138,14 @@ static int __setting_location_set_int(const char *path, int val)
 	int enabled = 0;
 	int ret = 0;
 	ret = vconf_get_int(path, &enabled);
-	if (ret != 0) {
+	if (ret != VCONF_OK) {
 		LS_LOGD("Fail to get vconf value");
 		return -1;
 	}
 
 	if (enabled != val) {
 		ret = vconf_set_int(path, val);
-		if (ret != 0) {
+		if (ret != VCONF_OK) {
 			LS_LOGD("Fail to set vconf value");
 			return -1;
 		}
@@ -244,6 +244,14 @@ static void __setting_location_item_disabled_update(void *data)
 		}
 #endif
 	}
+
+	int restriction = 0;
+	int ret = vconf_get_int(VCONFKEY_LOCATION_RESTRICT, &restriction);
+	if (ret != VCONF_OK)
+		LS_LOGE("fail to get vconf key!");
+
+	if (restriction > 0)
+		elm_object_item_disabled_set(ad->gi_loc, EINA_TRUE);
 }
 
 static void __setting_location_loc_set_key(void *data)
@@ -559,8 +567,8 @@ static void __setting_location_loc_check_cb(void *data, Evas_Object *obj, void *
 	} else {
 		int isShow = KEY_DISABLED;
 		int ret = vconf_get_int(VCONFKEY_LBS_SETTING_IS_SHOW_GPS_POPUP, &isShow);
-		if (ret != 0)
-			LOGE("vconf_get_bool error:%d", ret);
+		if (ret != VCONF_OK)
+			LS_LOGE("vconf_get_bool error:%d", ret);
 
 		elm_check_state_set(ad->gi_loc_check, EINA_FALSE);
 		elm_genlist_item_update(ad->gi_loc);
@@ -590,8 +598,8 @@ static void __setting_location_gps_check_cb(void *data, Evas_Object *obj, void *
 	} else {
 		int isShow = 0;
 		int ret = vconf_get_int(VCONFKEY_LBS_SETTING_IS_SHOW_GPS_POPUP, &isShow);
-		if (ret != 0)
-			LOGE("vconf_get_bool error:%d", ret);
+		if (ret != VCONF_OK)
+			LS_LOGE("vconf_get_bool error:%d", ret);
 
 		elm_check_state_set(ad->gi_gps_check, EINA_FALSE);
 		elm_genlist_item_update(ad->gi_gps);
@@ -631,8 +639,8 @@ static Evas_Object *__setting_location_loc_check_get(void *data, Evas_Object *ob
 
 		int value = -1;
 		int ret = vconf_get_int(VCONFKEY_LOCATION_USE_MY_LOCATION, &value);
-		if (ret != 0)
-			LOGE("fail to get vconf key!");
+		if (ret != VCONF_OK)
+			LS_LOGE("fail to get vconf key!");
 
 		if (value)
 			elm_check_state_set(ad->gi_loc_check, EINA_TRUE);
@@ -659,8 +667,8 @@ static Evas_Object *__setting_location_gps_check_get(void *data, Evas_Object *ob
 
 		int value = -1;
 		int ret = vconf_get_int(VCONFKEY_LOCATION_ENABLED, &value);
-		if (ret != 0)
-			LOGE("fail to get vconf key!");
+		if (ret != VCONF_OK)
+			LS_LOGE("fail to get vconf key!");
 
 		if (value)
 			elm_check_state_set(tg, EINA_TRUE);
@@ -689,8 +697,8 @@ static Evas_Object *__setting_location_wifi_check_get(void *data, Evas_Object *o
 
 		int value = -1;
 		int ret = vconf_get_int(VCONFKEY_LOCATION_NETWORK_ENABLED, &value);
-		if (ret != 0)
-			LOGE("fail to get vconf key!");
+		if (ret != VCONF_OK)
+			LS_LOGE("fail to get vconf key!");
 
 		if (value)
 			elm_check_state_set(tg, EINA_TRUE);
@@ -725,8 +733,8 @@ static void __setting_location_loc_sel(void *data, Evas_Object *obj, void *event
 	} else {
 		int isShow = KEY_DISABLED;
 		int ret = vconf_get_int(VCONFKEY_LBS_SETTING_IS_SHOW_GPS_POPUP, &isShow);
-		if (ret != 0)
-			LOGE("vconf_get_bool error:%d", ret);
+		if (ret != VCONF_OK)
+			LS_LOGE("vconf_get_bool error:%d", ret);
 
 		if (isShow)
 			location_gps_popup(ad);
@@ -755,8 +763,8 @@ static void __setting_location_gps_sel(void *data, Evas_Object *obj, void *event
 	} else {
 		int isShow = 0;
 		int ret = vconf_get_int(VCONFKEY_LBS_SETTING_IS_SHOW_GPS_POPUP, &isShow);
-		if (ret != 0)
-			LOGE("vconf_get_bool error:%d", ret);
+		if (ret != VCONF_OK)
+			LS_LOGE("vconf_get_bool error:%d", ret);
 
 		if (isShow)
 			location_gps_popup(ad);
@@ -1082,7 +1090,7 @@ void _gps_key_changed_cb(keynode_t *key, void *data)
 
 	int enabled = 0;
 	int ret = vconf_get_int(VCONFKEY_LOCATION_ENABLED, &enabled);
-	if (ret != 0)
+	if (ret != VCONF_OK)
 		LOGE("fail to get vconf key!");
 
 	if (enabled)
@@ -1105,8 +1113,8 @@ void _wifi_key_changed_cb(keynode_t *key, void *data)
 
 	int enabled = 0;
 	int ret = vconf_get_int(VCONFKEY_LOCATION_NETWORK_ENABLED, &enabled);
-	if (ret != 0)
-		LOGE("fail to get vconf key!");
+	if (ret != VCONF_OK)
+		LS_LOGE("fail to get vconf key!");
 
 	if (enabled)
 		ad->is_wifi = true;
@@ -1119,6 +1127,53 @@ void _wifi_key_changed_cb(keynode_t *key, void *data)
 		LS_LOGD("Notice: Current operation in Genlist callback function.");
 
 	ad->quick_panel_setting = false;
+}
+
+void _restriction_key_changed_cb(keynode_t *key, void *data)
+{
+	LS_LOGD("_restriction_key_changed_cb >> ENTER");
+	LS_RETURN_IF_FAILED(data);
+	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
+
+	int value = -1;
+	int restriction = 0;
+	int ret = vconf_get_int(VCONFKEY_LOCATION_RESTRICT, &restriction);
+	if (ret != VCONF_OK)
+		LS_LOGE("fail to get vconf key!");
+	else
+		LS_LOGE("get_int restriction success [%d]", restriction);
+
+	if (restriction > 0) {
+		elm_object_item_disabled_set(ad->gi_gps, EINA_TRUE);
+		elm_object_item_disabled_set(ad->gi_loc, EINA_TRUE);
+#ifdef TIZEN_FEATURE_WPS
+		elm_object_item_disabled_set(ad->gi_wps, EINA_TRUE);
+#endif
+	} else {
+		ret = vconf_get_int(VCONFKEY_LOCATION_USE_MY_LOCATION, &value);
+		if (ret != VCONF_OK)
+			LS_LOGE("fail to get vconf key!");
+
+		if (value == 1)
+			elm_object_item_disabled_set(ad->gi_gps, EINA_FALSE);
+		else
+			elm_object_item_disabled_set(ad->gi_gps, EINA_TRUE);
+
+		elm_object_item_disabled_set(ad->gi_loc, EINA_FALSE);
+
+#ifdef TIZEN_FEATURE_WPS
+		if (value == 1)
+			elm_object_item_disabled_set(ad->gi_wps, EINA_FALSE);
+		else
+			elm_object_item_disabled_set(ad->gi_wps, EINA_TRUE);
+#endif
+	}
+
+	elm_genlist_item_update(ad->gi_gps);
+	elm_genlist_item_update(ad->gi_loc);
+#ifdef TIZEN_FEATURE_WPS
+	elm_genlist_item_update(ad->gi_wps);
+#endif
 }
 
 int __setting_location_init(lbs_setting_app_data *ad)
@@ -1142,6 +1197,8 @@ int __setting_location_init(lbs_setting_app_data *ad)
 	else ad->is_wifi = false;
 	ret &= vconf_notify_key_changed(VCONFKEY_LOCATION_NETWORK_ENABLED, _wifi_key_changed_cb, (void *)ad);
 #endif
+
+	ret &= vconf_notify_key_changed(VCONFKEY_LOCATION_RESTRICT, _restriction_key_changed_cb, (void *)ad);
 
 	/* if myloc is off , and gps or wifi is on, we should set myloc on and its vconf value */
 #ifdef TIZEN_FEATURE_WPS
@@ -1174,6 +1231,7 @@ int _setting_location_deinit(lbs_setting_app_data *ad)
 #ifdef TIZEN_FEATURE_WPS
 	ret = vconf_ignore_key_changed(VCONFKEY_LOCATION_NETWORK_ENABLED, _wifi_key_changed_cb);
 #endif
+	ret = vconf_ignore_key_changed(VCONFKEY_LOCATION_RESTRICT, _restriction_key_changed_cb);
 
 	return ret;
 }
@@ -1530,8 +1588,8 @@ static Evas_Object *_setting_wizard_check_get(void *data, Evas_Object *obj, cons
 
 		int value = -1;
 		int ret = vconf_get_int(VCONFKEY_LOCATION_USE_MY_LOCATION, &value);
-		if (ret != 0)
-			LOGE("fail to get vconf key!");
+		if (ret != VCONF_OK)
+			LS_LOGE("fail to get vconf key!");
 
 		if (value)
 			elm_check_state_set(ad->loc_check, EINA_TRUE);
@@ -1553,8 +1611,8 @@ void set_dim_view(lbs_setting_app_data *ad)
 	LS_FUNC_ENTER
 	int value = -1;
 	int ret = vconf_get_int(VCONFKEY_LOCATION_USE_MY_LOCATION, &value);
-	if (ret != 0)
-		LOGE("fail to get vconf key!");
+	if (ret != VCONF_OK)
+		LS_LOGE("fail to get vconf key!");
 
 	if (value == KEY_DISABLED) {
 		edje_object_signal_emit(_EDJ(ad->wizard_layout), "location,dimmed", "elm");
