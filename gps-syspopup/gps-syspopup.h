@@ -46,7 +46,7 @@
 #define LOG_TAG GPS_POPUP_TAG
 #endif
 
-#define GPS_POPUP_LOG(fmt,args...) LOGD(fmt, ##args)
+#define GPS_POPUP_LOG(fmt, args...) LOGD(fmt, ##args)
 
 #define GPS_POPUP_RETURN_IF_FAILED(point) do { \
 		if (point == NULL) { \
