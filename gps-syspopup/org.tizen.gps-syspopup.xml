@@ -9,6 +9,7 @@
 		<privilege>http://tizen.org/privilege/application.launch</privilege>
 		<privilege>http://tizen.org/privilege/location.enable</privilege>
 		<privilege>http://tizen.org/privilege/haptic</privilege>
+		<privilege>http://tizen.org/privilege/window.priority.set</privilege>
 	</privileges>
 	<ui-application appid="org.tizen.gps-syspopup" exec="/usr/apps/org.tizen.gps-syspopup/bin/gps-syspopup" nodisplay="true" multiple="false" type="capp" taskmanage="false">
 		<label>gps-syspopup</label>
