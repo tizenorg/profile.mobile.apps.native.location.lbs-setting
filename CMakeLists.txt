@@ -59,6 +59,7 @@ PKG_CONFIG(E_APPFW				"capi-appfw-application")
 PKG_CONFIG(E_LOCATION			"capi-location-manager")
 PKG_CONFIG(E_SYSTEMINFO			"capi-system-info")
 PKG_CONFIG(E_EVENTSYSTEM		"eventsystem")
+PKG_CONFIG(E_CONTEXT     		"context")
 
 
 SET(EXTRA_CFLAGS "")

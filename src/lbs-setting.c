@@ -34,13 +34,14 @@
 #include "lbs-setting-window.h"
 #include "lbs-setting-help.h"
 #include "lbs-setting-common.h"
+#include <context_places_internal.h>
 
-static lbs_setting_app_data *global_ad;
+static lbs_setting_app_data global_ad = { NULL, };
 
 lbs_setting_app_data *lbs_setting_common_get_app_data(void)
 {
 	LS_FUNC_ENTER
-	return global_ad;
+	return &global_ad;
 }
 
 void lbs_setting_common_destroy_app_data(void)
@@ -73,6 +74,22 @@ static Eina_Bool _lbs_window_transient_cb(void *data, int type, void *eventinfo)
 static bool _app_create_cb(void *user_data)
 {
 	LS_FUNC_ENTER
+
+	lbs_setting_app_data * ad = lbs_setting_common_get_app_data();
+	LS_LOGD("mmastern");
+	int ret = context_places_is_supported(&ad->is_myplace_automation_supported);
+	LS_LOGD("mmastern");
+	if (ret == CONTEXT_PLACES_ERROR_NONE) {
+		if (ad->is_myplace_automation_supported) {
+			LS_LOGD("mmastern");
+			ret = context_places_is_consented(&ad->is_myplace_automation_consent);
+			if (ret == CONTEXT_PLACES_ERROR_NONE)
+				LS_LOGD("mmastern");
+				return true;
+		}
+	}
+	ad->is_myplace_automation_supported = false;
+	ad->is_myplace_automation_consent = false;
 
 	return true;
 }
