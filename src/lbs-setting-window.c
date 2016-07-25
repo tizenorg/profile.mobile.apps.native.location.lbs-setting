@@ -34,6 +34,7 @@
 #include "lbs-setting-common.h"
 #include "lbs-setting-window.h"
 #include "lbs-setting-help.h"
+#include <context_places_internal.h>
 
 static void _anchor_clicked_cb(void *data, Evas_Object *obj, void *event_info);
 static void __setting_reply_gps_wifi_status(void *data);
@@ -594,7 +595,6 @@ static void __setting_location_gps_check_cb(void *data, Evas_Object *obj, void *
 	if (ad->is_gps) {
 		ad->is_gps = false;
 		__setting_location_gps_set_key(ad);
-
 	} else {
 		int isShow = 0;
 		int ret = vconf_get_int(VCONFKEY_LBS_SETTING_IS_SHOW_GPS_POPUP, &isShow);
@@ -622,7 +622,6 @@ static void __setting_location_wifi_check_cb(void *data, Evas_Object *obj, void 
 	if (ad->is_wifi) {
 		ad->is_wifi = false;
 		__setting_location_wifi_set_key(ad);
-
 	} else {
 		elm_check_state_set(ad->gi_wifi_check, EINA_FALSE);
 		elm_genlist_item_update(ad->gi_wifi);
@@ -655,7 +654,6 @@ static Evas_Object *__setting_location_loc_check_get(void *data, Evas_Object *ob
 		return ad->gi_loc_check;
 	}
 	return NULL;
-
 }
 
 static Evas_Object *__setting_location_gps_check_get(void *data, Evas_Object *obj, const char *part)
@@ -837,6 +835,157 @@ static void __setting_myplace_sel(void *data, Evas_Object *obj, void *event_info
 	elm_genlist_item_selected_set(event_info, EINA_FALSE);
 }
 
+static void __myplace_automation_consent_set(bool consent, lbs_setting_app_data * ad)
+{
+	LS_FUNC_ENTER
+	LS_RETURN_IF_FAILED(ad);
+
+	elm_check_state_set(ad->gi_myplace_automation_check, consent);
+	elm_genlist_item_update(ad->gi_myplace_automation);
+	ad->is_myplace_automation_consent = consent;
+	int ret = context_places_consent(consent);
+	if (ret != CONTEXT_PLACES_ERROR_NONE) {
+		LS_LOGE("context_places consent setting ERROR");
+	}
+
+	LS_FUNC_EXIT
+}
+
+static void __myplace_automation_popup_agree_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	LS_RETURN_IF_FAILED(data);
+	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
+
+	/* Hide popup */
+	if (ad->myplace_automation_popup) {
+		evas_object_del(ad->myplace_automation_popup);
+		ad->myplace_automation_popup = NULL;
+	}
+
+	__myplace_automation_consent_set(true, ad);
+}
+
+static void __myplace_automation_popup_disagree_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	LS_RETURN_IF_FAILED(data);
+	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
+
+	/* Hide popup */
+	if (ad->myplace_automation_popup) {
+		evas_object_del(ad->myplace_automation_popup);
+		ad->myplace_automation_popup = NULL;
+	}
+
+	__myplace_automation_consent_set(false, ad);
+}
+
+static void __myplace_automation_popup_back_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	LS_RETURN_IF_FAILED(data);
+	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
+
+	/* Hide popup */
+	if (ad->myplace_automation_popup) {
+		evas_object_del(ad->myplace_automation_popup);
+		ad->myplace_automation_popup = NULL;
+	}
+}
+
+static void __myplace_automation_popup(void *data)
+{
+	LS_RETURN_IF_FAILED(data);
+	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
+
+	Evas_Object *popup = NULL;
+	Evas_Object *agree_btn = NULL;
+	Evas_Object *disagree_btn = NULL;
+
+	popup = elm_popup_add(ad->win_main);
+	ad->myplace_automation_popup = popup;
+	elm_popup_align_set(popup, ELM_NOTIFY_ALIGN_FILL, 1.0);
+	evas_object_event_callback_add(popup, EVAS_CALLBACK_MOUSE_UP, _mouseup_cb, NULL);
+	eext_object_event_callback_add(popup, EEXT_CALLBACK_BACK, __myplace_automation_popup_back_cb, ad);
+	evas_object_size_hint_weight_set(popup, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	elm_object_part_text_set(popup, "title,text", "My places automation consent"); // TODO: Translate for other languages
+	elm_object_text_set(popup, "Some fancy description of algorithm and its usage. "\
+			"Some fancy description of algorithm and its usage. Some fancy description "\
+			"of algorithm and its usage. Some fancy description of algorithm and its usage. "\
+			"Some fancy description of algorithm and its usage. Some fancy description of "\
+			"algorithm and its usage. Some fancy description of algorithm and its usage");	// TODO: Fill with proper description
+																							// TODO: Translate for other languages
+
+	/* Disagree button */
+	disagree_btn = elm_button_add(popup);
+	elm_object_style_set(disagree_btn, "popup");
+	elm_object_domain_translatable_text_set(disagree_btn, LBS_SETTING_PKG, "IDS_ST_BUTTON_DISAGREE");
+	elm_object_part_content_set(popup, "button1", disagree_btn);
+	evas_object_smart_callback_add(disagree_btn, "clicked", __myplace_automation_popup_disagree_cb, ad);
+
+	/* Agree button */
+	agree_btn = elm_button_add(popup);
+	elm_object_style_set(agree_btn, "popup");
+	elm_object_domain_translatable_text_set(agree_btn, LBS_SETTING_PKG, "IDS_ST_BUTTON_AGREE");
+	elm_object_part_content_set(popup, "button2", agree_btn);
+	evas_object_smart_callback_add(agree_btn, "clicked", __myplace_automation_popup_agree_cb, ad);
+
+	evas_object_show(popup);
+}
+
+static char *__setting_myplace_automation_text_get(void *data, Evas_Object *obj, const char *part)
+{
+	if (!g_strcmp0(part, "elm.text"))
+		return strdup("Automatic suggestion");
+
+	return NULL;
+}
+
+static void __setting_myplace_automation_check_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	LS_RETURN_IF_FAILED(data);
+	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
+
+	elm_check_state_set(ad->gi_myplace_automation_check, ad->is_myplace_automation_consent);
+	elm_genlist_item_update(ad->gi_myplace_automation);
+	if (ad->is_myplace_automation_consent)
+		__myplace_automation_consent_set(false, ad);
+	else
+		__myplace_automation_popup(ad);
+}
+
+static Evas_Object *__setting_myplace_automation_check_get(void *data, Evas_Object *obj, const char *part)
+{
+	LS_RETURN_VAL_IF_FAILED(data, NULL);
+	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
+
+	if (!strcmp(part, "elm.swallow.icon.1")) {
+		ad->gi_myplace_automation_check = elm_check_add(obj);
+
+		elm_check_state_set(ad->gi_myplace_automation_check, ad->is_myplace_automation_consent);
+		elm_object_style_set(ad->gi_myplace_automation_check, "on&off");
+		evas_object_propagate_events_set(ad->gi_myplace_automation_check, EINA_FALSE);
+		evas_object_smart_callback_add(ad->gi_myplace_automation_check, "changed", __setting_myplace_automation_check_cb, ad);
+		evas_object_show(ad->gi_myplace_automation_check);
+
+		return ad->gi_myplace_automation_check;
+	}
+
+	return NULL;
+}
+
+static void __setting_myplace_automation_sel(void *data, Evas_Object *obj, void *event_info)
+{
+	LS_RETURN_IF_FAILED(data);
+	LS_RETURN_IF_FAILED(event_info);
+	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
+
+	if (ad->is_myplace_automation_consent)
+		__myplace_automation_consent_set(false, ad);
+	else
+		__myplace_automation_popup(ad);
+
+	elm_genlist_item_selected_set(event_info, EINA_FALSE);
+}
+
 static Evas_Object *__setting_location_create_gl(Evas_Object *parent, void *data)
 {
 	lbs_setting_app_data *ad = (lbs_setting_app_data *)data;
@@ -904,9 +1053,11 @@ static Evas_Object *__setting_location_create_gl(Evas_Object *parent, void *data
 
 	__setting_location_item_disabled_update(ad);
 
-	/* Myplace */
+	/* Myplace group */
 	system_info_get_platform_bool(geofence_feature, &is_geofence_supported);
 	if (is_geofence_supported) {
+
+		/* Group title */
 		ad->itc_myplace_title = elm_genlist_item_class_new();
 		if (ad->itc_myplace_title == NULL) {
 			g_free(ad->itc_loc);
@@ -921,6 +1072,7 @@ static Evas_Object *__setting_location_create_gl(Evas_Object *parent, void *data
 		ad->gi_myplace_title = elm_genlist_item_append(genlist, ad->itc_myplace_title, NULL, NULL, ELM_GENLIST_ITEM_NONE, NULL, NULL);
 		elm_genlist_item_select_mode_set(ad->gi_myplace_title, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
+		/* My places */
 		ad->itc_myplace = elm_genlist_item_class_new();
 		if (ad->itc_myplace == NULL) {
 			g_free(ad->itc_loc);
@@ -934,6 +1086,19 @@ static Evas_Object *__setting_location_create_gl(Evas_Object *parent, void *data
 		ad->itc_myplace->item_style = "type1";
 		ad->itc_myplace->func.text_get = __setting_myplace_text_get;
 		ad->gi_myplace = elm_genlist_item_append(genlist, ad->itc_myplace, (void *)ad, NULL, ELM_GENLIST_ITEM_NONE, __setting_myplace_sel, ad);
+
+		/* Automatic suggestion consent */
+		if (ad->is_myplace_automation_supported) {
+			ad->itc_myplace_automation = elm_genlist_item_class_new();
+			if (ad->itc_myplace_automation == NULL) {
+				LS_LOGE("critical error : LS_RETURN_VAL_IS_FAILED");
+				return NULL;
+			}
+			ad->itc_myplace_automation->item_style = "type1";
+			ad->itc_myplace_automation->func.text_get = __setting_myplace_automation_text_get;
+			ad->itc_myplace_automation->func.content_get = __setting_myplace_automation_check_get;
+			ad->gi_myplace_automation = elm_genlist_item_append(genlist, ad->itc_myplace_automation, (void *)ad, NULL, ELM_GENLIST_ITEM_NONE, __setting_myplace_automation_sel, ad);
+		}
 	}
 
 	return genlist;
@@ -1035,7 +1200,7 @@ static void __setting_location_create_more_button(void *data, Evas_Object *obj, 
 
 void __setting_location_create_view(lbs_setting_app_data *ad)
 {
-	LS_LOGD("__setting_location_create_view.");
+	LS_FUNC_ENTER
 	LS_RETURN_IF_FAILED(ad);
 	Elm_Object_Item *navi_it = NULL;
 	Evas_Object *more_button = NULL;
@@ -1062,6 +1227,7 @@ void __setting_location_create_view(lbs_setting_app_data *ad)
 	elm_object_style_set(more_button, "naviframe/more/default");
 	evas_object_smart_callback_add(more_button, "clicked", __setting_location_create_more_button, ad);
 	elm_object_item_part_content_set(navi_it, "toolbar_more_btn", more_button);
+	LS_FUNC_EXIT
 }
 
 void _location_key_changed_cb(keynode_t *key, void *data)
@@ -1627,7 +1793,6 @@ void set_dim_view(lbs_setting_app_data *ad)
 	}
 }
 
-
 Evas_Object *__setting_location_wizard_view(lbs_setting_app_data *ad)
 {
 	LS_FUNC_ENTER
@@ -1746,7 +1911,6 @@ Evas_Object *__setting_location_wizard_view(lbs_setting_app_data *ad)
 	LS_FUNC_EXIT
 
 	return layout;
-
 }
 
 void lbs_setting_win_show(lbs_setting_app_data *ad)

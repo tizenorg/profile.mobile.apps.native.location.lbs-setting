@@ -164,6 +164,7 @@ typedef struct appdata {
 	Evas_Object *genlist;
 	Evas_Object *gps_popup;
 	Evas_Object *wifi_popup;
+	Evas_Object *myplace_automation_popup;
 	Evas_Object *ctx_popup;
 	Evas_Object *disagree_btn[3];
 	Evas_Object *agree_btn[3];
@@ -171,11 +172,12 @@ typedef struct appdata {
 	Evas_Object *gi_loc_check;
 	Evas_Object *gi_gps_check;
 	Evas_Object *gi_wifi_check;
+	Evas_Object *gi_myplace_automation_check;
 	Evas_Object *wizard_check;
 
-	Elm_Object_Item *gi_loc, *gi_gps, *gi_wifi, *gi_group_title, *gi_myplace_title, *gi_myplace;
-	Elm_Genlist_Item_Class *itc_loc, *itc_gps, *itc_wifi,  *itc_title, *itc_myplace_title, *itc_myplace;
-	bool is_myloc, is_gps, is_wifi;
+	Elm_Object_Item *gi_loc, *gi_gps, *gi_wifi, *gi_group_title, *gi_myplace_title, *gi_myplace, *gi_myplace_automation;
+	Elm_Genlist_Item_Class *itc_loc, *itc_gps, *itc_wifi,  *itc_title, *itc_myplace_title, *itc_myplace, *itc_myplace_automation;
+	bool is_myloc, is_gps, is_wifi, is_myplace_automation_supported, is_myplace_automation_consent;
 	bool quick_panel_setting;
 	int view_id;
 	unsigned int location_event_req_id, gps_event_req_id;;
