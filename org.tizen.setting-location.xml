@@ -7,7 +7,9 @@
 	<description>Location setting application</description>
 	<privileges>
 		<privilege>http://tizen.org/privilege/application.launch</privilege>
+		<privilege>http://tizen.org/privilege/location</privilege>
 		<privilege>http://tizen.org/privilege/location.enable</privilege>
+		<privilege>http://tizen.org/privilege/network.get</privilege>
 		<privilege>http://tizen.org/privilege/haptic</privilege>
 		<privilege>http://tizen.org/privilege/appmanager.launch</privilege>
 	</privileges>
