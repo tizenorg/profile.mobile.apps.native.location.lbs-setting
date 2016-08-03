@@ -32,6 +32,6 @@ gboolean view_location_update(void);
 
 #ifdef __cplusplus
 }
-#endif /*__cplusplus */
+#endif /* __cplusplus */
 
 #endif /* LBS_SETTING_VIEW_LOCATION_H_ */

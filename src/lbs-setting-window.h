@@ -65,6 +65,6 @@ Evas_Object *__setting_location_wizard_view(lbs_setting_app_data *ad);
 
 #ifdef __cplusplus
 }
-#endif /*__cplusplus */
+#endif /* __cplusplus */
 
 #endif /* LBS_SETTING_WINDOW_H_ */

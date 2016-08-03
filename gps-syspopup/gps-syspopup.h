@@ -87,4 +87,4 @@ struct gps_popup_appdata {
 	Evas_Object *ask_check;
 };
 
-#endif /*__GPS_POPUP_H_*/
+#endif /* __GPS_POPUP_H_*/

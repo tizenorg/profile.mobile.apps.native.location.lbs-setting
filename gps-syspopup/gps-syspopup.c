@@ -67,7 +67,7 @@ syspopup_handler handler = {
 enum {
 	POPUP_GPS,
 	POPUP_WIRELESS,
-	POPUP_GPS_QP, /*for quickpanel */
+	POPUP_GPS_QP, /* for quickpanel */
 	POPUP_WIRELESS_QP
 };
 

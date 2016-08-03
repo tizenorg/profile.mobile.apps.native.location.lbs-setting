@@ -26,6 +26,7 @@ BuildRequires: pkgconfig(feedback)
 BuildRequires: pkgconfig(bundle)
 BuildRequires: pkgconfig(eventsystem)
 BuildRequires: pkgconfig(capi-system-info)
+BuildRequires: pkgconfig(context)
 BuildRequires: edje-bin
 BuildRequires: cmake
 BuildRequires: gettext-tools

@@ -39,5 +39,5 @@ extern "C" {
 
 #ifdef __cplusplus
 }
-#endif /*__cplusplus */
+#endif /* __cplusplus */
 #endif /* LBS_SETTING_STRING_H_ */

@@ -34,6 +34,7 @@
 #include "lbs-setting-window.h"
 #include "lbs-setting-help.h"
 #include "lbs-setting-common.h"
+#include <context_places_internal.h>
 
 static lbs_setting_app_data *global_ad;
 
@@ -46,7 +47,7 @@ lbs_setting_app_data *lbs_setting_common_get_app_data(void)
 void lbs_setting_common_destroy_app_data(void)
 {
 	LS_FUNC_ENTER
-	/*TODO */
+	/* TODO */
 	LS_LOGI("Not Implemented");
 
 	return;
@@ -74,6 +75,18 @@ static bool _app_create_cb(void *user_data)
 {
 	LS_FUNC_ENTER
 
+	lbs_setting_app_data * ad = (lbs_setting_app_data *)user_data;
+	int ret = context_places_is_supported(&ad->is_myplace_automation_supported);
+	if (ret == CONTEXT_PLACES_ERROR_NONE) {
+		if (ad->is_myplace_automation_supported) {
+			ret = context_places_is_consented(&ad->is_myplace_automation_consent);
+			if (ret == CONTEXT_PLACES_ERROR_NONE)
+				return true;
+		}
+	}
+	ad->is_myplace_automation_supported = false;
+	ad->is_myplace_automation_consent = false;
+
 	return true;
 }
 
@@ -85,13 +98,13 @@ static void _app_terminate_cb(void *user_data)
 static void _app_pause_cb(void *user_data)
 {
 	LS_FUNC_ENTER
-	/*Nothing */
+	/* Nothing */
 }
 
 static void _app_resume_cb(void *user_data)
 {
 	LS_FUNC_ENTER
-	/*Nothing coz thre is nothing when paused */
+	/* Nothing coz thre is nothing when paused */
 }
 
 static void _app_control_cb(app_control_h app_control, void *user_data)
@@ -148,7 +161,7 @@ static void _app_control_cb(app_control_h app_control, void *user_data)
 		ecore_event_handler_add(ECORE_X_EVENT_WINDOW_DESTROY, _lbs_window_transient_cb, (void *)parent_xwin_id);
 	}
 #endif
-	/*LS_FUNC_EXIT */
+	/* LS_FUNC_EXIT */
 }
 #if 0
 static void _app_device_orientation_cb(app_event_info_h event_info, void *user_data)
